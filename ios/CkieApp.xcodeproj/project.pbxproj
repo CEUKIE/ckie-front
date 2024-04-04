@@ -37,6 +37,25 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = CkieApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = CkieApp/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-CkieApp-CkieAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CkieApp-CkieAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		223A0E4B2BBEBC200074A115 /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome6_Brands.ttf; sourceTree = "<group>"; };
+		223A0E4C2BBEBC200074A115 /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Foundation.ttf; sourceTree = "<group>"; };
+		223A0E4D2BBEBC200074A115 /* FontAwesome6_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome6_Solid.ttf; sourceTree = "<group>"; };
+		223A0E4E2BBEBC200074A115 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Brands.ttf; sourceTree = "<group>"; };
+		223A0E4F2BBEBC200074A115 /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AntDesign.ttf; sourceTree = "<group>"; };
+		223A0E502BBEBC200074A115 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
+		223A0E512BBEBC200074A115 /* FontAwesome6_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome6_Regular.ttf; sourceTree = "<group>"; };
+		223A0E522BBEBC200074A115 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialCommunityIcons.ttf; sourceTree = "<group>"; };
+		223A0E532BBEBC200074A115 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
+		223A0E542BBEBC200074A115 /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
+		223A0E552BBEBC200074A115 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Solid.ttf; sourceTree = "<group>"; };
+		223A0E562BBEBC200074A115 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
+		223A0E572BBEBC200074A115 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
+		223A0E582BBEBC200074A115 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
+		223A0E592BBEBC200074A115 /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
+		223A0E5A2BBEBC210074A115 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
+		223A0E5B2BBEBC210074A115 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Regular.ttf; sourceTree = "<group>"; };
+		223A0E5C2BBEBC210074A115 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		223A0E5D2BBEBC210074A115 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-CkieApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CkieApp.debug.xcconfig"; path = "Target Support Files/Pods-CkieApp/Pods-CkieApp.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-CkieApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CkieApp.release.xcconfig"; path = "Target Support Files/Pods-CkieApp/Pods-CkieApp.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-CkieApp-CkieAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CkieApp-CkieAppTests.debug.xcconfig"; path = "Target Support Files/Pods-CkieApp-CkieAppTests/Pods-CkieApp-CkieAppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -86,6 +105,7 @@
 		13B07FAE1A68108700A75B9A /* CkieApp */ = {
 			isa = PBXGroup;
 			children = (
+				223A0E4A2BBEBB5A0074A115 /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -94,6 +114,32 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = CkieApp;
+			sourceTree = "<group>";
+		};
+		223A0E4A2BBEBB5A0074A115 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				223A0E4F2BBEBC200074A115 /* AntDesign.ttf */,
+				223A0E592BBEBC200074A115 /* Entypo.ttf */,
+				223A0E572BBEBC200074A115 /* EvilIcons.ttf */,
+				223A0E502BBEBC200074A115 /* Feather.ttf */,
+				223A0E5A2BBEBC210074A115 /* FontAwesome.ttf */,
+				223A0E4E2BBEBC200074A115 /* FontAwesome5_Brands.ttf */,
+				223A0E5B2BBEBC210074A115 /* FontAwesome5_Regular.ttf */,
+				223A0E552BBEBC200074A115 /* FontAwesome5_Solid.ttf */,
+				223A0E4B2BBEBC200074A115 /* FontAwesome6_Brands.ttf */,
+				223A0E512BBEBC200074A115 /* FontAwesome6_Regular.ttf */,
+				223A0E4D2BBEBC200074A115 /* FontAwesome6_Solid.ttf */,
+				223A0E542BBEBC200074A115 /* Fontisto.ttf */,
+				223A0E4C2BBEBC200074A115 /* Foundation.ttf */,
+				223A0E532BBEBC200074A115 /* Ionicons.ttf */,
+				223A0E522BBEBC200074A115 /* MaterialCommunityIcons.ttf */,
+				223A0E5C2BBEBC210074A115 /* MaterialIcons.ttf */,
+				223A0E582BBEBC200074A115 /* Octicons.ttf */,
+				223A0E5D2BBEBC210074A115 /* SimpleLineIcons.ttf */,
+				223A0E562BBEBC200074A115 /* Zocial.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -466,6 +512,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8974DCR7M2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = CkieApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -493,6 +540,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8974DCR7M2;
 				INFOPLIST_FILE = CkieApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
