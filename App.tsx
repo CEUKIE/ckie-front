@@ -1,27 +1,18 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React from 'react';
+import {Button, SafeAreaView} from 'react-native';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
-
-function App() {
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+    <SafeAreaView>
+      <Button title="달팽이" />
+    </SafeAreaView>
   );
-}
+};
 
 let AppEntryPoint = App;
 
 if (process.env.STORYBOOK_ENABLED) {
-  AppEntryPoint = require("./.ondevice").default;
+  AppEntryPoint = require('./.ondevice').default;
 }
 
 export default AppEntryPoint;
