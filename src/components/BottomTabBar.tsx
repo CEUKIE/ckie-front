@@ -9,6 +9,28 @@ import TempIcon from '../assets/icons/temp-hot-line.svg';
 import CageManagementScreen from '../screens/CageManagementScreen';
 import IndividualManagamentScreen from '../screens/IndividualManagamentScreen';
 import MyPage from '../screens/MyPage';
+import {BottomTabBarType} from '../types';
+
+const elements: BottomTabBarType.BottomTabBarElement[] = [
+  {
+    name: 'cage',
+    title: '사육장',
+    component: CageManagementScreen,
+    SVGIcon: CageIcon,
+  },
+  {
+    name: 'individual',
+    title: '개체',
+    component: IndividualManagamentScreen,
+    SVGIcon: TempIcon,
+  },
+  {
+    name: 'myPage',
+    title: '마이페이지',
+    component: MyPage,
+    SVGIcon: HomeIcon,
+  },
+];
 
 const BottomTabBar = () => {
   const Tab = createBottomTabNavigator();
@@ -19,36 +41,19 @@ const BottomTabBar = () => {
       screenOptions={{
         tabBarActiveTintColor: '#FFC25C',
       }}>
-      <Tab.Screen
-        name="cage"
-        component={CageManagementScreen}
-        options={{
-          title: '사육장',
-          tabBarIcon: ({color, size}) => (
-            <CageIcon width={size} height={size} fill={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="individual"
-        component={IndividualManagamentScreen}
-        options={{
-          title: '개체',
-          tabBarIcon: ({color, size}) => (
-            <TempIcon width={size} height={size} fill={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="myPage"
-        component={MyPage}
-        options={{
-          title: '프로필',
-          tabBarIcon: ({color, size}) => (
-            <HomeIcon width={size} height={size} fill={color} />
-          ),
-        }}
-      />
+      {elements.map(e => (
+        <Tab.Screen
+          key={e.name}
+          name={e.name}
+          component={e.component}
+          options={{
+            title: e.title,
+            tabBarIcon: ({color, size}) => (
+              <e.SVGIcon width={size} height={size} fill={color} />
+            ),
+          }}
+        />
+      ))}
     </Tab.Navigator>
   );
 };
