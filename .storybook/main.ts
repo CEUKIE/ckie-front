@@ -1,6 +1,8 @@
 /** @type{import("@storybook/react-webpack5").StorybookConfig} */
+import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
+
 module.exports = {
-  stories: ['../components/**/*.stories.?(ts|tsx|js|jsx)'],
+  stories: ['../src/components/**/*.stories.@(ts|tsx|js|jsx)'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -12,5 +14,9 @@ module.exports = {
   },
   docs: {
     autodocs: true,
+  },
+  webpackFinal: async (config, { configType }) => {
+    config.resolve.plugins = [new TsconfigPathsPlugin()];
+    return config;
   },
 };
