@@ -1,12 +1,16 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import BottomTabBar from './src/components/BottomTabBar';
+import {ThemeProvider} from '@emotion/react';
+import theme from './src/styles/theme';
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <BottomTabBar />
-    </NavigationContainer>
+    <ThemeProvider theme={theme}>
+      <NavigationContainer>
+        <BottomTabBar />
+      </NavigationContainer>
+    </ThemeProvider>
   );
 };
 
