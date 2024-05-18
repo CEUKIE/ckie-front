@@ -14,6 +14,9 @@ const theme = {
     warning: '#EF8523',
     success: '#31A115',
 
+    kakao: '#FEE500',
+    naver: '#03C75A',
+
     font: {
       primary: '#000000',
     },
