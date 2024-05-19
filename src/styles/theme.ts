@@ -19,6 +19,7 @@ const theme = {
 
     font: {
       primary: '#000000',
+      text1: '#212529',
     },
 
     background: {
