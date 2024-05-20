@@ -15,6 +15,7 @@ import RapterIcon from '../assets/icons/rapter-icon.svg';
 import GuitarIcon from '../assets/icons/guitar-icon.svg';
 import WeightModal from '../components/WeightModal';
 import MoltingModal from '../components/MoltingModal';
+import MemoModal from '../components/MemoModal';
 
 interface Category {
   name: string;
@@ -39,7 +40,7 @@ const ScheduleScreen = () => {
   const [isFeedingModalVisible, setFeedingModalVisible] = useState(false);
   const [isWeightModalVisible, setWeightModalVisible] = useState(false);
   const [isMoltingModalVisible, setMoltingModalVisible] = useState(false);
-  const [isEtcModalVisible, setEtcModalVisible] = useState(false);
+  const [isMemoModalVisible, setMemoModalVisible] = useState(false);
 
   const categories = [
     {
@@ -64,7 +65,7 @@ const ScheduleScreen = () => {
       name: '기타',
       color: '#FEFFDD',
       icon: <GuitarIcon width={32} height={32} fill={theme.color.black} />,
-      setModalVisible: setEtcModalVisible,
+      setModalVisible: setMemoModalVisible,
     },
   ];
 
@@ -91,6 +92,10 @@ const ScheduleScreen = () => {
       <MoltingModal
         isVisible={isMoltingModalVisible}
         setIsVisible={setMoltingModalVisible}
+      />
+      <MemoModal
+        isVisible={isMemoModalVisible}
+        setIsVisible={setMemoModalVisible}
       />
       {Object.keys(markedDates).length === plans.length ? (
         <Container>
