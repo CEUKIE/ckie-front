@@ -64,7 +64,7 @@ const MoltingModal = ({isVisible, setIsVisible}: MoltingModalProps) => {
             <Body1>닫기</Body1>
           </CloseButton>
           <CompleteButton>
-            <Body1>완료</Body1>
+            <Body1 color={theme.color.white}>완료</Body1>
           </CompleteButton>
         </CloseButtonBlock>
       </Container>

@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import ModalView, {ModalViewProps} from './common/ModalView';
 import {Body1, Body2, Headline5} from './common/TextGroup';
 import Button from './common/Button';
+import theme from '../styles/theme';
 
 interface WeightModalProps extends Omit<ModalViewProps, 'children'> {
   weightUnit: 'g' | 'kg';
@@ -132,7 +133,7 @@ const WeightModal = ({
             <Body1>닫기</Body1>
           </CloseButton>
           <CompleteButton>
-            <Body1>완료</Body1>
+            <Body1 color={theme.color.white}>완료</Body1>
           </CompleteButton>
         </CloseButtonBlock>
       </Container>
