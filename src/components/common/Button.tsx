@@ -29,4 +29,5 @@ const Button = (props: IButtonProps) => {
     </StyledTouchableOpacity>
   );
 };
+
 export default Button;

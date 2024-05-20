@@ -1,12 +1,56 @@
+import styled from '@emotion/native';
 import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import {SafeAreaView, Text, Image} from 'react-native';
+import SearchIcon from '../assets/icons/search.svg';
+import theme from '../styles/theme';
+import Button from '../components/common/Button';
+import IndividualCardComponent from './IndividualCardComponent';
+import {individuals} from './data';
 
-const IndividualManagamentScreen = () => {
+
+const Container = styled.View`
+  margin: 0px 24px;
+`;
+const SearchBox = styled.View`
+  margin: 25px 20px;
+  border: 3px solid ${({theme}) => theme.color.secondary};
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  padding: 8px 10px;
+`;
+const SearchInput = styled.TextInput`
+  display: flex;
+  flex: 1;
+  font-size: ${props => props.theme.fontSize.body1};
+  
+`;
+const IndividualList = styled.View`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: start;
+  gap: 10px;
+`;
+
+const IndividualManagementScreen = () => {
   return (
     <SafeAreaView>
-      <Text>개체 관리</Text>
+      <Container>
+        <SearchBox>
+          <SearchInput placeholder='개체검색'/>
+          <Button varient='text'>
+            <SearchIcon width={30} height={30} fill={theme.color.secondary} />
+          </Button>
+        </SearchBox>
+        <IndividualList>
+          {individuals.map(individual => (
+            <IndividualCardComponent key={individual.id} individual={individual} />
+          ))}
+        </IndividualList>
+      </Container>
     </SafeAreaView>
   );
 };
 
-export default IndividualManagamentScreen;
+export default IndividualManagementScreen;
