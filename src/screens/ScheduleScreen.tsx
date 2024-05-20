@@ -13,6 +13,7 @@ import FoodIcon from '../assets/icons/food-icon.svg';
 import ScaleIcon from '../assets/icons/scale-icon.svg';
 import RapterIcon from '../assets/icons/rapter-icon.svg';
 import GuitarIcon from '../assets/icons/guitar-icon.svg';
+import WeightModal from '../components/WeightModal';
 
 interface Category {
   name: string;
@@ -34,31 +35,33 @@ const Container = styled.View`
 const ScheduleScreen = () => {
   const [selected, setSelected] = useState('');
   const [markedDates, setMarkedDates] = useState<MarkedType>({});
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isFeedingModalVisible, setFeedingModalVisible] = useState(false);
+  const [isWeightModalVisible, setWeightModalVisible] = useState(false);
+
   const categories = [
     {
       name: '피딩',
       color: '#DDFFE1',
       icon: <FoodIcon width={32} height={32} fill={theme.color.black} />,
-      setModalVisible: setModalVisible,
+      setModalVisible: setFeedingModalVisible,
     },
     {
       name: '무게',
       color: '#DEDDFF',
       icon: <ScaleIcon width={32} height={32} fill={theme.color.black} />,
-      setModalVisible: setModalVisible,
+      setModalVisible: setWeightModalVisible,
     },
     {
       name: '탈피',
       color: '#FFDDE0',
       icon: <RapterIcon width={32} height={32} fill={theme.color.black} />,
-      setModalVisible: setModalVisible,
+      setModalVisible: setFeedingModalVisible,
     },
     {
       name: '달팽이',
       color: '#FEFFDD',
       icon: <GuitarIcon width={32} height={32} fill={theme.color.black} />,
-      setModalVisible: setModalVisible,
+      setModalVisible: setFeedingModalVisible,
     },
   ];
 
@@ -72,7 +75,16 @@ const ScheduleScreen = () => {
 
   return (
     <SafeAreaView>
-      <FeedingModal isVisible={isModalVisible} setIsVisible={setModalVisible} />
+      <FeedingModal
+        isVisible={isFeedingModalVisible}
+        setIsVisible={setFeedingModalVisible}
+      />
+      <WeightModal
+        isVisible={isWeightModalVisible}
+        setIsVisible={setWeightModalVisible}
+        weightUnit={'g'}
+        currentWeight={12}
+      />
       {Object.keys(markedDates).length === plans.length ? (
         <Container>
           <CategoryItemList items={categories} />
