@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import Modal from 'react-native-modal';
 
-interface ModalProps {
+export interface ModalViewProps {
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   isVisible: boolean;
   children: React.JSX.Element;
@@ -16,7 +16,7 @@ const Container = styled.View`
 
 const ContentBlock = styled.View``;
 
-const ModalView = ({isVisible, setIsVisible, children}: ModalProps) => {
+const ModalView = ({isVisible, setIsVisible, children}: ModalViewProps) => {
   return (
     <Modal
       isVisible={isVisible}

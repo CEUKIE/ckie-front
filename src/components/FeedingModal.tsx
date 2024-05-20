@@ -11,7 +11,7 @@ import FoodSizeButton from './FoodSizeButton';
 import ModalView from './common/ModalView';
 import Button from './common/Button';
 
-interface ModalProps {
+interface FeedingModalProps {
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   isVisible: boolean;
 }
@@ -58,7 +58,7 @@ const CompleteButton = styled(Button)`
   flex: 1;
 `;
 
-const FeedingModal = ({isVisible, setIsVisible}: ModalProps) => {
+const FeedingModal = ({isVisible, setIsVisible}: FeedingModalProps) => {
   const foods = [
     {name: '귀뚜라미', icon: <CricketIcon width={32} height={32} />},
     {name: '밀웜', icon: <WormIcon width={32} height={32} />},
