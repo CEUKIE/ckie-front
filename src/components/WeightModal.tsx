@@ -36,6 +36,7 @@ const WeightInputBlock = styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  gap: 4px;
 `;
 
 const WeightInput = styled.TextInput`
@@ -107,7 +108,7 @@ const WeightModal = ({
               placeholder={'무게'}
               style={{borderBottomWidth: 1}}
             />
-            <Headline5>G</Headline5>
+            <Headline5>{weightUnit}</Headline5>
           </WeightInputBlock>
           <WeightButtonBlock>
             {weights.map((w, i) => (
