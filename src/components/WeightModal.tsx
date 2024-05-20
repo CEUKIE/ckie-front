@@ -114,7 +114,9 @@ const WeightModal = ({
               <WegithButton
                 key={i}
                 varient={'outline'}
-                onPress={() => setWeight(current => current + w)}>
+                onPress={() =>
+                  setWeight(current => Number((current + w).toFixed(1)))
+                }>
                 <Body1>{w < 0 ? w : `+${w}`}</Body1>
               </WegithButton>
             ))}
