@@ -1,6 +1,5 @@
 import styled from '@emotion/native';
 import React, {useState} from 'react';
-import Modal from 'react-native-modal';
 import FoodButton from './FoodButton';
 import {Body1, Headline6} from './common/TextGroup';
 
@@ -9,6 +8,7 @@ import SuperfoodIcon from '../assets/icons/super-food-icon.svg';
 import WormIcon from '../assets/icons/worm-icon.svg';
 import GuitarIcon from '../assets/icons/guitar-icon.svg';
 import FoodSizeButton from './FoodSizeButton';
+import ModalView from './common/ModalView';
 import Button from './common/Button';
 
 interface ModalProps {
@@ -17,9 +17,10 @@ interface ModalProps {
 }
 
 const Container = styled.View`
-  background-color: ${({theme}) => theme.color.white};
-  border-radius: 12px;
-  padding: 24px;
+  gap: 64px;
+`;
+
+const ContentBlock = styled.View`
   gap: 48px;
 `;
 
@@ -69,39 +70,37 @@ const FeedingModal = ({isVisible, setIsVisible}: ModalProps) => {
   const [size, setSize] = useState('');
 
   return (
-    <Modal
-      isVisible={isVisible}
-      onBackdropPress={() => setIsVisible(false)}
-      animationIn={'fadeIn'}
-      animationOut={'fadeOut'}
-      backdropTransitionOutTiming={0}>
+    <ModalView isVisible={isVisible} setIsVisible={setIsVisible}>
       <Container>
-        <FoodBlock>
-          <Headline6>먹이 종류</Headline6>
-          <FoodButtonBlock>
-            {foods.map(f => (
-              <FoodButton
-                foodName={f.name}
-                onPress={() => setFood(f.name)}
-                clicked={f.name === food}
-                icon={f.icon}
-              />
-            ))}
-          </FoodButtonBlock>
-        </FoodBlock>
-        <SizeBlock>
-          <Headline6>먹이 사이즈</Headline6>
-          <SizeButtonBlock>
-            {sizeList.map((s, i) => (
-              <FoodSizeButton
-                key={i}
-                size={s}
-                onPress={() => setSize(s)}
-                clicked={size === s}
-              />
-            ))}
-          </SizeButtonBlock>
-        </SizeBlock>
+        <ContentBlock>
+          <FoodBlock>
+            <Headline6>먹이 종류</Headline6>
+            <FoodButtonBlock>
+              {foods.map(f => (
+                <FoodButton
+                  foodName={f.name}
+                  onPress={() => setFood(f.name)}
+                  clicked={f.name === food}
+                  icon={f.icon}
+                />
+              ))}
+            </FoodButtonBlock>
+          </FoodBlock>
+          <SizeBlock>
+            <Headline6>먹이 사이즈</Headline6>
+            <SizeButtonBlock>
+              {sizeList.map((s, i) => (
+                <FoodSizeButton
+                  key={i}
+                  size={s}
+                  onPress={() => setSize(s)}
+                  clicked={size === s}
+                />
+              ))}
+            </SizeButtonBlock>
+          </SizeBlock>
+        </ContentBlock>
+
         <CloseButtonBlock>
           <CloseButton onPress={() => setIsVisible(false)}>
             <Body1>닫기</Body1>
@@ -111,7 +110,7 @@ const FeedingModal = ({isVisible, setIsVisible}: ModalProps) => {
           </CompleteButton>
         </CloseButtonBlock>
       </Container>
-    </Modal>
+    </ModalView>
   );
 };
 
