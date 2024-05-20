@@ -9,6 +9,8 @@ const theme = {
     gray: '#ACACAC',
     black: '#000000',
     white: '#FFFFFF',
+    red: '#f0616f',
+    green: '#9DD5B5',
 
     error: '#F14646',
     warning: '#EF8523',
