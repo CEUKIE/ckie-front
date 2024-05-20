@@ -76,8 +76,9 @@ const FeedingModal = ({isVisible, setIsVisible}: FeedingModalProps) => {
           <FoodBlock>
             <Headline6>먹이 종류</Headline6>
             <FoodButtonBlock>
-              {foods.map(f => (
+              {foods.map((f, i) => (
                 <FoodButton
+                  key={i}
                   foodName={f.name}
                   onPress={() => setFood(f.name)}
                   clicked={f.name === food}
