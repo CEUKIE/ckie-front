@@ -7,17 +7,20 @@ import theme from '../styles/theme';
 
 const IndividualCard = styled.View`
   background-color: ${({theme}) => theme.color.primary};
-  padding: 30px 20px;
+  padding: 20px;
   border-radius: 10px;
+  width: 44%;
+  margin: 8px
 `;
 const IndividualBox = styled.View`
   background-color: white;
+  width: 100%;
 `;
 const IndividualProfile = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding: 13px;
+  padding: 4px;
 `;
 const IndividualProfileImage = styled(Image)`
   width: 100px;
@@ -28,7 +31,7 @@ const IndividualInfoBox = styled.View`
   display: flex;
   gap: 5px;
 `;
-const IndividualDob = styled.Text`
+const IndividualBirth = styled.Text`
   text-align: center;
 `;
 const IndividualNameGender = styled.View`
@@ -66,9 +69,9 @@ const IndividualCardComponent = ({ individual }) => {
           <IndividualInfoBox>
             <IndividualNameGender>
               <IndividualName>{individual.name}</IndividualName>
-              <IndividualGender>{individual.gender === 'men' ? <Men width={10} height={10}/> : <Women width={10} height={10}/>}</IndividualGender>
+              <IndividualGender>{individual.gender === 'men' ? <Men width={10} height={10}/> : <Women width={10} height={10} fill={theme.color.secondary}/>}</IndividualGender>
             </IndividualNameGender>
-            <IndividualDob>{individual.dob}</IndividualDob>
+            <IndividualBirth>{individual.dob}</IndividualBirth>
             <IndividualMemoBox>
               <IndividualMemo>{individual.memo}</IndividualMemo>
               </IndividualMemoBox>

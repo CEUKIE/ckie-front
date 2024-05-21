@@ -24,5 +24,5 @@ export const individuals = [
         dob: '2001.01.01',
         memo: '털관리',
         profileImage: 'https://image.ckie.store/images/individual-profile.jpeg'
-    }
+    },
 ];
