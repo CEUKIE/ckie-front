@@ -1,6 +1,5 @@
 import styled from '@emotion/native';
 import React from 'react';
-import {SafeAreaView} from 'react-native';
 
 import SearchIcon from '../assets/icons/search.svg';
 import AddIcon from '../assets/icons/add.svg';
@@ -8,12 +7,15 @@ import theme from '../styles/theme';
 import Button from '../components/common/Button';
 import IndividualCardComponent from './IndividualCardComponent';
 import {individuals} from '../db/data';
+import SafeAreaView from '../components/common/SafeAreaView';
+import {ScrollView} from 'react-native';
 
 const Container = styled.View`
-  margin: 0px 24px;
+  margin: 0px ${props => props.theme.margin.screen};
+  flex: 1;
 `;
 const SearchBox = styled.View`
-  margin: 25px 20px;
+  margin: 20px 48px;
   border: 3px solid ${props => props.theme.color.secondary};
   border-radius: 10px;
   display: flex;
@@ -49,22 +51,27 @@ const IndividualManagementScreen = () => {
     <SafeAreaView>
       <Container>
         <SearchBox>
-          <SearchInput placeholder="개체검색" />
+          <SearchInput
+            placeholder="이름으로 검색해봐요!"
+            placeholderTextColor={theme.color.lightGray}
+          />
           <Button varient="text">
             <SearchIcon width={30} height={30} fill={theme.color.secondary} />
           </Button>
         </SearchBox>
-        <IndividualList>
-          {individuals.map(individual => (
-            <IndividualCardComponent
-              key={individual.id}
-              individual={individual}
-            />
-          ))}
-          <IndividualAdd>
-            <AddIcon width={30} height={30} fill={theme.color.white} />
-          </IndividualAdd>
-        </IndividualList>
+        <ScrollView>
+          <IndividualList>
+            {individuals.map(individual => (
+              <IndividualCardComponent
+                key={individual.id}
+                individual={individual}
+              />
+            ))}
+            <IndividualAdd>
+              <AddIcon width={30} height={30} fill={theme.color.white} />
+            </IndividualAdd>
+          </IndividualList>
+        </ScrollView>
       </Container>
     </SafeAreaView>
   );
