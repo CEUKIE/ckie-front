@@ -6,11 +6,11 @@ import Women from '../assets/icons/women.svg';
 import theme from '../styles/theme';
 
 const IndividualCard = styled.View`
-  background-color: ${({theme}) => theme.color.primary};
+  background-color: ${props => props.theme.color.primary};
   padding: 20px;
   border-radius: 10px;
   width: 44%;
-  margin: 8px
+  margin: 8px;
 `;
 const IndividualBox = styled.View`
   background-color: white;
@@ -26,7 +26,7 @@ const IndividualProfileImage = styled(Image)`
   width: 100px;
   height: 100px;
   border-radius: 10px;
-  `;
+`;
 const IndividualInfoBox = styled.View`
   display: flex;
   gap: 5px;
@@ -42,42 +42,46 @@ const IndividualNameGender = styled.View`
   gap: 3px;
   text-align: center;
 `;
-const IndividualName = styled.Text`
-`;
-const IndividualGender = styled.Text`
-`;
+const IndividualName = styled.Text``;
+const IndividualGender = styled.Text``;
 
 const IndividualMemoBox = styled.View`
   margin: 0px 10px 5px 10px;
   border-radius: 10px;
-  background-color: #ffdfbe;  
+  background-color: #ffdfbe;
 `;
 const IndividualMemo = styled.Text`
-  border-radius: 5px; 
+  border-radius: 5px;
   text-align: center;
   padding: 10px;
   display: flex;
 `;
 
-const IndividualCardComponent = ({ individual }) => {
+const IndividualCardComponent = ({individual}) => {
   return (
     <IndividualCard>
-        <IndividualBox>
-          <IndividualProfile>
-          <IndividualProfileImage source={{ uri: individual.profileImage }} />
-          </IndividualProfile>
-          <IndividualInfoBox>
-            <IndividualNameGender>
-              <IndividualName>{individual.name}</IndividualName>
-              <IndividualGender>{individual.gender === 'men' ? <Men width={10} height={10}/> : <Women width={10} height={10} fill={theme.color.secondary}/>}</IndividualGender>
-            </IndividualNameGender>
-            <IndividualBirth>{individual.dob}</IndividualBirth>
-            <IndividualMemoBox>
-              <IndividualMemo>{individual.memo}</IndividualMemo>
-              </IndividualMemoBox>
-          </IndividualInfoBox>
-        </IndividualBox>
-      </IndividualCard>
+      <IndividualBox>
+        <IndividualProfile>
+          <IndividualProfileImage source={{uri: individual.profileImage}} />
+        </IndividualProfile>
+        <IndividualInfoBox>
+          <IndividualNameGender>
+            <IndividualName>{individual.name}</IndividualName>
+            <IndividualGender>
+              {individual.gender === 'men' ? (
+                <Men width={10} height={10} />
+              ) : (
+                <Women width={10} height={10} fill={theme.color.secondary} />
+              )}
+            </IndividualGender>
+          </IndividualNameGender>
+          <IndividualBirth>{individual.dob}</IndividualBirth>
+          <IndividualMemoBox>
+            <IndividualMemo>{individual.memo}</IndividualMemo>
+          </IndividualMemoBox>
+        </IndividualInfoBox>
+      </IndividualBox>
+    </IndividualCard>
   );
 };
 
