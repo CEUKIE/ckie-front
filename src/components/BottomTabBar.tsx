@@ -10,6 +10,7 @@ import CageManagementScreen from '../screens/CageManagementScreen';
 import IndividualManagamentScreen from '../screens/IndividualManagamentScreen';
 import MyPage from '../screens/MyPage';
 import {BottomTabBarType} from '../types';
+import {Image, View} from 'react-native';
 
 const elements: BottomTabBarType.BottomTabBarElement[] = [
   {
@@ -47,6 +48,16 @@ const BottomTabBar = () => {
           name={e.name}
           component={e.component}
           options={{
+            headerStatusBarHeight: 58,
+            headerLeft: () => (
+              <View style={{paddingBottom: 20, paddingLeft: 16}}>
+                <Image
+                  style={{width: 86, height: 43, paddingLeft: 10}}
+                  src={'https://image.ckie.store/images/header-logo.png'}
+                />
+              </View>
+            ),
+            headerTitle: () => <></>,
             title: e.title,
             tabBarIcon: ({color, size}) => (
               <e.SVGIcon width={size} height={size} fill={color} />
