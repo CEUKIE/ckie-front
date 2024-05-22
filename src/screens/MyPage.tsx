@@ -1,14 +1,10 @@
 import styled from '@emotion/native';
 import React from 'react';
-import { Alert, ScrollView, View } from 'react-native';
+import {Alert, ScrollView} from 'react-native';
+
 import Avatar from '../components/common/Avatar';
 import SafeAreaView from '../components/common/SafeAreaView';
-import {
-  Body1,
-  Body2,
-  Caption,
-  Headline6,
-} from '../components/common/TextGroup';
+import {Body1, Body2, Caption} from '../components/common/TextGroup';
 import theme from '../styles/theme';
 import Button from '../components/common/Button';
 import EditIcon from '../assets/icons/edit-icon.svg';
@@ -34,7 +30,7 @@ const InfoBlock = styled.View`
   justify-content: space-between;
   align-items: center;
 `;
-11;
+
 const Nickname = styled(Body1)`
   font-weight: 600;
 `;
@@ -117,16 +113,25 @@ const MyPage = () => {
             <MenuItem>
               <MenuTitle>개체</MenuTitle>
               <MenuButtonBlock>
-                <MenuButton text={'내 개체'} onPress={() => Alert.alert('개체')} />
+                <MenuButton
+                  text={'내 개체'}
+                  onPress={() => Alert.alert('개체')}
+                />
               </MenuButtonBlock>
             </MenuItem>
             <MenuItem>
               <MenuTitle>사육장</MenuTitle>
-              <MenuButton text={'내 사육장'} onPress={() => Alert.alert('사육장')} />
+              <MenuButton
+                text={'내 사육장'}
+                onPress={() => Alert.alert('사육장')}
+              />
             </MenuItem>
             <MenuItem>
               <MenuTitle>계정</MenuTitle>
-              <MenuButton text={'로그아웃'} onPress={() => Alert.alert('계정')} />
+              <MenuButton
+                text={'로그아웃'}
+                onPress={() => Alert.alert('계정')}
+              />
             </MenuItem>
           </MenuBlock>
         </Container>
