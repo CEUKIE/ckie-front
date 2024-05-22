@@ -10,7 +10,7 @@ import CageManagementScreen from '../screens/CageManagementScreen';
 import IndividualManagamentScreen from '../screens/IndividualManagamentScreen';
 import MyPage from '../screens/MyPage';
 import {BottomTabBarType} from '../types';
-import {Image, View} from 'react-native';
+import {Image, Platform, View} from 'react-native';
 
 const elements: BottomTabBarType.BottomTabBarElement[] = [
   {
@@ -48,7 +48,7 @@ const BottomTabBar = () => {
           name={e.name}
           component={e.component}
           options={{
-            headerStatusBarHeight: 58,
+            headerStatusBarHeight: Platform.OS === 'ios' ? 58 : 16,
             headerLeft: () => (
               <View style={{paddingBottom: 20, paddingLeft: 16}}>
                 <Image
