@@ -29,8 +29,8 @@ const Text = styled(Body2)`
 
 const ChangeWeight = styled(Body2)<{isIncreasing: boolean}>`
   font-weight: 600;
-  color: ${({isIncreasing, theme}) =>
-    isIncreasing ? theme.color.green : theme.color.red};
+  color: ${props =>
+    props.isIncreasing ? props.theme.color.green : props.theme.color.red};
 `;
 
 const WeightInputBlock = styled.View`
