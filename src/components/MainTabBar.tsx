@@ -7,38 +7,44 @@ import HomeIcon from '../assets/icons/home-fill.svg';
 import TempIcon from '../assets/icons/temp-hot-line.svg';
 
 import CageManagementScreen from '../screens/CageManagementScreen';
-import IndividualManagamentScreen from '../screens/IndividualManagamentScreen';
 import MyPage from '../screens/MyPage';
-import {BottomTabBarType} from '../types';
+import {MainTabType} from '../types';
 import {Image, Platform, View} from 'react-native';
+import IndividualManagementScreen from '../screens/IndividualManagamentScreen';
 
-const elements: BottomTabBarType.BottomTabBarElement[] = [
+export type RootStackParamList = {
+  CageManagementScreen: undefined;
+  IndividualManagementScreen: undefined;
+  MyPage: undefined;
+};
+
+const elements: MainTabType.MainTabElement[] = [
   {
-    name: 'cage',
+    name: 'CageManagementScreen',
     title: '사육장',
     component: CageManagementScreen,
     SVGIcon: CageIcon,
   },
   {
-    name: 'individual',
+    name: 'IndividualManagementScreen',
     title: '개체',
-    component: IndividualManagamentScreen,
+    component: IndividualManagementScreen,
     SVGIcon: TempIcon,
   },
   {
-    name: 'myPage',
+    name: 'MyPage',
     title: '마이페이지',
     component: MyPage,
     SVGIcon: HomeIcon,
   },
 ];
 
-const BottomTabBar = () => {
-  const Tab = createBottomTabNavigator();
+const MainTab = () => {
+  const Tab = createBottomTabNavigator<RootStackParamList>();
 
   return (
     <Tab.Navigator
-      initialRouteName="cage"
+      initialRouteName={'CageManagementScreen'}
       screenOptions={{
         tabBarActiveTintColor: '#FFC25C',
       }}>
@@ -69,4 +75,4 @@ const BottomTabBar = () => {
   );
 };
 
-export default BottomTabBar;
+export default MainTab;

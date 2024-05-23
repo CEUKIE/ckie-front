@@ -1,8 +1,8 @@
 import {RouteProp} from '@react-navigation/native';
 import {SvgProps} from 'react-native-svg';
 
-export namespace BottomTabBarType {
-  export interface BottomTabBarElement {
+export namespace MainTabType {
+  export interface MainTabElement {
     name: string;
     title: string;
     component: ScreenComponentType<any, any>;
