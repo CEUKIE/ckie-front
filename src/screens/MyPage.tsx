@@ -10,6 +10,7 @@ import Button from '../components/common/Button';
 import EditIcon from '../assets/icons/edit-icon.svg';
 import CommentIcon from '../assets/icons/comment-icon.svg';
 import MenuButton from '../components/MenuButton';
+import {useNav} from '../hooks/useNav';
 
 const Container = styled.View`
   margin: 0 ${props => props.theme.margin.screen};
@@ -69,6 +70,8 @@ const MenuTitle = styled(Body1)`
 const MenuButtonBlock = styled.View``;
 
 const MyPage = () => {
+  const navigation = useNav<'UserInfoEditScreen'>();
+
   return (
     <SafeAreaView>
       <ScrollView>
@@ -88,7 +91,17 @@ const MyPage = () => {
               />
               <InfoBlock>
                 <Nickname>달퍙이</Nickname>
-                <StyledButton varient={'outline'}>
+                <StyledButton
+                  varient={'outline'}
+                  onPress={() => {
+                    navigation.push('UserInfoEditScreen', {
+                      avatarUrl:
+                        'https://image.ckie.store/images/default-profile-image.png',
+                      nickname: '달팽이',
+                      introduction: '다들 안녕',
+                      platform: 'naver',
+                    });
+                  }}>
                   <ButtonInner>
                     <EditIcon
                       width={12}
