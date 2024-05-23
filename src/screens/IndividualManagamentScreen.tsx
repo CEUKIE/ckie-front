@@ -5,7 +5,7 @@ import SearchIcon from '../assets/icons/search.svg';
 import AddIcon from '../assets/icons/add.svg';
 import theme from '../styles/theme';
 import Button from '../components/common/Button';
-import IndividualCardComponent from './IndividualCard';
+import IndividualCardComponent from '../components/IndividualCard';
 import {individuals} from '../db/data';
 import SafeAreaView from '../components/common/SafeAreaView';
 import {ScrollView} from 'react-native';

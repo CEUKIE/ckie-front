@@ -1,4 +1,4 @@
-import {Individual} from '../screens/IndividualCard';
+import {Individual} from '../components/IndividualCard';
 
 export const individuals: Individual[] = [
   {
