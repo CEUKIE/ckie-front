@@ -53,18 +53,6 @@ const data: WeightRecord[] = [
   {targetDate: new Date(), weight: 4.7},
   {targetDate: new Date(), weight: 3},
   {targetDate: new Date(), weight: 8.2},
-  {targetDate: new Date(), weight: 3},
-  {targetDate: new Date(), weight: 3},
-  {targetDate: new Date(), weight: 3},
-  {targetDate: new Date(), weight: 3},
-  {targetDate: new Date(), weight: 3},
-  {targetDate: new Date(), weight: 3.5},
-  {targetDate: new Date(), weight: 4.7},
-  {targetDate: new Date(), weight: 3},
-  {targetDate: new Date(), weight: 12.2},
-  {targetDate: new Date(), weight: 3.5},
-  {targetDate: new Date(), weight: 4.7},
-  {targetDate: new Date(), weight: 3},
 ];
 
 const WeightChartScreen = ({
@@ -109,7 +97,9 @@ const WeightChartScreen = ({
                 <WeightChange
                   isIncreasing={weightChange === 'new' || weightChange > 0}>
                   {typeof weightChange === 'number'
-                    ? weightChange.toFixed(1)
+                    ? weightChange > 0
+                      ? `+${weightChange.toFixed(1)}`
+                      : weightChange.toFixed(1)
                     : weightChange}
                 </WeightChange>
               </RecordItem>

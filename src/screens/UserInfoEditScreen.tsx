@@ -7,13 +7,11 @@ import SafeAreaView from '../components/common/SafeAreaView';
 import UnderLineTextInput from '../components/common/UnderLineTextInput';
 import TextArea from '../components/common/TextArea';
 import MenuButton from '../components/MenuButton';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import {RootStackParamList} from '../stacks/RootNavigation';
 
-interface UserInfoEditScreenProps {
-  avatarUrl: string;
-  nickname: string;
-  introduction: string;
-  platform: 'kakao' | 'google' | 'naver';
-}
+interface UserInfoEditScreenProps
+  extends RouteProp<RootStackParamList, 'UserInfoEditScreen'> {}
 
 const Container = styled.View`
   margin: 0 ${props => props.theme.margin.screen};
@@ -40,15 +38,11 @@ const InfoTitle = styled(Body1)`
 
 const AccountBlock = styled.View``;
 
-const UserInfoEditScreen = ({
-  avatarUrl = 'https://image.ckie.store/images/default-profile-image.png',
-  nickname = '달팽이',
-  introduction = '다들 안녕',
-  platform = 'naver',
-}: UserInfoEditScreenProps) => {
-  const [newAvatar, setNewAvatar] = useState(avatarUrl);
-  const [newNickname, setNewNickname] = useState(nickname);
-  const [newIntroduction, setNewIntroduction] = useState(introduction);
+const UserInfoEditScreen = () => {
+  const {params} = useRoute<UserInfoEditScreenProps>();
+  const [newAvatar, setNewAvatar] = useState(params.avatarUrl);
+  const [newNickname, setNewNickname] = useState(params.nickname);
+  const [newIntroduction, setNewIntroduction] = useState(params.introduction);
 
   return (
     <SafeAreaView>
@@ -63,7 +57,6 @@ const UserInfoEditScreen = ({
               placeholder={'2~15자의 닉네임을 입력해주세요.'}
               value={newNickname}
               onChangeText={setNewNickname}
-              autoFocus
             />
           </InfoBlock>
           <InfoBlock>
@@ -77,9 +70,9 @@ const UserInfoEditScreen = ({
           <AccountBlock>
             <MenuButton
               text={`로그아웃 (${
-                platform === 'kakao'
+                params.platform === 'kakao'
                   ? '카카오'
-                  : platform === 'google'
+                  : params.platform === 'google'
                   ? '구글'
                   : '네이버'
               })`}

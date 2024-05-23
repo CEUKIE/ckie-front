@@ -9,6 +9,7 @@ import IndividualCardComponent from './IndividualCardComponent';
 import {individuals} from '../db/data';
 import SafeAreaView from '../components/common/SafeAreaView';
 import {ScrollView} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const Container = styled.View`
   margin: 0px ${props => props.theme.margin.screen};
@@ -47,6 +48,8 @@ const IndividualList = styled.View`
 `;
 
 const IndividualManagementScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView>
       <Container>
@@ -67,7 +70,7 @@ const IndividualManagementScreen = () => {
                 individual={individual}
               />
             ))}
-            <IndividualAdd>
+            <IndividualAdd onPress={() => navigation.navigate('Test')}>
               <AddIcon width={30} height={30} fill={theme.color.white} />
             </IndividualAdd>
           </IndividualList>
