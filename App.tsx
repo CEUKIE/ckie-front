@@ -1,14 +1,16 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import BottomTabBar from './src/components/BottomTabBar';
 import {ThemeProvider} from '@emotion/react';
+import 'react-native-gesture-handler';
+
 import theme from './src/styles/theme';
+import RootNavigation from './src/stacks/RootNavigation';
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
-        <BottomTabBar />
+      <NavigationContainer independent>
+        <RootNavigation />
       </NavigationContainer>
     </ThemeProvider>
   );
