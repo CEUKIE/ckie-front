@@ -1,6 +1,5 @@
 import styled from '@emotion/native';
 import React from 'react';
-
 import SearchIcon from '../assets/icons/search.svg';
 import AddIcon from '../assets/icons/add.svg';
 import theme from '../styles/theme';
