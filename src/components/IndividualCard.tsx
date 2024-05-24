@@ -2,8 +2,8 @@ import styled from '@emotion/native';
 import React from 'react';
 import {Image} from 'react-native';
 
-import MaleIcon from '../assets/icons/men.svg';
-import FemaleIcon from '../assets/icons/women.svg';
+import MaleIcon from '../assets/icons/male.svg';
+import FemaleIcon from '../assets/icons/female.svg';
 import theme from '../styles/theme';
 import {formatKorean} from '../utils/format-date';
 import {useNav} from '../hooks/useNav';
