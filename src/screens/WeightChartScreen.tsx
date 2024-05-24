@@ -3,12 +3,10 @@ import React from 'react';
 import {View} from 'react-native';
 
 import SafeAreaView from '../components/common/SafeAreaView';
-import WeightChart, {
-  WeightChartProps,
-  WeightRecord,
-} from '../components/WeightChart';
+import WeightChart, {WeightRecord} from '../components/WeightChart';
 import {Body1, Body2} from '../components/common/TextGroup';
 import theme from '../styles/theme';
+import useWeightRecordsStore from '../stores/useWeightRecordsStore';
 
 const Container = styled.View`
   margin: 24px 0;
@@ -55,10 +53,10 @@ const data: WeightRecord[] = [
   {targetDate: new Date(), weight: 8.2},
 ];
 
-const WeightChartScreen = ({
-  weightUnit = 'g',
-  weightRecords = data,
-}: WeightChartProps) => {
+const WeightChartScreen = () => {
+  // TODO data 대신에 weightRecords도 store에서 가져와서 사용
+  const {weightUnit} = useWeightRecordsStore(state => state);
+
   return (
     <SafeAreaView>
       <Container>
@@ -67,7 +65,7 @@ const WeightChartScreen = ({
             borderBottomWidth: 1,
             borderBottomColor: theme.color.lightGray,
           }}>
-          <WeightChart weightRecords={weightRecords} weightUnit={weightUnit} />
+          <WeightChart weightRecords={data} weightUnit={weightUnit} />
         </View>
         <RecordItemBlock>
           <RecordTitleBlock>
@@ -75,15 +73,13 @@ const WeightChartScreen = ({
             <RecordTitle>체중</RecordTitle>
             <RecordTitle>변화량</RecordTitle>
           </RecordTitleBlock>
-          {weightRecords.map((record, index) => {
+          {data.map((record, index) => {
             const date = record.targetDate;
             const dateFormat = `${date.getFullYear()}.${
               date.getMonth() + 1
             }.${date.getDate()}`;
             const weightChange =
-              index > 0
-                ? weightRecords[index].weight - weightRecords[index - 1].weight
-                : 'new';
+              index > 0 ? data[index].weight - data[index - 1].weight : 'new';
 
             return (
               <RecordItem

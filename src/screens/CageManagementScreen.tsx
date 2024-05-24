@@ -1,20 +1,21 @@
 import styled from '@emotion/native';
 import React from 'react';
-import SearchIcon from '../assets/icons/search.svg';
-import AddIcon from '../assets/icons/add.svg';
+import {ScrollView} from 'react-native';
+
 import theme from '../styles/theme';
 import Button from '../components/common/Button';
-import IndividualCardComponent from '../components/IndividualCard';
-import {individuals} from '../db/data';
+import SearchIcon from '../assets/icons/search.svg';
+import AddIcon from '../assets/icons/add.svg';
+import CageCard from '../components/CageCard';
 import SafeAreaView from '../components/common/SafeAreaView';
-import {ScrollView} from 'react-native';
+import {cages} from '../db/cages';
 
 const Container = styled.View`
   margin: 0px ${props => props.theme.margin.screen};
   flex: 1;
 `;
 
-const SearchBox = styled.View`
+const SearchBlock = styled.View`
   margin: 20px 48px;
   border: 3px solid ${props => props.theme.color.secondary};
   border-radius: 10px;
@@ -36,22 +37,16 @@ const RegistButton = styled.TouchableOpacity`
   align-items: center;
   padding: 20px;
   border-radius: 10px;
-  width: 44%;
   margin: 8px;
 `;
 
-const IndividualList = styled.View`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-`;
+const CageCardList = styled.View``;
 
-const IndividualManagementScreen = () => {
+const CageManagementScreen = () => {
   return (
     <SafeAreaView>
       <Container>
-        <SearchBox>
+        <SearchBlock>
           <SearchInput
             placeholder="이름으로 검색해봐요!"
             placeholderTextColor={theme.color.lightGray}
@@ -59,26 +54,25 @@ const IndividualManagementScreen = () => {
           <Button varient="text">
             <SearchIcon width={30} height={30} fill={theme.color.secondary} />
           </Button>
-        </SearchBox>
+        </SearchBlock>
         <ScrollView>
-          <IndividualList>
-            {individuals.map(individual => (
-              <IndividualCardComponent
-                key={individual.id}
-                individual={{
-                  ...individual,
-                  hatchedAt: new Date(individual.hatchedAt),
-                }}
+          <CageCardList>
+            {cages.map(cage => (
+              <CageCard
+                key={cage.id}
+                id={cage.id}
+                name={cage.name}
+                memo={cage.memo}
               />
             ))}
             <RegistButton>
               <AddIcon width={30} height={30} fill={theme.color.white} />
             </RegistButton>
-          </IndividualList>
+          </CageCardList>
         </ScrollView>
       </Container>
     </SafeAreaView>
   );
 };
 
-export default IndividualManagementScreen;
+export default CageManagementScreen;
