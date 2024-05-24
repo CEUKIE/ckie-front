@@ -3,8 +3,13 @@ import React from 'react';
 import {Image} from 'react-native';
 
 import {useNav} from '../hooks/useNav';
+import useIndividualIdStore from '../stores/useIndividualIdStore';
 
-export interface CageCardProps {}
+export interface CageCardProps {
+  id: string;
+  name: string;
+  memo: string;
+}
 
 const Card = styled.TouchableOpacity`
   background-color: ${props => props.theme.color.primary};
@@ -12,28 +17,30 @@ const Card = styled.TouchableOpacity`
   border-radius: 10px;
   margin: 8px;
 `;
+
 const IndividualBox = styled.View`
   background-color: white;
   width: 100%;
 `;
+
 const ProfileBlock = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: center;
   padding: 4px;
 `;
+
 const ProfileImage = styled(Image)`
   width: 100px;
   height: 100px;
   border-radius: 10px;
 `;
+
 const InfoBlock = styled.View`
   display: flex;
   gap: 5px;
 `;
-const HatchDate = styled.Text`
-  text-align: center;
-`;
+
 const NameBlock = styled.View`
   display: flex;
   flex-direction: row;
@@ -49,6 +56,7 @@ const MemoBlock = styled.View`
   border-radius: 10px;
   background-color: #ffdfbe;
 `;
+
 const Memo = styled.Text`
   border-radius: 5px;
   text-align: center;
@@ -56,11 +64,16 @@ const Memo = styled.Text`
   display: flex;
 `;
 
-const CageCard = () => {
+const CageCard = ({id, name, memo}: CageCardProps) => {
   const navigation = useNav<'MainTab'>();
+  const updateId = useIndividualIdStore(state => state.updateId);
 
   return (
-    <Card onPress={() => navigation.push('CageTopTab')}>
+    <Card
+      onPress={() => {
+        updateId(id);
+        navigation.push('CageTopTab');
+      }}>
       <IndividualBox>
         <ProfileBlock>
           <ProfileImage
@@ -71,11 +84,10 @@ const CageCard = () => {
         </ProfileBlock>
         <InfoBlock>
           <NameBlock>
-            <Name>코따리 집</Name>
+            <Name>{name}</Name>
           </NameBlock>
-          <HatchDate>2024년 12월 6일</HatchDate>
           <MemoBlock>
-            <Memo>코따리의 펜트하우스</Memo>
+            <Memo>{memo}</Memo>
           </MemoBlock>
         </InfoBlock>
       </IndividualBox>

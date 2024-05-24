@@ -8,11 +8,13 @@ import SearchIcon from '../assets/icons/search.svg';
 import AddIcon from '../assets/icons/add.svg';
 import CageCard from '../components/CageCard';
 import SafeAreaView from '../components/common/SafeAreaView';
+import {cages} from '../db/cages';
 
 const Container = styled.View`
   margin: 0px ${props => props.theme.margin.screen};
   flex: 1;
 `;
+
 const SearchBlock = styled.View`
   margin: 20px 48px;
   border: 3px solid ${props => props.theme.color.secondary};
@@ -21,6 +23,7 @@ const SearchBlock = styled.View`
   flex-direction: row;
   padding: 8px 10px;
 `;
+
 const SearchInput = styled.TextInput`
   display: flex;
   flex: 1;
@@ -54,9 +57,14 @@ const CageManagementScreen = () => {
         </SearchBlock>
         <ScrollView>
           <CageCardList>
-            <CageCard />
-            <CageCard />
-            <CageCard />
+            {cages.map(cage => (
+              <CageCard
+                key={cage.id}
+                id={cage.id}
+                name={cage.name}
+                memo={cage.memo}
+              />
+            ))}
             <RegistButton>
               <AddIcon width={30} height={30} fill={theme.color.white} />
             </RegistButton>
