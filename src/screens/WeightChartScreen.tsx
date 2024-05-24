@@ -54,7 +54,7 @@ const data: WeightRecord[] = [
 ];
 
 const WeightChartScreen = () => {
-  // TODO data 대산에 weightRecords도 store에서 가져와서 사용
+  // TODO data 대신에 weightRecords도 store에서 가져와서 사용
   const {weightUnit} = useWeightRecordsStore(state => state);
 
   return (

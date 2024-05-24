@@ -12,6 +12,9 @@ const data: number[] = [
 ];
 
 const CageHumidityScreen = () => {
+  // TODO individualId로 데이터 검색 후 사용
+  // const individualId = useIndividualIdStore(({id}) => id);
+
   return (
     <SafeAreaView>
       <Container>

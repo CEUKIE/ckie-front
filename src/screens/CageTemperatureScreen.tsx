@@ -13,6 +13,7 @@ const data: number[] = [
 ];
 
 const CageTemperatureScreen = () => {
+  // TODO individualId로 데이터 검색 후 사용
   // const individualId = useIndividualIdStore(({id}) => id);
 
   return (
