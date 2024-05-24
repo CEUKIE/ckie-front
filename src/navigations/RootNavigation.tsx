@@ -4,8 +4,10 @@ import MainTab from '../components/MainTabBar';
 import UserInfoEditScreen from '../screens/UserInfoEditScreen';
 import CageTopTab from './CageTopTab';
 import IndividulaTopTab from './IndividulaTopTab';
+import LoginScreen from '../screens/LoginScreen';
 
 export type RootStackParamList = {
+  LoginScreen: undefined;
   MainTab: undefined;
   CageTopTab: undefined;
   IndividualTopTab: undefined;
@@ -25,8 +27,21 @@ export const inputScreenHeaderOption = {
 };
 
 const RootNavigation = () => {
+  // TODO 토큰과 상태를 통해 로그인 여부 확인하도록 변경.
+  const isLogined = true;
+
   return (
-    <Stack.Navigator initialRouteName={'MainTab'}>
+    <Stack.Navigator initialRouteName={isLogined ? 'MainTab' : 'LoginScreen'}>
+      {!isLogined && (
+        <Stack.Screen
+          name={'LoginScreen'}
+          component={LoginScreen}
+          options={{
+            ...inputScreenHeaderOption,
+            headerShown: false,
+          }}
+        />
+      )}
       <Stack.Screen
         name={'MainTab'}
         component={MainTab}
