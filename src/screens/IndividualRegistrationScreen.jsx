@@ -3,14 +3,14 @@ import SafeAreaView from '../components/common/SafeAreaView';
 import Button from '../components/common/Button';
 import CameraIcon from '../assets/icons/camera.svg';
 import theme from '../styles/theme';
-import SearchIcon from'../assets/icons/search.svg';
+import SearchIcon from '../assets/icons/search.svg';
 import Male from '../assets/icons/male.svg';
 import Female from '../assets/icons/female.svg';
-import Genderless from '../assets/icons/genderless.svg'
+import Genderless from '../assets/icons/genderless.svg';
 import {ScrollView, Modal, Text} from 'react-native';
-import React, { useState } from 'react'
-import DatePicker from 'react-native-date-picker'
-import {Picker}from '@react-native-picker/picker'
+import React, {useState} from 'react';
+import DatePicker from 'react-native-date-picker';
+import {Picker} from '@react-native-picker/picker';
 
 const Container = styled.View`
   margin: 0px ${props => props.theme.margin.screen};
@@ -40,7 +40,6 @@ const Info = styled.View`
 const Label = styled.Text`
   font-size: ${({theme}) => theme.fontSize.body1};
   margin-bottom: 10px;
-  
 `;
 
 const Input = styled.TextInput`
@@ -59,7 +58,7 @@ const Input = styled.TextInput`
 `;
 
 const Box = styled.View`
-margin-bottom: 20px;
+  margin-bottom: 20px;
 `;
 
 const ShortBox = styled.View`
@@ -91,7 +90,7 @@ const GenderList = styled.View`
 `;
 
 const MaleBox = styled.View`
-  background-color: #C7F1FF;
+  background-color: #c7f1ff;
   border-radius: 10px;
   padding: 10px;
 `;
@@ -103,7 +102,7 @@ const FemaleBox = styled.View`
 `;
 
 const GenderLessBox = styled.View`
-  background-color: #FDF2B1;
+  background-color: #fdf2b1;
   border-radius: 10px;
   padding: 10px;
 `;
@@ -169,27 +168,24 @@ const IndividualRegistrationScreen = () => {
     <SafeAreaView>
       <ScrollView>
         <Container>
-        <Modal
-                  visible={CageOpen}
-                  transparent={true}
-                  animationType="slide">
-                  <ModalBack>
-                    <ModalBox>
-                      <Picker
-                        selectedValue={selectedValue}
-                        onValueChange={(itemValue, itemIndex) =>
-                          setSelectedValue(itemValue)
-                        }>
-                        <Picker.Item label="사육장1" value="사육장1" />
-                        <Picker.Item label="사육장2" value="사육장2" />
-                        <Picker.Item label="사육장3" value="사육장3" />
-                      </Picker>
-                      <Button varient="text" onPress={() => setCageOpen(false)}>
-                        <Text>확인</Text>
-                      </Button>
-                    </ModalBox>
-                  </ModalBack>
-                </Modal>
+          <Modal visible={CageOpen} transparent={true} animationType="slide">
+            <ModalBack>
+              <ModalBox>
+                <Picker
+                  selectedValue={selectedValue}
+                  onValueChange={(itemValue, itemIndex) =>
+                    setSelectedValue(itemValue)
+                  }>
+                  <Picker.Item label="사육장1" value="사육장1" />
+                  <Picker.Item label="사육장2" value="사육장2" />
+                  <Picker.Item label="사육장3" value="사육장3" />
+                </Picker>
+                <Button varient="text" onPress={() => setCageOpen(false)}>
+                  <Text>확인</Text>
+                </Button>
+              </ModalBox>
+            </ModalBack>
+          </Modal>
           <ProfileBox>
             <Profile>
               <Button varient="text">
