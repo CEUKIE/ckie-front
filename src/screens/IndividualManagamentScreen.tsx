@@ -71,7 +71,7 @@ const IndividualManagementScreen = () => {
                 individual={individual}
               />
             ))}
-            <IndividualAdd onPress={() => navigation.navigate('Test')}>
+            <IndividualAdd>
               <AddIcon width={30} height={30} fill={theme.color.white} />
             </IndividualAdd>
           </IndividualList>
