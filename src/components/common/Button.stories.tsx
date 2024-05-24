@@ -23,7 +23,7 @@ type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {
   args: {
-    children: <Headline6 {...Basic.args} color="white" />,
+    children: <Headline6 {...Basic.args} color="black" />,
     onPress: () => Alert.alert('Press'),
   },
 };
@@ -39,6 +39,6 @@ export const Text: Story = {
   args: {
     varient: 'text',
     onPress: () => Alert.alert('Press'),
-    children: <Headline6 {...Basic.args} color="#black" />,
+    children: <Headline6 {...Basic.args} color="black" />,
   },
 };
