@@ -1,6 +1,5 @@
 import styled from '@emotion/native';
 import React from 'react';
-
 import SearchIcon from '../assets/icons/search.svg';
 import AddIcon from '../assets/icons/add.svg';
 import theme from '../styles/theme';
@@ -14,7 +13,8 @@ const Container = styled.View`
   margin: 0px ${props => props.theme.margin.screen};
   flex: 1;
 `;
-const SearchBlock = styled.View`
+
+const SearchBox = styled.View`
   margin: 20px 48px;
   border: 3px solid ${props => props.theme.color.secondary};
   border-radius: 10px;
@@ -22,6 +22,7 @@ const SearchBlock = styled.View`
   flex-direction: row;
   padding: 8px 10px;
 `;
+
 const SearchInput = styled.TextInput`
   display: flex;
   flex: 1;
@@ -50,7 +51,7 @@ const IndividualManagementScreen = () => {
   return (
     <SafeAreaView>
       <Container>
-        <SearchBlock>
+        <SearchBox>
           <SearchInput
             placeholder="이름으로 검색해봐요!"
             placeholderTextColor={theme.color.lightGray}
@@ -58,7 +59,7 @@ const IndividualManagementScreen = () => {
           <Button varient="text">
             <SearchIcon width={30} height={30} fill={theme.color.secondary} />
           </Button>
-        </SearchBlock>
+        </SearchBox>
         <ScrollView>
           <IndividualList>
             {individuals.map(individual => (
