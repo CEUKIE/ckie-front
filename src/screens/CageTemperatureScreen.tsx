@@ -1,5 +1,6 @@
 import styled from '@emotion/native';
 import React from 'react';
+
 import SafeAreaView from '../components/common/SafeAreaView';
 import Chart from '../components/Chart';
 
@@ -12,6 +13,8 @@ const data: number[] = [
 ];
 
 const CageTemperatureScreen = () => {
+  // const individualId = useIndividualIdStore(({id}) => id);
+
   return (
     <SafeAreaView>
       <Container>
