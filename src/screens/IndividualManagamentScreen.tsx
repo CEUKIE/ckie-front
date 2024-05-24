@@ -14,6 +14,7 @@ const Container = styled.View`
   margin: 0px ${props => props.theme.margin.screen};
   flex: 1;
 `;
+
 const SearchBox = styled.View`
   margin: 20px 48px;
   border: 3px solid ${props => props.theme.color.secondary};
@@ -22,6 +23,7 @@ const SearchBox = styled.View`
   flex-direction: row;
   padding: 8px 10px;
 `;
+
 const SearchInput = styled.TextInput`
   display: flex;
   flex: 1;
