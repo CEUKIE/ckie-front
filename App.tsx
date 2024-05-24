@@ -4,7 +4,7 @@ import {ThemeProvider} from '@emotion/react';
 import 'react-native-gesture-handler';
 
 import theme from './src/styles/theme';
-import RootNavigation from './src/stacks/RootNavigation';
+import RootNavigation from './src/navigations/RootNavigation';
 
 const App = () => {
   return (
