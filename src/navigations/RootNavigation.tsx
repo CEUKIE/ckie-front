@@ -3,10 +3,12 @@ import {createStackNavigator} from '@react-navigation/stack';
 import MainTab from '../components/MainTabBar';
 import UserInfoEditScreen from '../screens/UserInfoEditScreen';
 import CageTopTab from './CageTopTab';
+import IndividulaTopTab from './IndividulaTopTab';
 
 export type RootStackParamList = {
   MainTab: undefined;
   CageTopTab: undefined;
+  IndividualTopTab: undefined;
   UserInfoEditScreen: {
     avatarUrl: string;
     nickname: string;
@@ -36,6 +38,13 @@ const RootNavigation = () => {
       <Stack.Screen
         name={'CageTopTab'}
         component={CageTopTab}
+        options={{
+          ...inputScreenHeaderOption,
+        }}
+      />
+      <Stack.Screen
+        name={'IndividualTopTab'}
+        component={IndividulaTopTab}
         options={{
           ...inputScreenHeaderOption,
         }}
