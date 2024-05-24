@@ -1,10 +1,13 @@
 import styled from '@emotion/native';
 import React from 'react';
 import {Image} from 'react-native';
+
 import MaleIcon from '../assets/icons/men.svg';
 import FemaleIcon from '../assets/icons/women.svg';
 import theme from '../styles/theme';
 import {formatKorean} from '../utils/format-date';
+import {useNav} from '../hooks/useNav';
+import useIndividualIdStore from '../stores/useIndividualIdStore';
 
 export interface IndividualCardProps {
   individual: Individual;
@@ -19,7 +22,7 @@ export interface Individual {
   memo: string;
 }
 
-const Card = styled.View`
+const Card = styled.TouchableOpacity`
   background-color: ${props => props.theme.color.primary};
   padding: 20px;
   border-radius: 10px;
@@ -72,8 +75,15 @@ const Memo = styled.Text`
 `;
 
 const IndividualCardComponent = ({individual}: IndividualCardProps) => {
+  const navigation = useNav<'IndividualTopTab'>();
+  const updateId = useIndividualIdStore(state => state.updateId);
+
   return (
-    <Card>
+    <Card
+      onPress={() => {
+        updateId(individual.id);
+        navigation.push('IndividualTopTab');
+      }}>
       <IndividualBox>
         <ProfileBlock>
           <ProfileImage source={{uri: individual.profileImage}} />
