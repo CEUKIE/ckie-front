@@ -1,8 +1,8 @@
 import styled from '@emotion/native';
 import React from 'react';
 import {Image} from 'react-native';
-import Men from '../assets/icons/men.svg';
-import Women from '../assets/icons/women.svg';
+import Male from '../assets/icons/male.svg';
+import Female from '../assets/icons/female.svg';
 import theme from '../styles/theme';
 
 const IndividualCard = styled.View`
@@ -12,28 +12,34 @@ const IndividualCard = styled.View`
   width: 44%;
   margin: 8px;
 `;
+
 const IndividualBox = styled.View`
   background-color: white;
   width: 100%;
 `;
+
 const IndividualProfile = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: center;
   padding: 4px;
 `;
+
 const IndividualProfileImage = styled(Image)`
   width: 100px;
   height: 100px;
   border-radius: 10px;
 `;
+
 const IndividualInfoBox = styled.View`
   display: flex;
   gap: 5px;
 `;
+
 const IndividualBirth = styled.Text`
   text-align: center;
 `;
+
 const IndividualNameGender = styled.View`
   display: flex;
   flex-direction: row;
@@ -42,7 +48,9 @@ const IndividualNameGender = styled.View`
   gap: 3px;
   text-align: center;
 `;
+
 const IndividualName = styled.Text``;
+
 const IndividualGender = styled.Text``;
 
 const IndividualMemoBox = styled.View`
@@ -50,6 +58,7 @@ const IndividualMemoBox = styled.View`
   border-radius: 10px;
   background-color: #ffdfbe;
 `;
+
 const IndividualMemo = styled.Text`
   border-radius: 5px;
   text-align: center;
@@ -68,10 +77,10 @@ const IndividualCardComponent = ({individual}) => {
           <IndividualNameGender>
             <IndividualName>{individual.name}</IndividualName>
             <IndividualGender>
-              {individual.gender === 'men' ? (
-                <Men width={10} height={10} />
+              {individual.gender === 'Male' ? (
+                <Male width={10} height={10} />
               ) : (
-                <Women width={10} height={10} fill={theme.color.secondary} />
+                <Female width={10} height={10} fill={theme.color.secondary} />
               )}
             </IndividualGender>
           </IndividualNameGender>
