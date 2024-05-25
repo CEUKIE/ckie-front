@@ -8,6 +8,7 @@ import IndividualCardComponent from '../components/IndividualCard';
 import {individuals} from '../db/data';
 import SafeAreaView from '../components/common/SafeAreaView';
 import {ScrollView} from 'react-native';
+import {useNav} from '../hooks/useNav';
 
 const Container = styled.View`
   margin: 0px ${props => props.theme.margin.screen};
@@ -48,6 +49,9 @@ const IndividualList = styled.View`
 `;
 
 const IndividualManagementScreen = () => {
+  const navigation = useNav<'MainTab'>();
+  const moveToRegist = () => navigation.push('IndividualRegistrationScreen');
+
   return (
     <SafeAreaView>
       <Container>
@@ -71,7 +75,7 @@ const IndividualManagementScreen = () => {
                 }}
               />
             ))}
-            <RegistButton>
+            <RegistButton onPress={moveToRegist}>
               <AddIcon width={30} height={30} fill={theme.color.white} />
             </RegistButton>
           </IndividualList>
