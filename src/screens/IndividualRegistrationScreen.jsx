@@ -25,12 +25,12 @@ const ProfileBox = styled.View`
 `;
 
 const Profile = styled.View`
-  border: 3px solid ${({theme}) => theme.color.lightGray};
+  border: 3px solid ${props => props.theme.color.lightGray};
   border-radius: 10px;
   padding: 35px;
   margin-bottom: 30px;
-  box-shadow: 0px 0px 4px ${({theme}) => theme.color.lightGray};
-  background-color: ${({theme}) => theme.color.white};
+  box-shadow: 0px 0px 4px ${props => props.theme.color.lightGray};
+  background-color: ${props => props.theme.color.white};
 `;
 
 const Info = styled.View`
@@ -38,7 +38,7 @@ const Info = styled.View`
 `;
 
 const Label = styled.Text`
-  font-size: ${({theme}) => theme.fontSize.body1};
+  font-size: ${props => props.theme.fontSize.body1};
   margin-bottom: 10px;
 `;
 
@@ -46,10 +46,9 @@ const Input = styled.TextInput`
   padding: 10px;
   display: flex;
   border-width: 2px;
-  width: 93%;
   border-radius: 10px;
-  border-color: ${({theme}) => theme.color.lightGray};
-  background-color: ${({theme}) => theme.color.white};
+  border-color: ${props => props.theme.color.lightGray};
+  background-color: ${props => props.theme.color.white};
   elevation: 5; /* 그림자 효과 크기 조절 */
   shadow-color: #000; /* 그림자 색상 */
   shadow-offset: 0px 2px; /* 그림자 위치 조절 */
@@ -73,8 +72,8 @@ const SearchInput = styled.TextInput`
   border-width: 2px;
   width: 85%;
   border-radius: 10px;
-  border-color: ${({theme}) => theme.color.lightGray};
-  background-color: ${({theme}) => theme.color.white};
+  border-color: ${props => props.theme.color.lightGray};
+  background-color: ${props => props.theme.color.white};
   elevation: 5; /* 그림자 효과 크기 조절 */
   shadow-color: #000; /* 그림자 색상 */
   shadow-offset: 0px 2px; /* 그림자 위치 조절 */
@@ -115,7 +114,7 @@ const ModalBack = styled.View`
 `;
 
 const ModalBox = styled.View`
-  background-color: ${({theme}) => theme.color.white};
+  background-color: ${props => props.theme.color.white};
   width: 80%;
   border-radius: 10px;
   padding: 20px;
@@ -128,8 +127,8 @@ const WeightInput = styled.TextInput`
   border-width: 2px;
   width: 65%;
   border-radius: 10px;
-  border-color: ${({theme}) => theme.color.lightGray};
-  background-color: ${({theme}) => theme.color.white};
+  border-color: ${props => props.theme.color.lightGray};
+  background-color: ${props => props.theme.color.white};
   elevation: 5; /* 그림자 효과 크기 조절 */
   shadow-color: #000; /* 그림자 색상 */
   shadow-offset: 0px 2px; /* 그림자 위치 조절 */
