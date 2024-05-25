@@ -46,7 +46,6 @@ const Input = styled.TextInput`
   padding: 10px;
   display: flex;
   border-width: 2px;
-  width: 93%;
   border-radius: 10px;
   border-color: ${props => props.theme.color.lightGray};
   background-color: ${props => props.theme.color.white};
