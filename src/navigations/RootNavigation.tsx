@@ -6,6 +6,7 @@ import CageTopTab from './CageTopTab';
 import IndividulaTopTab from './IndividulaTopTab';
 import LoginScreen from '../screens/LoginScreen';
 import IndividualRegistrationScreen from '../screens/IndividualRegistrationScreen';
+import IndividualInfoEditScreen from '../screens/IndividualInfoEditScreen';
 
 export type RootStackParamList = {
   LoginScreen: undefined;
@@ -13,6 +14,7 @@ export type RootStackParamList = {
   CageTopTab: undefined;
   IndividualTopTab: undefined;
   IndividualRegistrationScreen: undefined;
+  IndividualInfoEditScreen: undefined;
   UserInfoEditScreen: {
     avatarUrl: string;
     nickname: string;
@@ -69,6 +71,13 @@ const RootNavigation = () => {
       <Stack.Screen
         name={'IndividualRegistrationScreen'}
         component={IndividualRegistrationScreen}
+        options={{
+          ...inputScreenHeaderOption,
+        }}
+      />
+      <Stack.Screen
+        name={'IndividualInfoEditScreen'}
+        component={IndividualInfoEditScreen}
         options={{
           ...inputScreenHeaderOption,
         }}
