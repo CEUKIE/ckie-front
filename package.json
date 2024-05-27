@@ -23,6 +23,7 @@
     "@react-native-community/datetimepicker": "^7.6.2",
     "@react-native-community/slider": "^4.5.0",
     "@react-native-picker/picker": "github:react-native-picker/picker",
+    "@react-native-seoul/kakao-login": "^5.4.1",
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/material-top-tabs": "^6.6.13",
     "@react-navigation/native": "^6.1.17",
