@@ -6,6 +6,7 @@ interface IButtonProps extends Omit<ButtonProps, 'title'> {
   varient?: 'default' | 'outline' | 'text';
   fullWidth?: boolean;
   children: React.JSX.Element;
+  color?: string;
 }
 
 const StyledTouchableOpacity = styled.TouchableOpacity<IButtonProps>`
@@ -16,7 +17,11 @@ const StyledTouchableOpacity = styled.TouchableOpacity<IButtonProps>`
   width: ${props => (props.fullWidth ? '100%' : 'fit-content')};
   border: ${props => props.varient === 'outline' && '1px solid #ACACAC'};
   background-color: ${props =>
-    props.varient === 'default' && theme.color.primary};
+    props.varient === 'default'
+      ? props.color !== undefined
+        ? props.color
+        : props.theme.color.primary
+      : ''};
   background-color: ${props => props.disabled && theme.color.lightGray};
 `;
 
