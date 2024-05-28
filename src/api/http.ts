@@ -11,9 +11,10 @@ const http = axios.create({
 
 http.interceptors.request.use(
   async config => {
-    const accessToken = await retrieve('acessToken');
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+    const token = await retrieve('accessToken');
+    console.log('axios: ' + token);
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
