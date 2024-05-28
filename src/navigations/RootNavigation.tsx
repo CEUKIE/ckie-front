@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
+
 import MainTab from '../components/MainTabBar';
 import UserInfoEditScreen from '../screens/UserInfoEditScreen';
 import CageTopTab from './CageTopTab';
@@ -7,6 +8,10 @@ import IndividulaTopTab from './IndividulaTopTab';
 import LoginScreen from '../screens/LoginScreen';
 import IndividualRegistrationScreen from '../screens/IndividualRegistrationScreen';
 import IndividualInfoEditScreen from '../screens/IndividualInfoEditScreen';
+import {verfiyAccessToken} from '../api/api';
+import useLoginStore from '../stores/useLoginStore';
+import UserInfoInputScreen from '../screens/UserInfoInputScreen';
+import {retrieve} from '../utils/persistence';
 
 export type RootStackParamList = {
   LoginScreen: undefined;
@@ -15,6 +20,9 @@ export type RootStackParamList = {
   IndividualTopTab: undefined;
   IndividualRegistrationScreen: undefined;
   IndividualInfoEditScreen: undefined;
+  UserInfoInputScreen: {
+    accessToken: string;
+  };
   UserInfoEditScreen: {
     avatarUrl: string;
     nickname: string;
@@ -31,8 +39,18 @@ export const inputScreenHeaderOption = {
 };
 
 const RootNavigation = () => {
-  // TODO 토큰과 상태를 통해 로그인 여부 확인하도록 변경.
-  const isLogined = true;
+  const {isLogined, updateIsLogined} = useLoginStore(state => state);
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await verfiyAccessToken();
+        updateIsLogined(response.result!.isVerified);
+      } catch (e) {
+        console.error(`error: ${e}`);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Stack.Navigator initialRouteName={isLogined ? 'MainTab' : 'LoginScreen'}>
@@ -78,6 +96,13 @@ const RootNavigation = () => {
       <Stack.Screen
         name={'IndividualInfoEditScreen'}
         component={IndividualInfoEditScreen}
+        options={{
+          ...inputScreenHeaderOption,
+        }}
+      />
+      <Stack.Screen
+        name={'UserInfoInputScreen'}
+        component={UserInfoInputScreen}
         options={{
           ...inputScreenHeaderOption,
         }}
