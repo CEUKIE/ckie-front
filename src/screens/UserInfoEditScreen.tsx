@@ -15,6 +15,7 @@ import useUpdateUser from '../hooks/useUpdateUser';
 import ImagePickerActionSheet from '../components/ImagePickerActionSheet';
 import {ActionSheetRef} from 'react-native-actions-sheet';
 import {TouchableWithoutFeedback} from 'react-native';
+import CameraIcon from '../assets/icons/camera-fill-icon.svg';
 
 interface UserInfoEditScreenProps
   extends RouteProp<RootStackParamList, 'UserInfoEditScreen'> {}
@@ -30,8 +31,24 @@ const ContentBlock = styled.View`
   gap: 48px;
 `;
 
+const AvatarBlockOuter = styled.View`
+  align-items: center;
+`;
+
 const AvatarBlock = styled.View`
   align-items: center;
+  background-color: rebeccapurple;
+  border-radius: 24px;
+  width: 100px;
+`;
+
+const AvatarDecoration = styled.View`
+  position: absolute;
+  background-color: ${props => props.theme.color.secondary};
+  padding: 8px;
+  border-radius: 28px;
+  bottom: -10px;
+  right: -10px;
 `;
 
 const InfoContainer = styled.View`
@@ -93,11 +110,16 @@ const UserInfoEditScreen = () => {
           closeActionSheet={closeActionSheet}
         />
         <ContentBlock>
-          <TouchableWithoutFeedback onPress={openActionSheet}>
-            <AvatarBlock>
-              <Avatar size={100} rounded uri={newAvatar} />
-            </AvatarBlock>
-          </TouchableWithoutFeedback>
+          <AvatarBlockOuter>
+            <TouchableWithoutFeedback onPress={openActionSheet}>
+              <AvatarBlock>
+                <Avatar size={100} rounded uri={newAvatar} />
+                <AvatarDecoration>
+                  <CameraIcon width={20} height={20} fill={theme.color.white} />
+                </AvatarDecoration>
+              </AvatarBlock>
+            </TouchableWithoutFeedback>
+          </AvatarBlockOuter>
           <InfoContainer>
             <InfoBlock>
               <InfoTitle>닉네임</InfoTitle>

@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import React, {Suspense} from 'react';
+import React, {Suspense, useState} from 'react';
 import {Alert, ScrollView, Text} from 'react-native';
 import {logout} from '@react-native-seoul/kakao-login';
 
@@ -76,6 +76,8 @@ const MyPage = () => {
   const navigation = useNav<'UserInfoEditScreen'>();
   const {data} = useUserDetail();
 
+  const [isMoving, setIsMoving] = useState(false);
+
   const signOutWithKakao = async (): Promise<void> => {
     try {
       const message = await logout();
@@ -103,13 +105,16 @@ const MyPage = () => {
                   <Nickname>{data.nickname}</Nickname>
                   <StyledButton
                     varient={'outline'}
+                    disabled={isMoving}
                     onPress={() => {
+                      setIsMoving(true);
                       navigation.push('UserInfoEditScreen', {
                         avatarUrl: data.avatarUrl,
                         nickname: data.nickname,
                         introduction: data.introduction,
                         platform: data.platform,
                       });
+                      setIsMoving(false);
                     }}>
                     <ButtonInner>
                       <EditIcon
