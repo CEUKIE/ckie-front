@@ -127,11 +127,6 @@ const IndividualRegistrationScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageUrl]);
 
-  useEffect(() => {
-    console.log(individual);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [individual.cageId]);
-
   const onChangeIndividual = <
     T extends keyof IndividualType.CreateIndividualRequest,
   >(
