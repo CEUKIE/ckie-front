@@ -1,16 +1,18 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 // icon
-import CageIcon from '../assets/icons/cage.svg';
-import HomeIcon from '../assets/icons/home-fill.svg';
+import CalendarIcon from '../assets/icons/calendar-icon.svg';
 import TempIcon from '../assets/icons/temp-hot-line.svg';
+import ProfileIcon from '../assets/icons/profile-icon.svg';
 
 import CageManagementScreen from '../screens/CageManagementScreen';
 import MyPage from '../screens/MyPage';
 import {MainTabType} from '../types';
 import {Image, Platform, View} from 'react-native';
 import IndividualManagementScreen from '../screens/IndividualManagamentScreen';
+import {retrieve} from '../utils/persistence';
+import theme from '../styles/theme';
 
 export type RootStackParamList = {
   CageManagementScreen: undefined;
@@ -23,30 +25,36 @@ const elements: MainTabType.MainTabElement[] = [
     name: 'CageManagementScreen',
     title: '사육장',
     component: CageManagementScreen,
-    SVGIcon: CageIcon,
+    SVGIcon: TempIcon,
   },
   {
     name: 'IndividualManagementScreen',
     title: '개체',
     component: IndividualManagementScreen,
-    SVGIcon: TempIcon,
+    SVGIcon: CalendarIcon,
   },
   {
     name: 'MyPage',
     title: '마이페이지',
     component: MyPage,
-    SVGIcon: HomeIcon,
+    SVGIcon: ProfileIcon,
   },
 ];
 
 const MainTab = () => {
   const Tab = createBottomTabNavigator<RootStackParamList>();
 
+  useEffect(() => {
+    (async () => {
+      console.log('token: ' + (await retrieve('accessToken')));
+    })();
+  }, []);
+
   return (
     <Tab.Navigator
       initialRouteName={'CageManagementScreen'}
       screenOptions={{
-        tabBarActiveTintColor: '#FFC25C',
+        tabBarActiveTintColor: theme.color.secondary,
       }}>
       {elements.map(e => (
         <Tab.Screen

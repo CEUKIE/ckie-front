@@ -1,6 +1,7 @@
 import styled from '@emotion/native';
 import React from 'react';
 import {Alert, ScrollView} from 'react-native';
+import {logout} from '@react-native-seoul/kakao-login';
 
 import Avatar from '../components/common/Avatar';
 import SafeAreaView from '../components/common/SafeAreaView';
@@ -11,6 +12,7 @@ import EditIcon from '../assets/icons/edit-icon.svg';
 import CommentIcon from '../assets/icons/comment-icon.svg';
 import MenuButton from '../components/MenuButton';
 import {useNav} from '../hooks/useNav';
+import {remove} from '../utils/persistence';
 
 const Container = styled.View`
   margin: 0 ${props => props.theme.margin.screen};
@@ -71,6 +73,17 @@ const MenuButtonBlock = styled.View``;
 
 const MyPage = () => {
   const navigation = useNav<'UserInfoEditScreen'>();
+
+  const signOutWithKakao = async (): Promise<void> => {
+    try {
+      const message = await logout();
+      await remove('accessToken');
+      navigation.replace('LoginScreen');
+      console.log(message);
+    } catch (err) {
+      console.error('signOut error', err);
+    }
+  };
 
   return (
     <SafeAreaView>
@@ -141,10 +154,7 @@ const MyPage = () => {
             </MenuItem>
             <MenuItem>
               <MenuTitle>계정</MenuTitle>
-              <MenuButton
-                text={'로그아웃'}
-                onPress={() => Alert.alert('계정')}
-              />
+              <MenuButton text={'로그아웃'} onPress={signOutWithKakao} />
             </MenuItem>
           </MenuBlock>
         </Container>

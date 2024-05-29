@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CkieApp</string>
+    <string name="kakao_app_key">17165efe10573ee7e0d446224b32a604</string>
 </resources>
