@@ -34,6 +34,12 @@ export namespace AuthType {
 }
 
 export namespace UserType {
+  export interface UpdateUserRequest {
+    avatarUrl: string;
+    nickname: string;
+    introduction: string;
+  }
+
   export interface UserDetailResponse {
     id: string;
     nickname: string;
@@ -41,6 +47,8 @@ export namespace UserType {
     platform: Platform;
     introduction: string;
   }
+
+  export type UpdateUserResponse = boolean;
 }
 
 export interface FileRequest {

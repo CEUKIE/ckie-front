@@ -98,25 +98,17 @@ const MyPage = () => {
                 borderBottomColor: theme.color.lightGray,
               }}>
               <EditBlock>
-                <Avatar
-                  uri={
-                    data?.avatarUrl ||
-                    'https://image.ckie.store/images/default-profile-image.png'
-                  }
-                  size={84}
-                  rounded
-                />
+                <Avatar uri={data.avatarUrl} size={84} rounded />
                 <InfoBlock>
-                  <Nickname>{data?.nickname}</Nickname>
+                  <Nickname>{data.nickname}</Nickname>
                   <StyledButton
                     varient={'outline'}
                     onPress={() => {
                       navigation.push('UserInfoEditScreen', {
-                        avatarUrl:
-                          'https://image.ckie.store/images/default-profile-image.png',
-                        nickname: '달팽이',
-                        introduction: '다들 안녕',
-                        platform: 'naver',
+                        avatarUrl: data.avatarUrl,
+                        nickname: data.nickname,
+                        introduction: data.introduction,
+                        platform: data.platform,
                       });
                     }}>
                     <ButtonInner>

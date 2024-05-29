@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {Body1, Headline6} from '../components/common/TextGroup';
 import Avatar from '../components/common/Avatar';
@@ -11,6 +11,10 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 import {RootStackParamList} from '../navigations/RootNavigation';
 import Button from '../components/common/Button';
 import theme from '../styles/theme';
+import useUpdateUser from '../hooks/useUpdateUser';
+import ImagePickerActionSheet from '../components/ImagePickerActionSheet';
+import {ActionSheetRef} from 'react-native-actions-sheet';
+import {TouchableWithoutFeedback} from 'react-native';
 
 interface UserInfoEditScreenProps
   extends RouteProp<RootStackParamList, 'UserInfoEditScreen'> {}
@@ -47,17 +51,37 @@ const AccountBlock = styled.View``;
 
 const UserInfoEditScreen = () => {
   const {params} = useRoute<UserInfoEditScreenProps>();
+  const actionSheetRef = useRef<ActionSheetRef>(null);
+  const {mutate} = useUpdateUser();
+
   const [newAvatar, setNewAvatar] = useState(params.avatarUrl);
   const [newNickname, setNewNickname] = useState(params.nickname);
   const [newIntroduction, setNewIntroduction] = useState(params.introduction);
 
+  const openActionSheet = () => actionSheetRef.current?.show();
+  const closeActionSheet = () => actionSheetRef.current?.hide();
+
+  const onPressSave = () =>
+    mutate({
+      avatarUrl: newAvatar,
+      nickname: newNickname,
+      introduction: newIntroduction,
+    });
+
   return (
     <SafeAreaView>
       <Container>
+        <ImagePickerActionSheet
+          actionSheetRef={actionSheetRef}
+          setImageUrl={setNewAvatar}
+          closeActionSheet={closeActionSheet}
+        />
         <ContentBlock>
-          <AvatarBlock>
-            <Avatar size={100} rounded uri={newAvatar} />
-          </AvatarBlock>
+          <TouchableWithoutFeedback onPress={openActionSheet}>
+            <AvatarBlock>
+              <Avatar size={100} rounded uri={newAvatar} />
+            </AvatarBlock>
+          </TouchableWithoutFeedback>
           <InfoContainer>
             <InfoBlock>
               <InfoTitle>닉네임</InfoTitle>
@@ -77,18 +101,18 @@ const UserInfoEditScreen = () => {
             </InfoBlock>
             <AccountBlock>
               <MenuButton
-                text={`로그아웃 (${
-                  params.platform === 'kakao'
+                text={`${
+                  params.platform === 'KAKAO'
                     ? '카카오'
-                    : params.platform === 'google'
+                    : params.platform === 'GOOGLE'
                     ? '구글'
                     : '네이버'
-                })`}
+                }로 가입했어요`}
               />
             </AccountBlock>
           </InfoContainer>
         </ContentBlock>
-        <Button>
+        <Button onPress={onPressSave}>
           <Headline6 color={theme.color.white}>저장</Headline6>
         </Button>
       </Container>

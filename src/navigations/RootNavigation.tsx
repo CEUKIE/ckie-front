@@ -11,7 +11,7 @@ import IndividualInfoEditScreen from '../screens/IndividualInfoEditScreen';
 import {verfiyAccessToken} from '../api/api';
 import useLoginStore from '../stores/useLoginStore';
 import UserInfoInputScreen from '../screens/UserInfoInputScreen';
-import {retrieve} from '../utils/persistence';
+import {Platform} from '../api/types';
 
 export type RootStackParamList = {
   LoginScreen: undefined;
@@ -27,7 +27,7 @@ export type RootStackParamList = {
     avatarUrl: string;
     nickname: string;
     introduction: string;
-    platform: 'kakao' | 'google' | 'naver';
+    platform: Platform;
   };
 };
 

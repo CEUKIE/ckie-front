@@ -41,7 +41,15 @@ export const getUserDetail = async () => {
   const response = await http.get<ResponseForm<UserType.UserDetailResponse>>(
     '/users',
   );
-  return response.data.result;
+  return response.data.result!;
+};
+
+export const updateUserInfo = async (data: UserType.UpdateUserRequest) => {
+  const response = await http.patch<ResponseForm<UserType.UpdateUserResponse>>(
+    '/users',
+    data,
+  );
+  return response;
 };
 
 export {login, verfiyAccessToken, signup, uploadImage};
