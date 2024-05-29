@@ -1,6 +1,8 @@
 import {HttpStatusCode} from 'axios';
 
 export type Platform = 'KAKAO' | 'GOOGLE' | 'NAVER';
+export type Gender = 'MALE' | 'FEMALE' | 'LESS';
+export type WeightUnit = 'G' | 'KG';
 
 export interface ResponseForm<T> {
   status: HttpStatusCode;
@@ -49,6 +51,18 @@ export namespace UserType {
   }
 
   export type UpdateUserResponse = boolean;
+}
+
+export namespace IndividualType {
+  export interface CreateIndividualRequest {
+    name: string;
+    weight: number;
+    weightUnit: WeightUnit;
+    gender: Gender;
+    hatchedAt?: Date;
+    speciesId: string;
+    memo?: string;
+  }
 }
 
 export interface FileRequest {
