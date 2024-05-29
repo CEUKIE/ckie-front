@@ -56,12 +56,14 @@ export namespace UserType {
 export namespace IndividualType {
   export interface CreateIndividualRequest {
     name: string;
+    avatarUrl: string;
     weight: number;
     weightUnit: WeightUnit;
     gender: Gender;
-    hatchedAt?: Date;
+    hatchedAt?: Date | null;
     speciesId: string;
-    memo?: string;
+    memo?: string | null;
+    cageId?: string | null;
   }
 }
 
