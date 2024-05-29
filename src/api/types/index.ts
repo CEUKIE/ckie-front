@@ -1,5 +1,7 @@
 import {HttpStatusCode} from 'axios';
 
+export type Platform = 'KAKAO' | 'GOOGLE' | 'NAVER';
+
 export interface ResponseForm<T> {
   status: HttpStatusCode;
   result?: T;
@@ -28,6 +30,16 @@ export namespace AuthType {
 
   export interface VerifyAccessTokenRepsonse {
     isVerified: boolean;
+  }
+}
+
+export namespace UserType {
+  export interface UserDetailResponse {
+    id: string;
+    nickname: string;
+    avatarUrl: string;
+    platform: Platform;
+    introduction: string;
   }
 }
 
