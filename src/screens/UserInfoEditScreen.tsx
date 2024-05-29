@@ -2,7 +2,6 @@ import styled from '@emotion/native';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {Body1, Caption, Headline6} from '../components/common/TextGroup';
-import Avatar from '../components/common/Avatar';
 import SafeAreaView from '../components/common/SafeAreaView';
 import UnderLineTextInput from '../components/common/UnderLineTextInput';
 import TextArea from '../components/common/TextArea';
@@ -14,8 +13,7 @@ import theme from '../styles/theme';
 import useUpdateUser from '../hooks/useUpdateUser';
 import ImagePickerActionSheet from '../components/ImagePickerActionSheet';
 import {ActionSheetRef} from 'react-native-actions-sheet';
-import {TouchableWithoutFeedback} from 'react-native';
-import CameraIcon from '../assets/icons/camera-fill-icon.svg';
+import ClickableAvatar from '../components/ClickableAvatar';
 
 interface UserInfoEditScreenProps
   extends RouteProp<RootStackParamList, 'UserInfoEditScreen'> {}
@@ -29,26 +27,6 @@ const Container = styled.View`
 
 const ContentBlock = styled.View`
   gap: 48px;
-`;
-
-const AvatarBlockOuter = styled.View`
-  align-items: center;
-`;
-
-const AvatarBlock = styled.View`
-  align-items: center;
-  background-color: rebeccapurple;
-  border-radius: 24px;
-  width: 100px;
-`;
-
-const AvatarDecoration = styled.View`
-  position: absolute;
-  background-color: ${props => props.theme.color.secondary};
-  padding: 8px;
-  border-radius: 28px;
-  bottom: -10px;
-  right: -10px;
 `;
 
 const InfoContainer = styled.View`
@@ -110,16 +88,11 @@ const UserInfoEditScreen = () => {
           closeActionSheet={closeActionSheet}
         />
         <ContentBlock>
-          <AvatarBlockOuter>
-            <TouchableWithoutFeedback onPress={openActionSheet}>
-              <AvatarBlock>
-                <Avatar size={100} rounded uri={newAvatar} />
-                <AvatarDecoration>
-                  <CameraIcon width={20} height={20} fill={theme.color.white} />
-                </AvatarDecoration>
-              </AvatarBlock>
-            </TouchableWithoutFeedback>
-          </AvatarBlockOuter>
+          <ClickableAvatar
+            onPress={openActionSheet}
+            uri={newAvatar}
+            size={100}
+          />
           <InfoContainer>
             <InfoBlock>
               <InfoTitle>닉네임</InfoTitle>
