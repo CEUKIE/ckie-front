@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styled from '@emotion/native';
 import {RouteProp, useRoute} from '@react-navigation/native';
 
@@ -11,6 +11,9 @@ import Button from '../components/common/Button';
 import theme from '../styles/theme';
 import {RootStackParamList} from '../navigations/RootNavigation';
 import useSignup from '../hooks/useSignup';
+import {TouchableWithoutFeedback} from 'react-native';
+import {ActionSheetRef} from 'react-native-actions-sheet';
+import ImagePickerActionSheet from '../components/ImagePickerActionSheet';
 
 interface UserInfoInputScreenProps
   extends RouteProp<RootStackParamList, 'UserInfoInputScreen'> {}
@@ -47,8 +50,15 @@ const InputValidationText = styled(Caption)`
   color: ${props => props.theme.color.red};
 `;
 
+export interface Image {
+  uri: string;
+  type: string;
+  name: string;
+}
+
 const UserInfoInputScreen = () => {
   const {params} = useRoute<UserInfoInputScreenProps>();
+  const actionSheetRef = useRef<ActionSheetRef>(null);
   const {mutate} = useSignup();
 
   const [avatarUrl, setAvatarUrl] = useState(
@@ -58,6 +68,9 @@ const UserInfoInputScreen = () => {
   const [nicknameValidText, setNicknameValidText] = useState('');
   const [isValidNickname, setIsValidNickname] = useState(false);
   const [introduction, setIntroduction] = useState('');
+
+  const openActionSheet = () => actionSheetRef.current?.show();
+  const closeActionSheet = () => actionSheetRef.current?.hide();
 
   const signup = () => {
     mutate({
@@ -83,10 +96,17 @@ const UserInfoInputScreen = () => {
   return (
     <SafeAreaView>
       <Container>
+        <ImagePickerActionSheet
+          actionSheetRef={actionSheetRef}
+          setImageUrl={setAvatarUrl}
+          closeActionSheet={closeActionSheet}
+        />
         <ContentBlock>
-          <AvatarBlock>
-            <Avatar size={100} rounded uri={avatarUrl} />
-          </AvatarBlock>
+          <TouchableWithoutFeedback onPress={openActionSheet}>
+            <AvatarBlock>
+              <Avatar size={100} rounded uri={avatarUrl} />
+            </AvatarBlock>
+          </TouchableWithoutFeedback>
           <InfoContainer>
             <InfoBlock>
               <InfoTitle>닉네임</InfoTitle>
