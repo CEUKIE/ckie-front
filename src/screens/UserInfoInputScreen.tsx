@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from '@emotion/native';
 import {RouteProp, useRoute} from '@react-navigation/native';
 
@@ -6,14 +6,13 @@ import SafeAreaView from '../components/common/SafeAreaView';
 import UnderLineTextInput from '../components/common/UnderLineTextInput';
 import {Body1, Caption, Headline6} from '../components/common/TextGroup';
 import TextArea from '../components/common/TextArea';
-import Avatar from '../components/common/Avatar';
 import Button from '../components/common/Button';
 import theme from '../styles/theme';
 import {RootStackParamList} from '../navigations/RootNavigation';
 import useSignup from '../hooks/useSignup';
-import {TouchableWithoutFeedback} from 'react-native';
-import {ActionSheetRef} from 'react-native-actions-sheet';
 import ImagePickerActionSheet from '../components/ImagePickerActionSheet';
+import ClickableAvatar from '../components/ClickableAvatar';
+import useActionSheet from '../hooks/useActionSheet';
 
 interface UserInfoInputScreenProps
   extends RouteProp<RootStackParamList, 'UserInfoInputScreen'> {}
@@ -27,10 +26,6 @@ const Container = styled.View`
 
 const ContentBlock = styled.View`
   gap: 48px;
-`;
-
-const AvatarBlock = styled.View`
-  align-items: center;
 `;
 
 const InfoContainer = styled.View`
@@ -58,7 +53,7 @@ export interface Image {
 
 const UserInfoInputScreen = () => {
   const {params} = useRoute<UserInfoInputScreenProps>();
-  const actionSheetRef = useRef<ActionSheetRef>(null);
+  const {actionSheetRef, openActionSheet, closeActionSheet} = useActionSheet();
   const {mutate} = useSignup();
 
   const [avatarUrl, setAvatarUrl] = useState(
@@ -68,9 +63,6 @@ const UserInfoInputScreen = () => {
   const [nicknameValidText, setNicknameValidText] = useState('');
   const [isValidNickname, setIsValidNickname] = useState(false);
   const [introduction, setIntroduction] = useState('');
-
-  const openActionSheet = () => actionSheetRef.current?.show();
-  const closeActionSheet = () => actionSheetRef.current?.hide();
 
   const signup = () => {
     mutate({
@@ -102,11 +94,11 @@ const UserInfoInputScreen = () => {
           closeActionSheet={closeActionSheet}
         />
         <ContentBlock>
-          <TouchableWithoutFeedback onPress={openActionSheet}>
-            <AvatarBlock>
-              <Avatar size={100} rounded uri={avatarUrl} />
-            </AvatarBlock>
-          </TouchableWithoutFeedback>
+          <ClickableAvatar
+            onPress={openActionSheet}
+            size={100}
+            uri={avatarUrl}
+          />
           <InfoContainer>
             <InfoBlock>
               <InfoTitle>닉네임</InfoTitle>
