@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {Body1, Caption, Headline6} from '../components/common/TextGroup';
 import SafeAreaView from '../components/common/SafeAreaView';
@@ -12,8 +12,8 @@ import Button from '../components/common/Button';
 import theme from '../styles/theme';
 import useUpdateUser from '../hooks/useUpdateUser';
 import ImagePickerActionSheet from '../components/ImagePickerActionSheet';
-import {ActionSheetRef} from 'react-native-actions-sheet';
 import ClickableAvatar from '../components/ClickableAvatar';
+import useActionSheet from '../hooks/useActionSheet';
 
 interface UserInfoEditScreenProps
   extends RouteProp<RootStackParamList, 'UserInfoEditScreen'> {}
@@ -49,8 +49,9 @@ const InputValidationText = styled(Caption)`
 const AccountBlock = styled.View``;
 
 const UserInfoEditScreen = () => {
+  const {actionSheetRef, openActionSheet, closeActionSheet} = useActionSheet();
   const {params} = useRoute<UserInfoEditScreenProps>();
-  const actionSheetRef = useRef<ActionSheetRef>(null);
+  // const actionSheetRef = useRef<ActionSheetRef>(null);
   const {mutate} = useUpdateUser();
 
   const [nicknameValidText, setNicknameValidText] = useState('');
@@ -59,8 +60,8 @@ const UserInfoEditScreen = () => {
   const [newNickname, setNewNickname] = useState(params.nickname);
   const [newIntroduction, setNewIntroduction] = useState(params.introduction);
 
-  const openActionSheet = () => actionSheetRef.current?.show();
-  const closeActionSheet = () => actionSheetRef.current?.hide();
+  // const openActionSheet = () => actionSheetRef.current?.show();
+  // const closeActionSheet = () => actionSheetRef.current?.hide();
 
   const onPressSave = () =>
     mutate({
