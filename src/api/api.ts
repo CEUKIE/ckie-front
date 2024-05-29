@@ -1,5 +1,5 @@
 import http from './http';
-import {AuthType, ResponseForm} from './types';
+import {AuthType, FileResponse, ResponseForm} from './types';
 
 const login = async (data: AuthType.LoginRequest) => {
   const response = await http.post<ResponseForm<AuthType.LoginResponse>>(
@@ -24,4 +24,17 @@ const verfiyAccessToken = async () => {
   return response.data;
 };
 
-export {login, verfiyAccessToken, signup};
+const uploadImage = async (data: FormData) => {
+  const response = await http.post<ResponseForm<FileResponse>>(
+    '/files/upload',
+    data,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    },
+  );
+  return response.data;
+};
+
+export {login, verfiyAccessToken, signup, uploadImage};

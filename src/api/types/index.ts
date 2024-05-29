@@ -30,3 +30,11 @@ export namespace AuthType {
     isVerified: boolean;
   }
 }
+
+export interface FileRequest {
+  image: FormData;
+}
+
+export interface FileResponse {
+  filePath: string;
+}
