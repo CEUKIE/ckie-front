@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
-import {Body1, Headline6} from '../components/common/TextGroup';
+import {Body1, Caption, Headline6} from '../components/common/TextGroup';
 import Avatar from '../components/common/Avatar';
 import SafeAreaView from '../components/common/SafeAreaView';
 import UnderLineTextInput from '../components/common/UnderLineTextInput';
@@ -47,6 +47,10 @@ const InfoTitle = styled(Body1)`
   font-weight: 600;
 `;
 
+const InputValidationText = styled(Caption)`
+  color: ${props => props.theme.color.red};
+`;
+
 const AccountBlock = styled.View``;
 
 const UserInfoEditScreen = () => {
@@ -54,6 +58,8 @@ const UserInfoEditScreen = () => {
   const actionSheetRef = useRef<ActionSheetRef>(null);
   const {mutate} = useUpdateUser();
 
+  const [nicknameValidText, setNicknameValidText] = useState('');
+  const [isValidNickname, setIsValidNickname] = useState(false);
   const [newAvatar, setNewAvatar] = useState(params.avatarUrl);
   const [newNickname, setNewNickname] = useState(params.nickname);
   const [newIntroduction, setNewIntroduction] = useState(params.introduction);
@@ -67,6 +73,16 @@ const UserInfoEditScreen = () => {
       nickname: newNickname,
       introduction: newIntroduction,
     });
+
+  useEffect(() => {
+    if (newNickname.length < 2) {
+      setNicknameValidText('* 닉네임을 2자 이상 입력해주세요.');
+      setIsValidNickname(false);
+    } else {
+      setNicknameValidText('');
+      setIsValidNickname(true);
+    }
+  }, [newNickname]);
 
   return (
     <SafeAreaView>
@@ -90,6 +106,7 @@ const UserInfoEditScreen = () => {
                 value={newNickname}
                 onChangeText={setNewNickname}
               />
+              <InputValidationText>{nicknameValidText}</InputValidationText>
             </InfoBlock>
             <InfoBlock>
               <InfoTitle>소개</InfoTitle>
@@ -97,6 +114,8 @@ const UserInfoEditScreen = () => {
                 placeholder={'자신을 소개해주세요.'}
                 value={newIntroduction}
                 onChangeText={setNewIntroduction}
+                maxLength={30}
+                numberOfLines={3}
               />
             </InfoBlock>
             <AccountBlock>
@@ -112,7 +131,10 @@ const UserInfoEditScreen = () => {
             </AccountBlock>
           </InfoContainer>
         </ContentBlock>
-        <Button onPress={onPressSave}>
+        <Button
+          onPress={onPressSave}
+          color={theme.color.secondary}
+          disabled={!isValidNickname}>
           <Headline6 color={theme.color.white}>저장</Headline6>
         </Button>
       </Container>
