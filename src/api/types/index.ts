@@ -67,6 +67,17 @@ export namespace IndividualType {
   }
 }
 
+export namespace SpeciesType {
+  export interface SpeciesListResponse {
+    id: string;
+    name: string;
+    minTemperature: number;
+    maxTemperature: number;
+    minHumidity: number;
+    maxHumidity: number;
+  }
+}
+
 export interface FileRequest {
   image: FormData;
 }
