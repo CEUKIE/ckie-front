@@ -1,6 +1,6 @@
 import styled from '@emotion/native';
-import React from 'react';
-import {Alert, ScrollView} from 'react-native';
+import React, {Suspense, useState} from 'react';
+import {Alert, ScrollView, Text} from 'react-native';
 import {logout} from '@react-native-seoul/kakao-login';
 
 import Avatar from '../components/common/Avatar';
@@ -13,6 +13,7 @@ import CommentIcon from '../assets/icons/comment-icon.svg';
 import MenuButton from '../components/MenuButton';
 import {useNav} from '../hooks/useNav';
 import {remove} from '../utils/persistence';
+import useUserDetail from '../hooks/useUserDetail';
 
 const Container = styled.View`
   margin: 0 ${props => props.theme.margin.screen};
@@ -73,6 +74,9 @@ const MenuButtonBlock = styled.View``;
 
 const MyPage = () => {
   const navigation = useNav<'UserInfoEditScreen'>();
+  const {data} = useUserDetail();
+
+  const [isMoving, setIsMoving] = useState(false);
 
   const signOutWithKakao = async (): Promise<void> => {
     try {
@@ -87,78 +91,76 @@ const MyPage = () => {
 
   return (
     <SafeAreaView>
-      <ScrollView>
-        <Container>
-          <ProfileBlock
-            style={{
-              borderBottomWidth: 1,
-              borderBottomColor: theme.color.lightGray,
-            }}>
-            <EditBlock>
-              <Avatar
-                uri={
-                  'https://image.ckie.store/images/default-profile-image.png'
-                }
-                size={84}
-                rounded
-              />
-              <InfoBlock>
-                <Nickname>달퍙이</Nickname>
-                <StyledButton
-                  varient={'outline'}
-                  onPress={() => {
-                    navigation.push('UserInfoEditScreen', {
-                      avatarUrl:
-                        'https://image.ckie.store/images/default-profile-image.png',
-                      nickname: '달팽이',
-                      introduction: '다들 안녕',
-                      platform: 'naver',
-                    });
-                  }}>
-                  <ButtonInner>
-                    <EditIcon
-                      width={12}
-                      height={12}
-                      fill={theme.color.font.text1}
-                    />
-                    <Body2>수정</Body2>
-                  </ButtonInner>
-                </StyledButton>
-              </InfoBlock>
-            </EditBlock>
-            <CommentBlock>
-              <CommentIcon
-                width={24}
-                height={24}
-                fill={theme.color.font.text1}
-              />
-              <Comment>다들 반가워요 저는 달줌이랍니다~</Comment>
-            </CommentBlock>
-          </ProfileBlock>
-          <MenuBlock>
-            <MenuItem>
-              <MenuTitle>개체</MenuTitle>
-              <MenuButtonBlock>
-                <MenuButton
-                  text={'내 개체'}
-                  onPress={() => Alert.alert('개체')}
+      <Suspense fallback={<Text>loading...</Text>}>
+        <ScrollView>
+          <Container>
+            <ProfileBlock
+              style={{
+                borderBottomWidth: 1,
+                borderBottomColor: theme.color.lightGray,
+              }}>
+              <EditBlock>
+                <Avatar uri={data.avatarUrl} size={84} rounded />
+                <InfoBlock>
+                  <Nickname>{data.nickname}</Nickname>
+                  <StyledButton
+                    varient={'outline'}
+                    disabled={isMoving}
+                    onPress={() => {
+                      setIsMoving(true);
+                      navigation.push('UserInfoEditScreen', {
+                        avatarUrl: data.avatarUrl,
+                        nickname: data.nickname,
+                        introduction: data.introduction,
+                        platform: data.platform,
+                      });
+                      setIsMoving(false);
+                    }}>
+                    <ButtonInner>
+                      <EditIcon
+                        width={12}
+                        height={12}
+                        fill={theme.color.font.text1}
+                      />
+                      <Body2>수정</Body2>
+                    </ButtonInner>
+                  </StyledButton>
+                </InfoBlock>
+              </EditBlock>
+              <CommentBlock>
+                <CommentIcon
+                  width={24}
+                  height={24}
+                  fill={theme.color.font.text1}
                 />
-              </MenuButtonBlock>
-            </MenuItem>
-            <MenuItem>
-              <MenuTitle>사육장</MenuTitle>
-              <MenuButton
-                text={'내 사육장'}
-                onPress={() => Alert.alert('사육장')}
-              />
-            </MenuItem>
-            <MenuItem>
-              <MenuTitle>계정</MenuTitle>
-              <MenuButton text={'로그아웃'} onPress={signOutWithKakao} />
-            </MenuItem>
-          </MenuBlock>
-        </Container>
-      </ScrollView>
+                <Comment>{data?.introduction}</Comment>
+              </CommentBlock>
+            </ProfileBlock>
+            <MenuBlock>
+              <MenuItem>
+                <MenuTitle>개체</MenuTitle>
+                <MenuButtonBlock>
+                  <MenuButton
+                    text={'내 개체'}
+                    onPress={() => Alert.alert('개체')}
+                  />
+                </MenuButtonBlock>
+              </MenuItem>
+              <MenuItem>
+                <MenuTitle>사육장</MenuTitle>
+                <MenuButton
+                  text={'내 사육장'}
+                  onPress={() => Alert.alert('사육장')}
+                />
+              </MenuItem>
+              <MenuItem>
+                <MenuTitle>계정</MenuTitle>
+                <MenuButton text={'로그아웃'} onPress={signOutWithKakao} />
+              </MenuItem>
+            </MenuBlock>
+          </Container>
+        </ScrollView>
+      </Suspense>
     </SafeAreaView>
   );
 };

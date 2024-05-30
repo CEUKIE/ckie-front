@@ -1,5 +1,9 @@
 import {HttpStatusCode} from 'axios';
 
+export type Platform = 'KAKAO' | 'GOOGLE' | 'NAVER';
+export type Gender = 'MALE' | 'FEMALE' | 'LESS';
+export type WeightUnit = 'G' | 'KG';
+
 export interface ResponseForm<T> {
   status: HttpStatusCode;
   result?: T;
@@ -28,6 +32,38 @@ export namespace AuthType {
 
   export interface VerifyAccessTokenRepsonse {
     isVerified: boolean;
+  }
+}
+
+export namespace UserType {
+  export interface UpdateUserRequest {
+    avatarUrl: string;
+    nickname: string;
+    introduction: string;
+  }
+
+  export interface UserDetailResponse {
+    id: string;
+    nickname: string;
+    avatarUrl: string;
+    platform: Platform;
+    introduction: string;
+  }
+
+  export type UpdateUserResponse = boolean;
+}
+
+export namespace IndividualType {
+  export interface CreateIndividualRequest {
+    name: string;
+    avatarUrl: string;
+    weight: number;
+    weightUnit: WeightUnit;
+    gender: Gender;
+    hatchedAt?: Date | null;
+    speciesId: string;
+    memo?: string | null;
+    cageId?: string | null;
   }
 }
 

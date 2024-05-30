@@ -1,5 +1,8 @@
 import React, {useEffect} from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  StackNavigationOptions,
+  createStackNavigator,
+} from '@react-navigation/stack';
 
 import MainTab from '../components/MainTabBar';
 import UserInfoEditScreen from '../screens/UserInfoEditScreen';
@@ -11,7 +14,9 @@ import IndividualInfoEditScreen from '../screens/IndividualInfoEditScreen';
 import {verfiyAccessToken} from '../api/api';
 import useLoginStore from '../stores/useLoginStore';
 import UserInfoInputScreen from '../screens/UserInfoInputScreen';
-import {retrieve} from '../utils/persistence';
+import {Platform} from '../api/types';
+import BackArrowIcon from '../assets/icons/arrow-left-icon.svg';
+import theme from '../styles/theme';
 
 export type RootStackParamList = {
   LoginScreen: undefined;
@@ -27,15 +32,18 @@ export type RootStackParamList = {
     avatarUrl: string;
     nickname: string;
     introduction: string;
-    platform: 'kakao' | 'google' | 'naver';
+    platform: Platform;
   };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-export const inputScreenHeaderOption = {
+export const inputScreenHeaderOption: StackNavigationOptions = {
   headerTitle: ' ',
   headerShadowVisible: false,
+  headerBackImage: () => (
+    <BackArrowIcon width={32} height={32} fill={theme.color.black} />
+  ),
 };
 
 const RootNavigation = () => {

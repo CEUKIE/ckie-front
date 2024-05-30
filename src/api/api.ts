@@ -1,5 +1,5 @@
 import http from './http';
-import {AuthType, FileResponse, ResponseForm} from './types';
+import {AuthType, FileResponse, ResponseForm, UserType} from './types';
 
 const login = async (data: AuthType.LoginRequest) => {
   const response = await http.post<ResponseForm<AuthType.LoginResponse>>(
@@ -35,6 +35,21 @@ const uploadImage = async (data: FormData) => {
     },
   );
   return response.data;
+};
+
+export const getUserDetail = async () => {
+  const response = await http.get<ResponseForm<UserType.UserDetailResponse>>(
+    '/users',
+  );
+  return response.data.result!;
+};
+
+export const updateUserInfo = async (data: UserType.UpdateUserRequest) => {
+  const response = await http.patch<ResponseForm<UserType.UpdateUserResponse>>(
+    '/users',
+    data,
+  );
+  return response;
 };
 
 export {login, verfiyAccessToken, signup, uploadImage};

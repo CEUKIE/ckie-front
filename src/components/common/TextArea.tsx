@@ -14,7 +14,7 @@ const Input = styled.TextInput<{fontSize?: number | undefined}>`
 `;
 
 const TextArea = ({fontSize, ...rest}: TextAreaProps) => {
-  return <Input {...rest} fontSize={fontSize} multiline />;
+  return <Input fontSize={fontSize} multiline {...rest} />;
 };
 
 export default TextArea;
