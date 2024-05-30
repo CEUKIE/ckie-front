@@ -65,6 +65,21 @@ export namespace IndividualType {
     memo?: string | null;
     cageId?: string | null;
   }
+
+  export interface IndividualsResponse {
+    id: string;
+    name: string;
+    avatarUrl: string;
+    gender: Gender;
+    hatchedAt: Date;
+    memo: string;
+    species: Pick<SpeciesType.SpeciesListResponse, 'id' | 'name'>;
+    // TODO Cage 타입 선언하면 교체
+    cage: {
+      name: string;
+      id: string;
+    };
+  }
 }
 
 export namespace SpeciesType {

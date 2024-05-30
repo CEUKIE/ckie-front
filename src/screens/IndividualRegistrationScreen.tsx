@@ -21,6 +21,8 @@ import ModalView from '../components/common/ModalView';
 import {TouchableWithoutFeedback} from 'react-native';
 import {useNav} from '../hooks/useNav';
 import useCreateIndividualStore from '../stores/useCreateIndividualStore';
+import useCreateIndividual from '../hooks/useCreateIndividual';
+import {IndividualType} from '../api/types';
 
 interface SelectButtonProps {
   isSelected: boolean;
@@ -98,9 +100,11 @@ const InputValidationText = styled(Caption)<{color?: string}>`
 
 const IndividualRegistrationScreen = () => {
   const navigation = useNav<'IndividualRegistrationScreen'>();
+  const {mutate} = useCreateIndividual();
   const {updateIndividual, ...individual} = useCreateIndividualStore(
     state => state,
   );
+  const [speciesLabel, setSpeciesLabel] = useState('');
 
   const {actionSheetRef, openActionSheet, closeActionSheet} = useActionSheet();
   const [imageUrl, setImageUrl] = useState(
@@ -116,6 +120,9 @@ const IndividualRegistrationScreen = () => {
   const [isValidName, setIsValidName] = useState(false);
   const [isValidWeight, setIsValidWeight] = useState(false);
   const [isValidHatchedAt, setIsValidHatchedAt] = useState(true);
+
+  const onRegist = () =>
+    mutate(individual as IndividualType.CreateIndividualRequest);
 
   const cageOptions = [
     {
@@ -270,14 +277,20 @@ const IndividualRegistrationScreen = () => {
                   <Label>종선택</Label>
                   <ShortBox>
                     <TextArea
+                      editable={false}
                       style={{flex: 1}}
                       multiline={false}
                       placeholder="종류를 검색해봐요!"
                       placeholderTextColor={theme.color.lightGray}
+                      value={speciesLabel}
                     />
                     <Button
                       varient="text"
-                      onPress={() => navigation.push('SpeciesSelectScreen')}>
+                      onPress={() =>
+                        navigation.push('SpeciesSelectScreen', {
+                          setSpeciesLabel: setSpeciesLabel,
+                        })
+                      }>
                       <SearchIcon
                         width={30}
                         height={30}
@@ -339,7 +352,7 @@ const IndividualRegistrationScreen = () => {
                   <ShortBox>
                     <TextArea
                       style={{flex: 1}}
-                      keyboardType={'numeric'}
+                      keyboardType={'decimal-pad'}
                       placeholder="무게를 입력해주세요!"
                       placeholderTextColor={theme.color.lightGray}
                       value={individual.weight ? String(individual.weight) : ''}
@@ -384,7 +397,7 @@ const IndividualRegistrationScreen = () => {
             <RegistButton
               color={theme.color.secondary}
               disabled={!(isValidName && isValidWeight && isValidHatchedAt)}
-              onPress={() => console.log(individual)}>
+              onPress={onRegist}>
               <Headline6 color={theme.color.white}>등록</Headline6>
             </RegistButton>
           </Container>
