@@ -59,6 +59,13 @@ export const updateUserInfo = async (data: UserType.UpdateUserRequest) => {
   return response;
 };
 
+export const getIndividuals = async () => {
+  const response = await http.get<
+    ResponseForm<IndividualType.IndividualsResponse[]>
+  >('/individuals');
+  return response.data.result!;
+};
+
 export const createIndividual = async (
   data: IndividualType.CreateIndividualRequest,
 ) => {
