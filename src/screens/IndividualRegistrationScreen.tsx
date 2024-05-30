@@ -11,7 +11,6 @@ import SearchIcon from '../assets/icons/search.svg';
 import Male from '../assets/icons/male.svg';
 import Female from '../assets/icons/female.svg';
 import Genderless from '../assets/icons/genderless.svg';
-import {IndividualType} from '../api/types';
 import {Body1, Caption, Headline6} from '../components/common/TextGroup';
 import TextArea from '../components/common/TextArea';
 import ImagePickerActionSheet from '../components/ImagePickerActionSheet';
@@ -21,6 +20,7 @@ import {formatKorean} from '../utils/format-date';
 import ModalView from '../components/common/ModalView';
 import {TouchableWithoutFeedback} from 'react-native';
 import {useNav} from '../hooks/useNav';
+import useCreateIndividualStore from '../stores/useCreateIndividualStore';
 
 interface SelectButtonProps {
   isSelected: boolean;
@@ -98,20 +98,14 @@ const InputValidationText = styled(Caption)<{color?: string}>`
 
 const IndividualRegistrationScreen = () => {
   const navigation = useNav<'IndividualRegistrationScreen'>();
+  const {updateIndividual, ...individual} = useCreateIndividualStore(
+    state => state,
+  );
+
   const {actionSheetRef, openActionSheet, closeActionSheet} = useActionSheet();
   const [imageUrl, setImageUrl] = useState(
     'https://image.ckie.store/images/individual-profile.jpeg',
   );
-  const [individual, setIndividual] =
-    useState<IndividualType.CreateIndividualRequest>({
-      name: '',
-      avatarUrl: imageUrl,
-      weight: 0,
-      weightUnit: 'G',
-      gender: 'FEMALE',
-      speciesId: 'c5bfa6a7-ebdd-4a2b-aadb-1bc9644a6b0f',
-      hatchedAt: null,
-    });
 
   const [isDateModalVisible, setIsDateModalVisible] = useState(false);
   const [isCageModalVisible, setIsCageModalVisible] = useState(false);
@@ -158,7 +152,7 @@ const IndividualRegistrationScreen = () => {
   };
 
   const validateWeight = () => {
-    if (individual.weight > 0) {
+    if (individual.weight && individual.weight > 0) {
       setIsValidWeight(true);
     } else {
       setIsValidWeight(false);
@@ -166,10 +160,7 @@ const IndividualRegistrationScreen = () => {
   };
 
   useEffect(() => {
-    setIndividual({
-      ...individual,
-      avatarUrl: imageUrl,
-    });
+    updateIndividual('avatarUrl', imageUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageUrl]);
 
@@ -179,18 +170,6 @@ const IndividualRegistrationScreen = () => {
     validateHatchedAt();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [individual]);
-
-  const onChangeIndividual = <
-    T extends keyof IndividualType.CreateIndividualRequest,
-  >(
-    key: T,
-    value: IndividualType.CreateIndividualRequest[T],
-  ) => {
-    setIndividual({
-      ...individual,
-      [key]: value,
-    });
-  };
 
   return (
     <SafeAreaView>
@@ -225,7 +204,7 @@ const IndividualRegistrationScreen = () => {
                 <Button
                   onPress={() => {
                     setSelectedLabel(cageOptions[selectedCageValueIndex].label);
-                    onChangeIndividual('cageId', selectedCageValue);
+                    updateIndividual('cageId', selectedCageValue);
                     setIsCageModalVisible(false);
                   }}>
                   <Body1 color={theme.color.white}>확인</Body1>
@@ -245,7 +224,7 @@ const IndividualRegistrationScreen = () => {
                   <TextArea
                     multiline={false}
                     value={individual.name}
-                    onChangeText={value => onChangeIndividual('name', value)}
+                    onChangeText={value => updateIndividual('name', value)}
                     placeholder="이름을 입력해주세요!"
                     placeholderTextColor={theme.color.lightGray}
                   />
@@ -282,7 +261,7 @@ const IndividualRegistrationScreen = () => {
                     date={new Date()}
                     onConfirm={date => {
                       setIsDateModalVisible(false);
-                      onChangeIndividual('hatchedAt', date);
+                      updateIndividual('hatchedAt', date);
                     }}
                     onCancel={() => setIsDateModalVisible(false)}
                   />
@@ -296,7 +275,9 @@ const IndividualRegistrationScreen = () => {
                       placeholder="종류를 검색해봐요!"
                       placeholderTextColor={theme.color.lightGray}
                     />
-                    <Button varient="text">
+                    <Button
+                      varient="text"
+                      onPress={() => navigation.push('SpeciesSelectScreen')}>
                       <SearchIcon
                         width={30}
                         height={30}
@@ -314,21 +295,21 @@ const IndividualRegistrationScreen = () => {
                           ? theme.color.secondary
                           : theme.color.primary
                       }
-                      onPress={() => onChangeIndividual('gender', 'FEMALE')}>
+                      onPress={() => updateIndividual('gender', 'FEMALE')}>
                       <Female width={50} height={50} fill={theme.color.white} />
                     </GenderButton>
                     <GenderButton
                       color={
                         individual.gender === 'MALE' ? '#00A7DD' : '#c7f1ff'
                       }
-                      onPress={() => onChangeIndividual('gender', 'MALE')}>
+                      onPress={() => updateIndividual('gender', 'MALE')}>
                       <Male width={50} height={50} fill={theme.color.white} />
                     </GenderButton>
                     <GenderButton
                       color={
                         individual.gender === 'LESS' ? '#FFB799' : '#fdf2b1'
                       }
-                      onPress={() => onChangeIndividual('gender', 'LESS')}>
+                      onPress={() => updateIndividual('gender', 'LESS')}>
                       <Genderless
                         width={50}
                         height={50}
@@ -361,27 +342,27 @@ const IndividualRegistrationScreen = () => {
                       keyboardType={'numeric'}
                       placeholder="무게를 입력해주세요!"
                       placeholderTextColor={theme.color.lightGray}
-                      value={String(individual.weight)}
+                      value={individual.weight ? String(individual.weight) : ''}
                       onChangeText={value =>
-                        onChangeIndividual('weight', Number(value))
+                        updateIndividual('weight', Number(value))
                       }
                     />
                     <WeightList>
                       <WeightButton
                         isSelected={individual.weightUnit === 'G'}
-                        onPress={() => onChangeIndividual('weightUnit', 'G')}>
+                        onPress={() => updateIndividual('weightUnit', 'G')}>
                         <WeightText>g</WeightText>
                       </WeightButton>
                       <WeightButton
                         isSelected={individual.weightUnit === 'KG'}
-                        onPress={() => onChangeIndividual('weightUnit', 'KG')}>
+                        onPress={() => updateIndividual('weightUnit', 'KG')}>
                         <WeightText>kg</WeightText>
                       </WeightButton>
                     </WeightList>
                   </ShortBox>
                   {!isValidWeight && (
                     <InputValidationText color={theme.color.red}>
-                      * 무게가 0 이하가 될 수 없어요
+                      올바른 무게를 입력해주세요
                     </InputValidationText>
                   )}
                 </Box>
@@ -391,6 +372,8 @@ const IndividualRegistrationScreen = () => {
                     maxLength={12}
                     placeholder="메모를 입력해주세요!"
                     placeholderTextColor={theme.color.lightGray}
+                    value={individual.memo || ''}
+                    onChangeText={value => updateIndividual('memo', value)}
                   />
                   <InputValidationText>
                     * 메모는 12자 이하로 입력해주세요
