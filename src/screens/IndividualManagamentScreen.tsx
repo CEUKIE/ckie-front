@@ -1,14 +1,16 @@
 import styled from '@emotion/native';
-import React from 'react';
+import React, {Suspense} from 'react';
+
 import SearchIcon from '../assets/icons/search.svg';
 import AddIcon from '../assets/icons/add.svg';
 import theme from '../styles/theme';
 import Button from '../components/common/Button';
 import IndividualCardComponent from '../components/IndividualCard';
-import {individuals} from '../db/data';
 import SafeAreaView from '../components/common/SafeAreaView';
 import {ScrollView} from 'react-native';
 import {useNav} from '../hooks/useNav';
+import useIndividuals from '../hooks/useIndividuals';
+import Indicator from '../components/Indicator';
 
 const Container = styled.View`
   margin: 0px ${props => props.theme.margin.screen};
@@ -50,37 +52,45 @@ const IndividualList = styled.View`
 
 const IndividualManagementScreen = () => {
   const navigation = useNav<'MainTab'>();
+  const {data} = useIndividuals();
+
   const moveToRegist = () => navigation.push('IndividualRegistrationScreen');
 
   return (
     <SafeAreaView>
-      <Container>
-        <SearchBox>
-          <SearchInput
-            placeholder="이름으로 검색해봐요!"
-            placeholderTextColor={theme.color.lightGray}
-          />
-          <Button varient="text">
-            <SearchIcon width={30} height={30} fill={theme.color.secondary} />
-          </Button>
-        </SearchBox>
-        <ScrollView>
-          <IndividualList>
-            {individuals.map(individual => (
-              <IndividualCardComponent
-                key={individual.id}
-                individual={{
-                  ...individual,
-                  hatchedAt: new Date(individual.hatchedAt),
-                }}
-              />
-            ))}
-            <RegistButton onPress={moveToRegist}>
-              <AddIcon width={30} height={30} fill={theme.color.white} />
-            </RegistButton>
-          </IndividualList>
-        </ScrollView>
-      </Container>
+      <Suspense fallback={<Indicator />}>
+        <Container>
+          <SearchBox>
+            <SearchInput
+              placeholder="이름으로 검색해봐요!"
+              placeholderTextColor={theme.color.lightGray}
+            />
+            <Button varient="text">
+              <SearchIcon width={30} height={30} fill={theme.color.secondary} />
+            </Button>
+          </SearchBox>
+          <ScrollView>
+            <IndividualList>
+              {data.map(individual => (
+                <IndividualCardComponent
+                  key={individual.id}
+                  individual={{
+                    id: individual.id,
+                    name: individual.name,
+                    avatarUrl: individual.avatarUrl,
+                    gender: individual.gender,
+                    memo: individual.memo,
+                    hatchedAt: new Date(individual.hatchedAt),
+                  }}
+                />
+              ))}
+              <RegistButton onPress={moveToRegist}>
+                <AddIcon width={30} height={30} fill={theme.color.white} />
+              </RegistButton>
+            </IndividualList>
+          </ScrollView>
+        </Container>
+      </Suspense>
     </SafeAreaView>
   );
 };
