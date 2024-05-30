@@ -43,6 +43,8 @@ const MoreButton = styled(Button)`
 `;
 
 const IndividualBox = styled.View`
+  border-radius: 8px;
+  overflow: hidden;
   background-color: white;
   width: 100%;
 `;
