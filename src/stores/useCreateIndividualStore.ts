@@ -18,18 +18,27 @@ type Action = {
     key: T,
     value: IndividualType.CreateIndividualRequest[T],
   ) => void;
+  clear: () => void;
 };
 
-const useCreateIndividualStore = create<State & Action>(set => ({
+const initialStates: State = {
   name: '',
   avatarUrl: 'https://image.ckie.store/images/individual-profile.jpeg',
   gender: 'FEMALE',
   weightUnit: 'G',
   memo: '',
+};
+
+const useCreateIndividualStore = create<State & Action>(set => ({
+  ...initialStates,
   updateIndividual: (key, value) =>
     set(state => ({
       ...state,
       [key]: value,
+    })),
+  clear: () =>
+    set(() => ({
+      ...initialStates,
     })),
 }));
 
