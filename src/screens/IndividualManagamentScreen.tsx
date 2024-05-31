@@ -32,10 +32,6 @@ const SearchBlock = styled.View`
   padding-top: 20px;
 `;
 
-const IndividualBlock = styled.View`
-  padding-top: 20px;
-`;
-
 const IndividualList = styled.View`
   display: flex;
   flex-direction: row;
@@ -45,7 +41,7 @@ const IndividualList = styled.View`
 
 const IndividualManagementScreen = () => {
   const navigation = useNav<'MainTab'>();
-  const {data} = useIndividuals();
+  const {data: individuals} = useIndividuals();
 
   const moveToRegist = () => navigation.push('IndividualRegistrationScreen');
 
@@ -56,28 +52,27 @@ const IndividualManagementScreen = () => {
           <SearchBlock>
             <SearchInput placeholder={'이름으로 검색해봐요!'} />
           </SearchBlock>
-          <IndividualBlock>
-            <ScrollView>
-              <IndividualList>
-                {data.map(individual => (
-                  <IndividualCardComponent
-                    key={individual.id}
-                    individual={{
-                      id: individual.id,
-                      name: individual.name,
-                      avatarUrl: individual.avatarUrl,
-                      gender: individual.gender,
-                      memo: individual.memo,
-                      hatchedAt: new Date(individual.hatchedAt),
-                    }}
-                  />
-                ))}
-                <RegistButton onPress={moveToRegist}>
-                  <AddIcon width={30} height={30} fill={theme.color.white} />
-                </RegistButton>
-              </IndividualList>
-            </ScrollView>
-          </IndividualBlock>
+
+          <ScrollView>
+            <IndividualList>
+              {individuals.map(individual => (
+                <IndividualCardComponent
+                  key={individual.id}
+                  individual={{
+                    id: individual.id,
+                    name: individual.name,
+                    avatarUrl: individual.avatarUrl,
+                    gender: individual.gender,
+                    memo: individual.memo,
+                    hatchedAt: new Date(individual.hatchedAt),
+                  }}
+                />
+              ))}
+              <RegistButton onPress={moveToRegist}>
+                <AddIcon width={30} height={30} fill={theme.color.white} />
+              </RegistButton>
+            </IndividualList>
+          </ScrollView>
         </Container>
       </Suspense>
     </SafeAreaView>
