@@ -52,18 +52,13 @@ const IndividualManagementScreen = () => {
           <SearchBlock>
             <SearchInput placeholder={'이름으로 검색해봐요!'} />
           </SearchBlock>
-
           <ScrollView>
             <IndividualList>
               {individuals.map(individual => (
                 <IndividualCardComponent
                   key={individual.id}
                   individual={{
-                    id: individual.id,
-                    name: individual.name,
-                    avatarUrl: individual.avatarUrl,
-                    gender: individual.gender,
-                    memo: individual.memo,
+                    ...individual,
                     hatchedAt: new Date(individual.hatchedAt),
                   }}
                 />

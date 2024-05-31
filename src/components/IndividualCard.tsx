@@ -12,21 +12,14 @@ import {useNav} from '../hooks/useNav';
 import useIndividualIdStore from '../stores/useIndividualIdStore';
 import Button from './common/Button';
 import IndividualMoreSeeActionSheet from './IndividualMoreSeeActionSheet';
-import {Gender} from '../api/types';
+import {IndividualType} from '../api/types';
 import {Caption} from './common/TextGroup';
 
 export interface IndividualCardProps {
   individual: Individual;
 }
 
-export interface Individual {
-  id: string;
-  name: string;
-  avatarUrl: string;
-  gender: Gender;
-  hatchedAt: Date;
-  memo: string;
-}
+export interface Individual extends IndividualType.IndividualsResponse {}
 
 const Card = styled.TouchableOpacity`
   background-color: ${props => props.theme.color.primary};
@@ -105,7 +98,9 @@ const IndividualCardComponent = ({individual}: IndividualCardProps) => {
   const closeActionSheet = () => actionSheetRef.current?.hide();
   const moveToEdit = () => {
     closeActionSheet();
-    navigation.push('IndividualInfoEditScreen');
+    navigation.push('IndividualInfoEditScreen', {
+      ...individual,
+    });
   };
 
   return (
