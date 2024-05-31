@@ -51,7 +51,6 @@ const AccountBlock = styled.View``;
 const UserInfoEditScreen = () => {
   const {actionSheetRef, openActionSheet, closeActionSheet} = useActionSheet();
   const {params} = useRoute<UserInfoEditScreenProps>();
-  // const actionSheetRef = useRef<ActionSheetRef>(null);
   const {mutate} = useUpdateUser();
 
   const [nicknameValidText, setNicknameValidText] = useState('');
@@ -59,9 +58,6 @@ const UserInfoEditScreen = () => {
   const [newAvatar, setNewAvatar] = useState(params.avatarUrl);
   const [newNickname, setNewNickname] = useState(params.nickname);
   const [newIntroduction, setNewIntroduction] = useState(params.introduction);
-
-  // const openActionSheet = () => actionSheetRef.current?.show();
-  // const closeActionSheet = () => actionSheetRef.current?.hide();
 
   const onPressSave = () =>
     mutate({

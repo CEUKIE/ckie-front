@@ -65,6 +65,49 @@ export namespace IndividualType {
     memo?: string | null;
     cageId?: string | null;
   }
+
+  export interface UpdateIndividualRequest {
+    id: string;
+    name: string;
+    avatarUrl: string;
+    gender: Gender;
+    hatchedAt?: Date | null;
+    memo?: string | null;
+    cageId?: string | null;
+  }
+
+  export interface IndividualsResponse {
+    id: string;
+    name: string;
+    avatarUrl: string;
+    gender: Gender;
+    hatchedAt: Date;
+    memo: string;
+    species: Pick<SpeciesType.SpeciesListResponse, 'id' | 'name'>;
+    // TODO Cage 타입 선언하면 교체
+    cage: {
+      name: string;
+      id: string;
+    };
+  }
+}
+
+export namespace CageType {
+  export interface CageResponse {
+    id: string;
+    name: string;
+  }
+}
+
+export namespace SpeciesType {
+  export interface SpeciesListResponse {
+    id: string;
+    name: string;
+    minTemperature: number;
+    maxTemperature: number;
+    minHumidity: number;
+    maxHumidity: number;
+  }
 }
 
 export interface FileRequest {

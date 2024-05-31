@@ -12,19 +12,14 @@ import {useNav} from '../hooks/useNav';
 import useIndividualIdStore from '../stores/useIndividualIdStore';
 import Button from './common/Button';
 import IndividualMoreSeeActionSheet from './IndividualMoreSeeActionSheet';
+import {IndividualType} from '../api/types';
+import {Caption} from './common/TextGroup';
 
 export interface IndividualCardProps {
   individual: Individual;
 }
 
-export interface Individual {
-  id: string;
-  name: string;
-  profileImage: string;
-  gender: 'male' | 'female';
-  hatchedAt: Date;
-  memo: string;
-}
+export interface Individual extends IndividualType.IndividualsResponse {}
 
 const Card = styled.TouchableOpacity`
   background-color: ${props => props.theme.color.primary};
@@ -41,6 +36,8 @@ const MoreButton = styled(Button)`
 `;
 
 const IndividualBox = styled.View`
+  border-radius: 8px;
+  overflow: hidden;
   background-color: white;
   width: 100%;
 `;
@@ -49,18 +46,17 @@ const ProfileBlock = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding: 4px;
 `;
 
 const ProfileImage = styled(Image)`
-  width: 100px;
-  height: 100px;
-  border-radius: 10px;
+  width: 100%;
+  aspect-ratio: 1;
+  margin-bottom: 8px;
 `;
 
 const InfoBlock = styled.View`
   display: flex;
-  gap: 5px;
+  gap: 8px;
 `;
 
 const HatchDate = styled.Text`
@@ -77,7 +73,7 @@ const NameAndGenderBlock = styled.View`
 `;
 
 const Name = styled.Text``;
-const Gender = styled.Text``;
+const GenderBlock = styled.Text``;
 
 const MemoBlock = styled.View`
   margin: 0px 10px 5px 10px;
@@ -85,8 +81,9 @@ const MemoBlock = styled.View`
   background-color: #ffdfbe;
 `;
 
-const Memo = styled.Text`
+const Memo = styled(Caption)`
   border-radius: 5px;
+  color: ${props => props.theme.color.font.text1};
   text-align: center;
   padding: 10px;
   display: flex;
@@ -100,8 +97,11 @@ const IndividualCardComponent = ({individual}: IndividualCardProps) => {
   const openActionSheet = () => actionSheetRef.current?.show();
   const closeActionSheet = () => actionSheetRef.current?.hide();
   const moveToEdit = () => {
+    const {species, ...rest} = individual;
     closeActionSheet();
-    navigation.push('IndividualInfoEditScreen');
+    navigation.push('IndividualInfoEditScreen', {
+      ...rest,
+    });
   };
 
   return (
@@ -120,13 +120,13 @@ const IndividualCardComponent = ({individual}: IndividualCardProps) => {
       </MoreButton>
       <IndividualBox>
         <ProfileBlock>
-          <ProfileImage source={{uri: individual.profileImage}} />
+          <ProfileImage source={{uri: individual.avatarUrl}} />
         </ProfileBlock>
         <InfoBlock>
           <NameAndGenderBlock>
             <Name>{individual.name}</Name>
-            <Gender>
-              {individual.gender === 'male' ? (
+            <GenderBlock>
+              {individual.gender === 'MALE' ? (
                 <MaleIcon width={10} height={10} />
               ) : (
                 <FemaleIcon
@@ -135,7 +135,7 @@ const IndividualCardComponent = ({individual}: IndividualCardProps) => {
                   fill={theme.color.secondary}
                 />
               )}
-            </Gender>
+            </GenderBlock>
           </NameAndGenderBlock>
           <HatchDate>{formatKorean(individual.hatchedAt)}</HatchDate>
           <MemoBlock>

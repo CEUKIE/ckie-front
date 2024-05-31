@@ -14,9 +14,10 @@ import IndividualInfoEditScreen from '../screens/IndividualInfoEditScreen';
 import {verfiyAccessToken} from '../api/api';
 import useLoginStore from '../stores/useLoginStore';
 import UserInfoInputScreen from '../screens/UserInfoInputScreen';
-import {Platform} from '../api/types';
+import {Gender, Platform} from '../api/types';
 import BackArrowIcon from '../assets/icons/arrow-left-icon.svg';
 import theme from '../styles/theme';
+import SpeciesSelectScreen from '../screens/SpeciesSelectScreen';
 
 export type RootStackParamList = {
   LoginScreen: undefined;
@@ -24,7 +25,21 @@ export type RootStackParamList = {
   CageTopTab: undefined;
   IndividualTopTab: undefined;
   IndividualRegistrationScreen: undefined;
-  IndividualInfoEditScreen: undefined;
+  IndividualInfoEditScreen: {
+    id: string;
+    name: string;
+    avatarUrl: string;
+    hatchedAt: Date;
+    gender: Gender;
+    cage?: {
+      id: string;
+      name: string;
+    } | null;
+    memo: string;
+  };
+  SpeciesSelectScreen: {
+    setSpeciesLabel: React.Dispatch<React.SetStateAction<string>>;
+  };
   UserInfoInputScreen: {
     accessToken: string;
   };
@@ -104,6 +119,13 @@ const RootNavigation = () => {
       <Stack.Screen
         name={'IndividualInfoEditScreen'}
         component={IndividualInfoEditScreen}
+        options={{
+          ...inputScreenHeaderOption,
+        }}
+      />
+      <Stack.Screen
+        name={'SpeciesSelectScreen'}
+        component={SpeciesSelectScreen}
         options={{
           ...inputScreenHeaderOption,
         }}

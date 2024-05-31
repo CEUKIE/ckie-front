@@ -7,7 +7,6 @@ import React, {useEffect, useState} from 'react';
 import SafeAreaView from '../components/common/SafeAreaView';
 import Button from '../components/common/Button';
 import theme from '../styles/theme';
-import SearchIcon from '../assets/icons/search.svg';
 import Male from '../assets/icons/male.svg';
 import Female from '../assets/icons/female.svg';
 import Genderless from '../assets/icons/genderless.svg';
@@ -18,15 +17,10 @@ import useActionSheet from '../hooks/useActionSheet';
 import ClickableAvatar from '../components/ClickableAvatar';
 import {formatKorean} from '../utils/format-date';
 import ModalView from '../components/common/ModalView';
-import {useNav} from '../hooks/useNav';
-import useCreateIndividualStore from '../stores/useCreateIndividualStore';
-import useCreateIndividual from '../hooks/useCreateIndividual';
-import {IndividualType} from '../api/types';
 import useCages from '../hooks/useCages';
-
-interface SelectButtonProps {
-  isSelected: boolean;
-}
+import {RouteProp, useRoute} from '@react-navigation/native';
+import {RootStackParamList} from '../navigations/RootNavigation';
+import useUpdateIndividual from '../hooks/useUpdateIndividual';
 
 const Container = styled.View`
   margin: 0px ${props => props.theme.margin.screen};
@@ -54,12 +48,6 @@ const Box = styled.View`
   margin-bottom: 20px;
 `;
 
-const ShortBox = styled.View`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-`;
-
 const GenderList = styled.View`
   display: flex;
   flex-direction: row;
@@ -72,25 +60,8 @@ const GenderButton = styled(Button)`
   padding: 10px;
 `;
 
-const WeightList = styled.View`
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
-`;
-
-const WeightText = styled(Body1)`
-  color: ${props => props.theme.color.white};
-  font-weight: 700;
-`;
-
-const WeightButton = styled(Button)<SelectButtonProps>`
-  background-color: ${props =>
-    props.isSelected ? props.theme.color.secondary : props.theme.color.primary};
-  width: 60px;
-`;
-
 const RegistButton = styled(Button)`
-  margin-top: 48px;
+  margin-top: 32px;
 `;
 
 const InputValidationText = styled(Caption)<{color?: string}>`
@@ -98,34 +69,46 @@ const InputValidationText = styled(Caption)<{color?: string}>`
   margin-top: 4px;
 `;
 
-const IndividualRegistrationScreen = () => {
-  const navigation = useNav<'IndividualRegistrationScreen'>();
-  const {mutate} = useCreateIndividual();
+interface IndividualInfoEditScreenProps
+  extends RouteProp<RootStackParamList, 'IndividualInfoEditScreen'> {}
+
+const IndividualInfoEditScreen = () => {
+  const {params} = useRoute<IndividualInfoEditScreenProps>();
+  const {mutate} = useUpdateIndividual();
   const {data: cages} = useCages();
-  const {updateIndividual, clear, ...individual} = useCreateIndividualStore(
-    state => state,
-  );
-  const [speciesLabel, setSpeciesLabel] = useState('');
+  const [individual, setIndividual] =
+    useState<IndividualInfoEditScreenProps['params']>(params);
 
   const {actionSheetRef, openActionSheet, closeActionSheet} = useActionSheet();
-  const [imageUrl, setImageUrl] = useState(
-    'https://image.ckie.store/images/individual-profile.jpeg',
-  );
 
   const [isDateModalVisible, setIsDateModalVisible] = useState(false);
   const [isCageModalVisible, setIsCageModalVisible] = useState(false);
-  const [selectedCageValue, setSelectedValue] = useState('');
+  const [selectedCageValue, setSelectedValue] = useState(individual.cage?.id);
   const [selectedCageValueIndex, setSelectedValueIndex] = useState(0);
-  const [selectedCageLabel, setSelectedLabel] = useState('');
 
   const [isValidName, setIsValidName] = useState(false);
-  const [isValidWeight, setIsValidWeight] = useState(false);
   const [isValidHatchedAt, setIsValidHatchedAt] = useState(true);
 
-  const onRegist = () => {
-    console.log(individual);
-    mutate(individual as IndividualType.CreateIndividualRequest);
-    clear();
+  const onChange = <T extends keyof IndividualInfoEditScreenProps['params']>(
+    key: T,
+    value: IndividualInfoEditScreenProps['params'][T],
+  ) => {
+    setIndividual({
+      ...individual,
+      [key]: value,
+    });
+  };
+
+  const onSave = () => {
+    const {cage, ...data} = individual;
+    console.log({
+      ...data,
+      ['cageId']: cage?.id,
+    });
+    mutate({
+      ...data,
+      ['cageId']: cage?.id,
+    });
   };
 
   const validateName = () => {
@@ -151,22 +134,8 @@ const IndividualRegistrationScreen = () => {
     }
   };
 
-  const validateWeight = () => {
-    if (individual.weight && individual.weight > 0) {
-      setIsValidWeight(true);
-    } else {
-      setIsValidWeight(false);
-    }
-  };
-
-  useEffect(() => {
-    updateIndividual('avatarUrl', imageUrl);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imageUrl]);
-
   useEffect(() => {
     validateName();
-    validateWeight();
     validateHatchedAt();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [individual]);
@@ -179,10 +148,9 @@ const IndividualRegistrationScreen = () => {
           <Container>
             <ImagePickerActionSheet
               actionSheetRef={actionSheetRef}
-              setImageUrl={setImageUrl}
+              setImageUrl={(url: string) => onChange('avatarUrl', url)}
               closeActionSheet={closeActionSheet}
             />
-
             <ModalView
               isVisible={isCageModalVisible}
               setIsVisible={setIsCageModalVisible}>
@@ -203,8 +171,7 @@ const IndividualRegistrationScreen = () => {
                 </Picker>
                 <Button
                   onPress={() => {
-                    setSelectedLabel(cages[selectedCageValueIndex].name);
-                    updateIndividual('cageId', selectedCageValue);
+                    onChange('cage', cages[selectedCageValueIndex]);
                     setIsCageModalVisible(false);
                   }}>
                   <Body1 color={theme.color.white}>확인</Body1>
@@ -215,7 +182,7 @@ const IndividualRegistrationScreen = () => {
             <ProfileBox>
               <ClickableAvatar
                 onPress={openActionSheet}
-                uri={imageUrl}
+                uri={individual.avatarUrl}
                 size={100}
               />
               <Info>
@@ -224,7 +191,7 @@ const IndividualRegistrationScreen = () => {
                   <TextArea
                     multiline={false}
                     value={individual.name}
-                    onChangeText={value => updateIndividual('name', value)}
+                    onChangeText={value => onChange('name', value)}
                     placeholder="이름을 입력해주세요!"
                     placeholderTextColor={theme.color.lightGray}
                   />
@@ -261,36 +228,10 @@ const IndividualRegistrationScreen = () => {
                     date={new Date()}
                     onConfirm={date => {
                       setIsDateModalVisible(false);
-                      updateIndividual('hatchedAt', date);
+                      onChange('hatchedAt', date);
                     }}
                     onCancel={() => setIsDateModalVisible(false)}
                   />
-                </Box>
-                <Box>
-                  <Label>종선택</Label>
-                  <ShortBox>
-                    <TextArea
-                      editable={false}
-                      style={{flex: 1}}
-                      multiline={false}
-                      placeholder="종류를 검색해봐요!"
-                      placeholderTextColor={theme.color.lightGray}
-                      value={speciesLabel}
-                    />
-                    <Button
-                      varient="text"
-                      onPress={() =>
-                        navigation.push('SpeciesSelectScreen', {
-                          setSpeciesLabel: setSpeciesLabel,
-                        })
-                      }>
-                      <SearchIcon
-                        width={30}
-                        height={30}
-                        fill={theme.color.secondary}
-                      />
-                    </Button>
-                  </ShortBox>
                 </Box>
                 <Box>
                   <Label>성별</Label>
@@ -301,21 +242,21 @@ const IndividualRegistrationScreen = () => {
                           ? theme.color.secondary
                           : theme.color.primary
                       }
-                      onPress={() => updateIndividual('gender', 'FEMALE')}>
+                      onPress={() => onChange('gender', 'FEMALE')}>
                       <Female width={50} height={50} fill={theme.color.white} />
                     </GenderButton>
                     <GenderButton
                       color={
                         individual.gender === 'MALE' ? '#00A7DD' : '#c7f1ff'
                       }
-                      onPress={() => updateIndividual('gender', 'MALE')}>
+                      onPress={() => onChange('gender', 'MALE')}>
                       <Male width={50} height={50} fill={theme.color.white} />
                     </GenderButton>
                     <GenderButton
                       color={
                         individual.gender === 'LESS' ? '#FFB799' : '#fdf2b1'
                       }
-                      onPress={() => updateIndividual('gender', 'LESS')}>
+                      onPress={() => onChange('gender', 'LESS')}>
                       <Genderless
                         width={50}
                         height={50}
@@ -332,40 +273,8 @@ const IndividualRegistrationScreen = () => {
                     placeholder="사육장을 선택해봐요!"
                     placeholderTextColor={theme.color.lightGray}
                     onPressOut={() => setIsCageModalVisible(true)}
-                    value={selectedCageLabel}
+                    value={individual.cage?.name}
                   />
-                </Box>
-                <Box>
-                  <Label>무게</Label>
-                  <ShortBox>
-                    <TextArea
-                      style={{flex: 1}}
-                      keyboardType={'decimal-pad'}
-                      placeholder="무게를 입력해주세요!"
-                      placeholderTextColor={theme.color.lightGray}
-                      value={individual.weight ? String(individual.weight) : ''}
-                      onChangeText={value =>
-                        updateIndividual('weight', Number(value))
-                      }
-                    />
-                    <WeightList>
-                      <WeightButton
-                        isSelected={individual.weightUnit === 'G'}
-                        onPress={() => updateIndividual('weightUnit', 'G')}>
-                        <WeightText>g</WeightText>
-                      </WeightButton>
-                      <WeightButton
-                        isSelected={individual.weightUnit === 'KG'}
-                        onPress={() => updateIndividual('weightUnit', 'KG')}>
-                        <WeightText>kg</WeightText>
-                      </WeightButton>
-                    </WeightList>
-                  </ShortBox>
-                  {!isValidWeight && (
-                    <InputValidationText color={theme.color.red}>
-                      * 올바른 무게를 입력해주세요
-                    </InputValidationText>
-                  )}
                 </Box>
                 <Box>
                   <View style={{flexDirection: 'row', gap: 4}}>
@@ -377,7 +286,7 @@ const IndividualRegistrationScreen = () => {
                     placeholder="예) 못된놈"
                     placeholderTextColor={theme.color.lightGray}
                     value={individual.memo || ''}
-                    onChangeText={value => updateIndividual('memo', value)}
+                    onChangeText={value => onChange('memo', value)}
                   />
                   <InputValidationText>
                     * 메모는 10자 이하로 입력해주세요
@@ -387,9 +296,9 @@ const IndividualRegistrationScreen = () => {
             </ProfileBox>
             <RegistButton
               color={theme.color.secondary}
-              disabled={!(isValidName && isValidWeight && isValidHatchedAt)}
-              onPress={onRegist}>
-              <Headline6 color={theme.color.white}>등록</Headline6>
+              disabled={!(isValidName && isValidHatchedAt)}
+              onPress={onSave}>
+              <Headline6 color={theme.color.white}>저장</Headline6>
             </RegistButton>
           </Container>
         </ScrollView>
@@ -398,4 +307,4 @@ const IndividualRegistrationScreen = () => {
   );
 };
 
-export default IndividualRegistrationScreen;
+export default IndividualInfoEditScreen;
