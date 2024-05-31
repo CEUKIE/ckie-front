@@ -18,11 +18,11 @@ import useActionSheet from '../hooks/useActionSheet';
 import ClickableAvatar from '../components/ClickableAvatar';
 import {formatKorean} from '../utils/format-date';
 import ModalView from '../components/common/ModalView';
-import {TouchableWithoutFeedback} from 'react-native';
 import {useNav} from '../hooks/useNav';
 import useCreateIndividualStore from '../stores/useCreateIndividualStore';
 import useCreateIndividual from '../hooks/useCreateIndividual';
 import {IndividualType} from '../api/types';
+import useCages from '../hooks/useCages';
 
 interface SelectButtonProps {
   isSelected: boolean;
@@ -101,7 +101,8 @@ const InputValidationText = styled(Caption)<{color?: string}>`
 const IndividualRegistrationScreen = () => {
   const navigation = useNav<'IndividualRegistrationScreen'>();
   const {mutate} = useCreateIndividual();
-  const {updateIndividual, ...individual} = useCreateIndividualStore(
+  const {data: cages} = useCages();
+  const {updateIndividual, clear, ...individual} = useCreateIndividualStore(
     state => state,
   );
   const [speciesLabel, setSpeciesLabel] = useState('');
@@ -121,19 +122,11 @@ const IndividualRegistrationScreen = () => {
   const [isValidWeight, setIsValidWeight] = useState(false);
   const [isValidHatchedAt, setIsValidHatchedAt] = useState(true);
 
-  const onRegist = () =>
+  const onRegist = () => {
+    console.log(individual);
     mutate(individual as IndividualType.CreateIndividualRequest);
-
-  const cageOptions = [
-    {
-      label: '코따리의 사육장',
-      value: 'c3bfa6a7-ebdd-4a2b-aadb-1bc9644a6b5f',
-    },
-    {
-      label: '코따리의 사육장',
-      value: 'c3bfa6a7-ebdd-4a2b-aadb-1bc9644a6b5f',
-    },
-  ];
+    clear();
+  };
 
   const validateName = () => {
     if (individual.name.length >= 2) {
@@ -200,17 +193,17 @@ const IndividualRegistrationScreen = () => {
                     setSelectedValue(itemValue);
                     setSelectedValueIndex(itemIndex);
                   }}>
-                  {cageOptions.map((cage, index) => (
+                  {cages.map((cage, index) => (
                     <Picker.Item
                       key={index}
-                      label={cage.label}
-                      value={cage.value}
+                      label={cage.name}
+                      value={cage.id}
                     />
                   ))}
                 </Picker>
                 <Button
                   onPress={() => {
-                    setSelectedLabel(cageOptions[selectedCageValueIndex].label);
+                    setSelectedLabel(cages[selectedCageValueIndex].name);
                     updateIndividual('cageId', selectedCageValue);
                     setIsCageModalVisible(false);
                   }}>
@@ -333,19 +326,14 @@ const IndividualRegistrationScreen = () => {
                 </Box>
                 <Box>
                   <Label>사육장</Label>
-                  <TouchableWithoutFeedback
-                    onPress={() => {
-                      console.log('tete');
-                      setIsCageModalVisible(true);
-                    }}>
-                    <TextArea
-                      multiline={false}
-                      editable={false}
-                      placeholder="사육장을 선택해봐요!"
-                      placeholderTextColor={theme.color.lightGray}
-                      value={selectedCageLabel}
-                    />
-                  </TouchableWithoutFeedback>
+                  <TextArea
+                    multiline={false}
+                    editable={false}
+                    placeholder="사육장을 선택해봐요!"
+                    placeholderTextColor={theme.color.lightGray}
+                    onPressOut={() => setIsCageModalVisible(true)}
+                    value={selectedCageLabel}
+                  />
                 </Box>
                 <Box>
                   <Label>무게</Label>
@@ -375,21 +363,24 @@ const IndividualRegistrationScreen = () => {
                   </ShortBox>
                   {!isValidWeight && (
                     <InputValidationText color={theme.color.red}>
-                      올바른 무게를 입력해주세요
+                      * 올바른 무게를 입력해주세요
                     </InputValidationText>
                   )}
                 </Box>
                 <Box>
-                  <Label>메모</Label>
+                  <View style={{flexDirection: 'row', gap: 4}}>
+                    <Label>메모</Label>
+                    <Caption>* 개체 카드 앞면에 표시돼요</Caption>
+                  </View>
                   <TextArea
-                    maxLength={12}
-                    placeholder="메모를 입력해주세요!"
+                    maxLength={10}
+                    placeholder="예) 못된놈"
                     placeholderTextColor={theme.color.lightGray}
                     value={individual.memo || ''}
                     onChangeText={value => updateIndividual('memo', value)}
                   />
                   <InputValidationText>
-                    * 메모는 12자 이하로 입력해주세요
+                    * 메모는 10자 이하로 입력해주세요
                   </InputValidationText>
                 </Box>
               </Info>
