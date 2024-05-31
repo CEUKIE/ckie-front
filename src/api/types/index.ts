@@ -82,6 +82,13 @@ export namespace IndividualType {
   }
 }
 
+export namespace CageType {
+  export interface CageResponse {
+    id: string;
+    name: string;
+  }
+}
+
 export namespace SpeciesType {
   export interface SpeciesListResponse {
     id: string;

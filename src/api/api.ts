@@ -1,6 +1,7 @@
 import http from './http';
 import {
   AuthType,
+  CageType,
   FileResponse,
   IndividualType,
   ResponseForm,
@@ -77,6 +78,13 @@ export const getSpeciesList = async () => {
   const response = await http.get<
     ResponseForm<SpeciesType.SpeciesListResponse[]>
   >('/species');
+  return response.data.result!;
+};
+
+export const getCages = async () => {
+  const response = await http.get<ResponseForm<CageType.CageResponse[]>>(
+    '/cages',
+  );
   return response.data.result!;
 };
 
