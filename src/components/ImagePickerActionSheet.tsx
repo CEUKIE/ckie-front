@@ -13,7 +13,9 @@ import useUpload from '../hooks/useUpload';
 
 interface ImagePickerActionSheetProps {
   actionSheetRef: React.RefObject<ActionSheetRef>;
-  setImageUrl: React.Dispatch<React.SetStateAction<string>>;
+  setImageUrl:
+    | React.Dispatch<React.SetStateAction<string>>
+    | ((url: string) => void);
   closeActionSheet: () => void;
 }
 

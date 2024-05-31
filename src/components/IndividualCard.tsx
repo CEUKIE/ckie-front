@@ -97,9 +97,10 @@ const IndividualCardComponent = ({individual}: IndividualCardProps) => {
   const openActionSheet = () => actionSheetRef.current?.show();
   const closeActionSheet = () => actionSheetRef.current?.hide();
   const moveToEdit = () => {
+    const {species, ...rest} = individual;
     closeActionSheet();
     navigation.push('IndividualInfoEditScreen', {
-      ...individual,
+      ...rest,
     });
   };
 

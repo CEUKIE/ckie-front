@@ -31,10 +31,10 @@ export type RootStackParamList = {
     avatarUrl: string;
     hatchedAt: Date;
     gender: Gender;
-    cage: {
+    cage?: {
       id: string;
       name: string;
-    };
+    } | null;
     memo: string;
   };
   SpeciesSelectScreen: {

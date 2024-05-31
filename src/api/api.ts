@@ -74,6 +74,17 @@ export const createIndividual = async (
   return response;
 };
 
+export const updateIndividual = async (
+  data: IndividualType.UpdateIndividualRequest,
+) => {
+  const {id, ...body} = data;
+  const response = await http.patch<ResponseForm<boolean>>(
+    `individuals/${id}`,
+    body,
+  );
+  return response.data.result!;
+};
+
 export const getSpeciesList = async () => {
   const response = await http.get<
     ResponseForm<SpeciesType.SpeciesListResponse[]>

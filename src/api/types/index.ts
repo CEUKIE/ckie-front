@@ -66,6 +66,16 @@ export namespace IndividualType {
     cageId?: string | null;
   }
 
+  export interface UpdateIndividualRequest {
+    id: string;
+    name: string;
+    avatarUrl: string;
+    gender: Gender;
+    hatchedAt?: Date | null;
+    memo?: string | null;
+    cageId?: string | null;
+  }
+
   export interface IndividualsResponse {
     id: string;
     name: string;
