@@ -1,12 +1,15 @@
 import styled from '@emotion/native';
-import React from 'react';
+import React, {Suspense, useEffect} from 'react';
 import {View} from 'react-native';
 
 import SafeAreaView from '../components/common/SafeAreaView';
-import WeightChart, {WeightRecord} from '../components/WeightChart';
+import WeightChart from '../components/WeightChart';
 import {Body1, Body2} from '../components/common/TextGroup';
 import theme from '../styles/theme';
 import useWeightRecordsStore from '../stores/useWeightRecordsStore';
+import useWeightRecords from '../hooks/useWeightRecords';
+import useIndividualIdStore from '../stores/useIndividualIdStore';
+import Indicator from '../components/Indicator';
 
 const Container = styled.View`
   margin: 24px 0;
@@ -45,64 +48,72 @@ const WeightChange = styled(Body2)<{isIncreasing: boolean}>`
     props.isIncreasing ? props.theme.color.green : props.theme.color.red};
 `;
 
-const data: WeightRecord[] = [
-  {targetDate: new Date(), weight: 2},
-  {targetDate: new Date(), weight: 3.5},
-  {targetDate: new Date(), weight: 4.7},
-  {targetDate: new Date(), weight: 3},
-  {targetDate: new Date(), weight: 8.2},
-];
-
 const WeightChartScreen = () => {
-  // TODO data 대신에 weightRecords도 store에서 가져와서 사용
-  const {weightUnit} = useWeightRecordsStore(state => state);
+  const individualId = useIndividualIdStore(state => state.id);
+  const {weightUnit, weightRecords, updateWeightRecords} =
+    useWeightRecordsStore(state => state);
+  const {data} = useWeightRecords(individualId);
+
+  useEffect(() => {
+    const records: {targetDate: Date; weight: number}[] = data.map(record => ({
+      ...record,
+      targetDate: new Date(record.targetDate),
+    }));
+    console.log('차트 스크린: ' + data);
+    updateWeightRecords([...records]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   return (
     <SafeAreaView>
-      <Container>
-        <View
-          style={{
-            borderBottomWidth: 1,
-            borderBottomColor: theme.color.lightGray,
-          }}>
-          <WeightChart weightRecords={data} weightUnit={weightUnit} />
-        </View>
-        <RecordItemBlock>
-          <RecordTitleBlock>
-            <RecordTitle>날짜</RecordTitle>
-            <RecordTitle>체중</RecordTitle>
-            <RecordTitle>변화량</RecordTitle>
-          </RecordTitleBlock>
-          {data.map((record, index) => {
-            const date = record.targetDate;
-            const dateFormat = `${date.getFullYear()}.${
-              date.getMonth() + 1
-            }.${date.getDate()}`;
-            const weightChange =
-              index > 0 ? data[index].weight - data[index - 1].weight : 'new';
-
-            return (
-              <RecordItem
-                key={index}
-                style={{
-                  borderBottomWidth: 1,
-                  borderBottomColor: theme.color.lightGray,
-                }}>
-                <RecordData>{dateFormat}</RecordData>
-                <RecordData>{record.weight}</RecordData>
-                <WeightChange
-                  isIncreasing={weightChange === 'new' || weightChange > 0}>
-                  {typeof weightChange === 'number'
-                    ? weightChange > 0
-                      ? `+${weightChange.toFixed(1)}`
-                      : weightChange.toFixed(1)
-                    : weightChange}
-                </WeightChange>
-              </RecordItem>
-            );
-          })}
-        </RecordItemBlock>
-      </Container>
+      <Suspense fallback={<Indicator />}>
+        <Container>
+          <View
+            style={{
+              borderBottomWidth: 1,
+              borderBottomColor: theme.color.lightGray,
+            }}>
+            <WeightChart
+              weightRecords={weightRecords}
+              weightUnit={weightUnit}
+            />
+          </View>
+          <RecordItemBlock>
+            <RecordTitleBlock>
+              <RecordTitle>날짜</RecordTitle>
+              <RecordTitle>체중</RecordTitle>
+              <RecordTitle>변화량</RecordTitle>
+            </RecordTitleBlock>
+            {weightRecords.map((record, index) => {
+              const date = record.targetDate;
+              const dateFormat = `${date.getFullYear()}.${
+                date.getMonth() + 1
+              }.${date.getDate()}`;
+              const weightChange =
+                index > 0 ? data[index].weight - data[index - 1].weight : 'new';
+              return (
+                <RecordItem
+                  key={index}
+                  style={{
+                    borderBottomWidth: 1,
+                    borderBottomColor: theme.color.lightGray,
+                  }}>
+                  <RecordData>{dateFormat}</RecordData>
+                  <RecordData>{record.weight}</RecordData>
+                  <WeightChange
+                    isIncreasing={weightChange === 'new' || weightChange > 0}>
+                    {typeof weightChange === 'number'
+                      ? weightChange > 0
+                        ? `+${weightChange.toFixed(1)}`
+                        : weightChange.toFixed(1)
+                      : weightChange}
+                  </WeightChange>
+                </RecordItem>
+              );
+            })}
+          </RecordItemBlock>
+        </Container>
+      </Suspense>
     </SafeAreaView>
   );
 };

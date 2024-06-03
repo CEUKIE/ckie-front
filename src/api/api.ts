@@ -4,6 +4,7 @@ import {
   CageType,
   FileResponse,
   IndividualType,
+  RecordType,
   ResponseForm,
   SpeciesType,
   UserType,
@@ -96,6 +97,20 @@ export const getCages = async () => {
   const response = await http.get<ResponseForm<CageType.CageResponse[]>>(
     '/cages',
   );
+  return response.data.result!;
+};
+
+export const getRecords = async (individualId: string) => {
+  const response = await http.get<ResponseForm<RecordType.RecordsResponse[]>>(
+    `/records/${individualId}`,
+  );
+  return response.data.result!;
+};
+
+export const getWeightRecords = async (individualId: string) => {
+  const response = await http.get<
+    ResponseForm<RecordType.WeightRecordResponse[]>
+  >(`/records/${individualId}/weights`);
   return response.data.result!;
 };
 

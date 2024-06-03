@@ -2,6 +2,7 @@ import axios from 'axios';
 import {retrieve} from '../utils/persistence';
 
 const http = axios.create({
+  // baseURL: 'https://api.ckie.store',
   baseURL: 'http://192.168.0.3:8080',
   timeout: 5000,
   headers: {

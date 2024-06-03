@@ -110,6 +110,27 @@ export namespace SpeciesType {
   }
 }
 
+export namespace RecordType {
+  export type RecordCategory = 'FEEDING' | 'WEIGHT' | 'ECDYSIS' | 'ETC';
+
+  export interface RecordsResponse {
+    target: string;
+    record: {
+      id: string;
+      name: RecordCategory;
+      memo?: string | null;
+      // TODO 나중에 빼자~
+      color?: string | null;
+    }[];
+  }
+
+  export interface WeightRecordResponse {
+    id: string;
+    targetDate: string;
+    weight: number;
+  }
+}
+
 export interface FileRequest {
   image: FormData;
 }
