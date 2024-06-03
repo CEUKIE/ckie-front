@@ -2,9 +2,10 @@ import styled from '@emotion/native';
 import React from 'react';
 import {Body1, Body2} from './common/TextGroup';
 import theme from '../styles/theme';
+import {RecordType} from '../api/types';
 
 export interface PlanItemProps {
-  name: string;
+  name: RecordType.RecordCategory;
   color: string;
   memo?: string;
 }
@@ -41,7 +42,15 @@ const PlanItem = ({name, color, memo}: PlanItemProps) => {
     <Container>
       <ColorBox color={color} />
       <InfoBlock>
-        <BoldBody1>{name}</BoldBody1>
+        <BoldBody1>
+          {name === 'FEEDING'
+            ? '피딩'
+            : name === 'WEIGHT'
+            ? '무게'
+            : name === 'ECDYSIS'
+            ? '탈피'
+            : '기타'}
+        </BoldBody1>
         <Body2 color={theme.color.font.text1}>{memo}</Body2>
       </InfoBlock>
     </Container>

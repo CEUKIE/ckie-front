@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import styled from '@emotion/native';
 
 import SafeAreaView from '../components/common/SafeAreaView';
 import {ScrollView, Text, View} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import theme from '../styles/theme';
-import {plans} from '../db/plants';
 import CategoryItemList from '../components/CategoryItemList';
 import PlanItemList from '../components/PlanItemList';
 import FeedingModal from '../components/FeedingModal';
@@ -16,6 +15,9 @@ import GuitarIcon from '../assets/icons/guitar-icon.svg';
 import WeightModal from '../components/WeightModal';
 import MoltingModal from '../components/MoltingModal';
 import MemoModal from '../components/MemoModal';
+import useIndividualIdStore from '../stores/useIndividualIdStore';
+import useRecords from '../hooks/useRecords';
+import Indicator from '../components/Indicator';
 
 interface Category {
   name: string;
@@ -35,6 +37,9 @@ const Container = styled.View`
 `;
 
 const ScheduleScreen = () => {
+  const individualId = useIndividualIdStore(state => state.id);
+  const {data} = useRecords(individualId);
+
   const [selected, setSelected] = useState('');
   const [markedDates, setMarkedDates] = useState<MarkedType>({});
   const [isFeedingModalVisible, setFeedingModalVisible] = useState(false);
@@ -71,69 +76,85 @@ const ScheduleScreen = () => {
 
   useEffect(() => {
     const planList: MarkedType = {};
-    plans.forEach(p => {
+    data.forEach(p => {
+      p.record.forEach(r => {
+        r.color =
+          r.name === 'FEEDING'
+            ? '#DDFFE1'
+            : r.name === 'WEIGHT'
+            ? '#DEDDFF'
+            : r.name === 'ECDYSIS'
+            ? '#FFDDE0'
+            : '#FEFFDD';
+      });
+    });
+    // TODO 타입 수정
+    data.forEach(p => {
       planList[p.target] = {dots: [...p.record]};
     });
     setMarkedDates(planList);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   return (
     <SafeAreaView>
-      <FeedingModal
-        isVisible={isFeedingModalVisible}
-        setIsVisible={setFeedingModalVisible}
-      />
-      <WeightModal
-        isVisible={isWeightModalVisible}
-        setIsVisible={setWeightModalVisible}
-        weightUnit={'g'}
-        currentWeight={12}
-      />
-      <MoltingModal
-        isVisible={isMoltingModalVisible}
-        setIsVisible={setMoltingModalVisible}
-      />
-      <MemoModal
-        isVisible={isMemoModalVisible}
-        setIsVisible={setMemoModalVisible}
-      />
-      {Object.keys(markedDates).length === plans.length ? (
-        <Container>
-          <CategoryItemList items={categories} />
-          <ScrollView>
-            <Calendar
-              style={{borderRadius: 8, marginBottom: 16}}
-              monthFormat={'M월'}
-              onDayPress={day => {
-                setSelected(day.dateString);
-              }}
-              markingType={'multi-dot'}
-              markedDates={{...markedDates, [selected]: {selected: true}}}
-              theme={{
-                arrowColor: theme.color.primary,
-                todayTextColor: theme.color.primary,
-                textDayFontWeight: 'bold',
-                textMonthFontSize: 20,
-                textMonthFontWeight: 'bold',
-                textSectionTitleColor: 'rgba(138, 138, 138, 1)',
-                selectedDotColor: theme.color.secondary,
-                selectedDayTextColor: theme.color.white,
-                selectedDayBackgroundColor: theme.color.secondary,
-              }}
-            />
-            <View>
-              {markedDates[selected] && (
-                <PlanItemList
-                  items={markedDates[selected].dots}
-                  date={new Date(selected)}
-                />
-              )}
-            </View>
-          </ScrollView>
-        </Container>
-      ) : (
-        <Text>loading...</Text>
-      )}
+      <Suspense fallback={<Indicator />}>
+        <FeedingModal
+          isVisible={isFeedingModalVisible}
+          setIsVisible={setFeedingModalVisible}
+        />
+        <WeightModal
+          isVisible={isWeightModalVisible}
+          setIsVisible={setWeightModalVisible}
+          weightUnit={'g'}
+          currentWeight={12}
+        />
+        <MoltingModal
+          isVisible={isMoltingModalVisible}
+          setIsVisible={setMoltingModalVisible}
+        />
+        <MemoModal
+          isVisible={isMemoModalVisible}
+          setIsVisible={setMemoModalVisible}
+        />
+        {Object.keys(markedDates).length === data.length ? (
+          <Container>
+            <CategoryItemList items={categories} />
+            <ScrollView>
+              <Calendar
+                style={{borderRadius: 8, marginBottom: 16}}
+                monthFormat={'M월'}
+                onDayPress={day => {
+                  setSelected(day.dateString);
+                }}
+                markingType={'multi-dot'}
+                markedDates={{...markedDates, [selected]: {selected: true}}}
+                theme={{
+                  arrowColor: theme.color.primary,
+                  todayTextColor: theme.color.primary,
+                  textDayFontWeight: 'bold',
+                  textMonthFontSize: 20,
+                  textMonthFontWeight: 'bold',
+                  textSectionTitleColor: 'rgba(138, 138, 138, 1)',
+                  selectedDotColor: theme.color.secondary,
+                  selectedDayTextColor: theme.color.white,
+                  selectedDayBackgroundColor: theme.color.secondary,
+                }}
+              />
+              <View>
+                {markedDates[selected] && (
+                  <PlanItemList
+                    items={markedDates[selected].dots}
+                    date={new Date(selected)}
+                  />
+                )}
+              </View>
+            </ScrollView>
+          </Container>
+        ) : (
+          <Text>loading...</Text>
+        )}
+      </Suspense>
     </SafeAreaView>
   );
 };
