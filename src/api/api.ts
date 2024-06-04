@@ -68,6 +68,13 @@ export const getIndividuals = async () => {
   return response.data.result!;
 };
 
+export const getIndividualDetail = async (id: string) => {
+  const response = await http.get<
+    ResponseForm<IndividualType.IndividualsDetailResponse>
+  >(`/individuals/${id}`);
+  return response.data.result!;
+};
+
 export const createIndividual = async (
   data: IndividualType.CreateIndividualRequest,
 ) => {
@@ -98,6 +105,11 @@ export const getCages = async () => {
     '/cages',
   );
   return response.data.result!;
+};
+
+export const createRecord = async (data: RecordType.CreateRecordsRequest) => {
+  const response = await http.post<ResponseForm<void>>('/records', data);
+  return response;
 };
 
 export const getRecords = async (individualId: string) => {

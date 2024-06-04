@@ -84,33 +84,36 @@ const WeightChartScreen = () => {
               <RecordTitle>체중</RecordTitle>
               <RecordTitle>변화량</RecordTitle>
             </RecordTitleBlock>
-            {weightRecords.map((record, index) => {
-              const date = record.targetDate;
-              const dateFormat = `${date.getFullYear()}.${
-                date.getMonth() + 1
-              }.${date.getDate()}`;
-              const weightChange =
-                index > 0 ? data[index].weight - data[index - 1].weight : 'new';
-              return (
-                <RecordItem
-                  key={index}
-                  style={{
-                    borderBottomWidth: 1,
-                    borderBottomColor: theme.color.lightGray,
-                  }}>
-                  <RecordData>{dateFormat}</RecordData>
-                  <RecordData>{record.weight}</RecordData>
-                  <WeightChange
-                    isIncreasing={weightChange === 'new' || weightChange > 0}>
-                    {typeof weightChange === 'number'
-                      ? weightChange > 0
-                        ? `+${weightChange.toFixed(1)}`
-                        : weightChange.toFixed(1)
-                      : weightChange}
-                  </WeightChange>
-                </RecordItem>
-              );
-            })}
+            {data.length !== 0 &&
+              weightRecords.map((record, index) => {
+                const date = record.targetDate;
+                const dateFormat = `${date.getFullYear()}.${
+                  date.getMonth() + 1
+                }.${date.getDate()}`;
+                const weightChange =
+                  index > 0
+                    ? data[index].weight - data[index - 1].weight
+                    : 'new';
+                return (
+                  <RecordItem
+                    key={index}
+                    style={{
+                      borderBottomWidth: 1,
+                      borderBottomColor: theme.color.lightGray,
+                    }}>
+                    <RecordData>{dateFormat}</RecordData>
+                    <RecordData>{record.weight}</RecordData>
+                    <WeightChange
+                      isIncreasing={weightChange === 'new' || weightChange > 0}>
+                      {typeof weightChange === 'number'
+                        ? weightChange > 0
+                          ? `+${weightChange.toFixed(1)}`
+                          : weightChange.toFixed(1)
+                        : weightChange}
+                    </WeightChange>
+                  </RecordItem>
+                );
+              })}
           </RecordItemBlock>
         </Container>
       </Suspense>

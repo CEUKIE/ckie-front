@@ -14,6 +14,7 @@ import useUpdateUser from '../hooks/useUpdateUser';
 import ImagePickerActionSheet from '../components/ImagePickerActionSheet';
 import ClickableAvatar from '../components/ClickableAvatar';
 import useActionSheet from '../hooks/useActionSheet';
+import {useNav} from '../hooks/useNav';
 
 interface UserInfoEditScreenProps
   extends RouteProp<RootStackParamList, 'UserInfoEditScreen'> {}
@@ -49,6 +50,7 @@ const InputValidationText = styled(Caption)`
 const AccountBlock = styled.View``;
 
 const UserInfoEditScreen = () => {
+  const navigation = useNav<'UserInfoEditScreen'>();
   const {actionSheetRef, openActionSheet, closeActionSheet} = useActionSheet();
   const {params} = useRoute<UserInfoEditScreenProps>();
   const {mutate} = useUpdateUser();
@@ -59,12 +61,14 @@ const UserInfoEditScreen = () => {
   const [newNickname, setNewNickname] = useState(params.nickname);
   const [newIntroduction, setNewIntroduction] = useState(params.introduction);
 
-  const onPressSave = () =>
+  const onPressSave = () => {
     mutate({
       avatarUrl: newAvatar,
       nickname: newNickname,
       introduction: newIntroduction,
     });
+    navigation.goBack();
+  };
 
   useEffect(() => {
     if (newNickname.length < 2) {

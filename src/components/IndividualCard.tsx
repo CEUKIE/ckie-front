@@ -19,7 +19,10 @@ export interface IndividualCardProps {
   individual: Individual;
 }
 
-export interface Individual extends IndividualType.IndividualsResponse {}
+export interface Individual
+  extends Omit<IndividualType.IndividualsResponse, 'hatchedAt'> {
+  hatchedAt: Date;
+}
 
 const Card = styled.TouchableOpacity`
   background-color: ${props => props.theme.color.primary};
@@ -108,7 +111,9 @@ const IndividualCardComponent = ({individual}: IndividualCardProps) => {
     <Card
       onPress={() => {
         updateId(individual.id);
-        navigation.push('IndividualTopTab');
+        navigation.push('IndividualTopTab', {
+          individualId: individual.id,
+        });
       }}>
       <IndividualMoreSeeActionSheet
         actionSheetRef={actionSheetRef}

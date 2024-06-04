@@ -18,6 +18,8 @@ import MemoModal from '../components/MemoModal';
 import useIndividualIdStore from '../stores/useIndividualIdStore';
 import useRecords from '../hooks/useRecords';
 import Indicator from '../components/Indicator';
+import useModalStore from '../stores/useModalStore';
+import useIndividualDetail from '../hooks/useIndividualDetail';
 
 interface Category {
   name: string;
@@ -42,10 +44,17 @@ const ScheduleScreen = () => {
 
   const [selected, setSelected] = useState('');
   const [markedDates, setMarkedDates] = useState<MarkedType>({});
-  const [isFeedingModalVisible, setFeedingModalVisible] = useState(false);
-  const [isWeightModalVisible, setWeightModalVisible] = useState(false);
-  const [isMoltingModalVisible, setMoltingModalVisible] = useState(false);
-  const [isMemoModalVisible, setMemoModalVisible] = useState(false);
+
+  const {
+    isFeedingModalVisible,
+    isMemoModalVisible,
+    isMoltingModalVisible,
+    isWeightModalVisible,
+    setFeedingModalVisible,
+    setWeightModalVisible,
+    setMoltingModalVisible,
+    setMemoModalVisible,
+  } = useModalStore(state => state);
 
   const categories = [
     {
@@ -94,29 +103,16 @@ const ScheduleScreen = () => {
     });
     setMarkedDates(planList);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log('data: ' + data);
   }, [data]);
 
   return (
     <SafeAreaView>
       <Suspense fallback={<Indicator />}>
-        <FeedingModal
-          isVisible={isFeedingModalVisible}
-          setIsVisible={setFeedingModalVisible}
-        />
-        <WeightModal
-          isVisible={isWeightModalVisible}
-          setIsVisible={setWeightModalVisible}
-          weightUnit={'g'}
-          currentWeight={12}
-        />
-        <MoltingModal
-          isVisible={isMoltingModalVisible}
-          setIsVisible={setMoltingModalVisible}
-        />
-        <MemoModal
-          isVisible={isMemoModalVisible}
-          setIsVisible={setMemoModalVisible}
-        />
+        <FeedingModal isVisible={isFeedingModalVisible} selected={selected} />
+        <WeightModal isVisible={isWeightModalVisible} selected={selected} />
+        <MoltingModal isVisible={isMoltingModalVisible} selected={selected} />
+        <MemoModal isVisible={isMemoModalVisible} selected={selected} />
         {Object.keys(markedDates).length === data.length ? (
           <Container>
             <CategoryItemList items={categories} />

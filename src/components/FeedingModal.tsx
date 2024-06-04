@@ -10,10 +10,13 @@ import GuitarIcon from '../assets/icons/guitar-icon.svg';
 import FoodSizeButton from './FoodSizeButton';
 import ModalView from './common/ModalView';
 import Button from './common/Button';
+import useCreateRecord from '../hooks/useCreateRecord';
+import useIndividualIdStore from '../stores/useIndividualIdStore';
+import useModalStore from '../stores/useModalStore';
 
 interface FeedingModalProps {
-  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   isVisible: boolean;
+  selected: string;
 }
 
 const Container = styled.View`
@@ -58,7 +61,13 @@ const CompleteButton = styled(Button)`
   flex: 1;
 `;
 
-const FeedingModal = ({isVisible, setIsVisible}: FeedingModalProps) => {
+const FeedingModal = ({isVisible, selected}: FeedingModalProps) => {
+  const {mutate} = useCreateRecord();
+  const individualId = useIndividualIdStore(state => state.id);
+  const setFeedingModalVisible = useModalStore(
+    state => state.setFeedingModalVisible,
+  );
+
   const foods = [
     {name: '귀뚜라미', icon: <CricketIcon width={32} height={32} />},
     {name: '밀웜', icon: <WormIcon width={32} height={32} />},
@@ -69,8 +78,18 @@ const FeedingModal = ({isVisible, setIsVisible}: FeedingModalProps) => {
   const [food, setFood] = useState('');
   const [size, setSize] = useState('');
 
+  const onComplete = () => {
+    mutate({
+      individualId,
+      targetDate: selected,
+      memo: size ? `${food}/${size}` : food,
+      category: 'FEEDING',
+    });
+    setFeedingModalVisible(false);
+  };
+
   return (
-    <ModalView isVisible={isVisible} setIsVisible={setIsVisible}>
+    <ModalView isVisible={isVisible} setIsVisible={setFeedingModalVisible}>
       <Container>
         <ContentBlock>
           <FoodBlock>
@@ -101,12 +120,11 @@ const FeedingModal = ({isVisible, setIsVisible}: FeedingModalProps) => {
             </SizeButtonBlock>
           </SizeBlock>
         </ContentBlock>
-
         <CloseButtonBlock>
-          <CloseButton onPress={() => setIsVisible(false)}>
+          <CloseButton onPress={() => setFeedingModalVisible(false)}>
             <Body1>닫기</Body1>
           </CloseButton>
-          <CompleteButton>
+          <CompleteButton onPress={onComplete}>
             <Body1 color={'white'}>완료</Body1>
           </CompleteButton>
         </CloseButtonBlock>

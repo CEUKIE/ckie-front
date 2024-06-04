@@ -18,12 +18,15 @@ import {Gender, Platform} from '../api/types';
 import BackArrowIcon from '../assets/icons/arrow-left-icon.svg';
 import theme from '../styles/theme';
 import SpeciesSelectScreen from '../screens/SpeciesSelectScreen';
+import CageRegistrationStack from './CageRegistrationStack';
 
 export type RootStackParamList = {
   LoginScreen: undefined;
   MainTab: undefined;
   CageTopTab: undefined;
-  IndividualTopTab: undefined;
+  IndividualTopTab: {
+    individualId: string;
+  };
   IndividualRegistrationScreen: undefined;
   IndividualInfoEditScreen: {
     id: string;
@@ -35,7 +38,7 @@ export type RootStackParamList = {
       id: string;
       name: string;
     } | null;
-    memo: string;
+    memo?: string | null;
   };
   SpeciesSelectScreen: {
     setSpeciesLabel: React.Dispatch<React.SetStateAction<string>>;
@@ -49,6 +52,7 @@ export type RootStackParamList = {
     introduction: string;
     platform: Platform;
   };
+  CageRegistrationStack: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -142,6 +146,14 @@ const RootNavigation = () => {
         component={UserInfoEditScreen}
         options={{
           ...inputScreenHeaderOption,
+        }}
+      />
+      <Stack.Screen
+        name={'CageRegistrationStack'}
+        component={CageRegistrationStack}
+        options={{
+          ...inputScreenHeaderOption,
+          headerShown: false,
         }}
       />
     </Stack.Navigator>

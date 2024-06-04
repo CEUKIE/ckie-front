@@ -1,12 +1,18 @@
 import React, {useState} from 'react';
 import styled from '@emotion/native';
 
-import ModalView, {ModalViewProps} from './common/ModalView';
+import ModalView from './common/ModalView';
 import {Body1, Headline6} from './common/TextGroup';
 import Button from './common/Button';
 import theme from '../styles/theme';
+import useCreateRecord from '../hooks/useCreateRecord';
+import useModalStore from '../stores/useModalStore';
+import useIndividualStore from '../stores/useIndividualStore';
 
-interface MemoModalProps extends Omit<ModalViewProps, 'children'> {}
+interface MemoModalProps {
+  isVisible: boolean;
+  selected: string;
+}
 
 const Container = styled.View`
   gap: 48px;
@@ -41,11 +47,24 @@ const CompleteButton = styled(Button)`
   flex: 1;
 `;
 
-const MemoModal = ({isVisible, setIsVisible}: MemoModalProps) => {
+const MemoModal = ({isVisible, selected}: MemoModalProps) => {
+  const {mutate} = useCreateRecord();
+  const individualId = useIndividualStore(state => state.id);
+  const setMemoModalVisible = useModalStore(state => state.setMemoModalVisible);
   const [memo, setMemo] = useState('');
 
+  const onComplete = () => {
+    mutate({
+      individualId,
+      category: 'ETC',
+      targetDate: selected,
+      memo,
+    });
+    setMemoModalVisible(false);
+  };
+
   return (
-    <ModalView isVisible={isVisible} setIsVisible={setIsVisible}>
+    <ModalView isVisible={isVisible} setIsVisible={setMemoModalVisible}>
       <Container>
         <ContentBlock>
           <Headline6>기타 기록</Headline6>
@@ -60,10 +79,10 @@ const MemoModal = ({isVisible, setIsVisible}: MemoModalProps) => {
           />
         </ContentBlock>
         <CloseButtonBlock>
-          <CloseButton onPress={() => setIsVisible(false)}>
+          <CloseButton onPress={() => setMemoModalVisible(false)}>
             <Body1>닫기</Body1>
           </CloseButton>
-          <CompleteButton>
+          <CompleteButton onPress={onComplete}>
             <Body1 color={theme.color.white}>완료</Body1>
           </CompleteButton>
         </CloseButtonBlock>
