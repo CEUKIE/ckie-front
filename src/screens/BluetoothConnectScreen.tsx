@@ -1,13 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import styled from '@emotion/native';
+import {useNavigation} from '@react-navigation/native';
+import {Device} from 'react-native-ble-plx';
+import {StackNavigationProp} from '@react-navigation/stack';
+import base64 from 'react-native-base64';
 
 import SafeAreaView from '../components/common/SafeAreaView';
 import {manager} from '../components/bluetooth';
-import {Alert, ScrollView} from 'react-native';
+import {Alert, ScrollView, Text} from 'react-native';
 import Button from '../components/common/Button';
 import {Body1, Headline6} from '../components/common/TextGroup';
 import theme from '../styles/theme';
 import DeviceItem from '../components/DeviceItem';
+import {RootStackParamList} from '../navigations/CageRegistrationStack';
+import useCageConnectStore from '../stores/useCageConnectStore';
 
 const Container = styled.View`
   flex: 1;
@@ -18,6 +24,7 @@ const Container = styled.View`
 const TextBlock = styled(Headline6)`
   font-size: 30px;
   font-weight: 600;
+  padding: 12px 0;
 `;
 
 const ImageBlock = styled.View`
@@ -29,7 +36,9 @@ const Image = styled.Image`
   aspect-ratio: 1;
 `;
 
-const DeviceListBlock = styled.View``;
+const DeviceListBlock = styled.View`
+  flex: 1;
+`;
 
 const DeviceList = styled.View`
   background-color: ${props => props.theme.color.white};
@@ -42,19 +51,27 @@ const SearhchButton = styled(Button)`
   padding: 18px 0;
 `;
 
-interface Device {
-  id?: string | null;
-  name?: string | null;
-  isConnectable?: boolean | null;
-}
+// interface Device {
+//   id?: string | null;
+//   name?: string | null;
+//   isConnectable?: boolean | null;
+// }
 
 const BluetoothConnectScreen = () => {
+  const navigation =
+    useNavigation<
+      StackNavigationProp<RootStackParamList, 'BluetoothConnectScreen'>
+    >();
+
+  const {device, updateCage} = useCageConnectStore(state => state);
+
   const [isSearching, setIsSearching] = useState(false);
   const [isCompleteSearch, setIsCompleteSearch] = useState(false);
   const [disalbeButton, setDisableButton] = useState(true);
   const [displayText, setDisplayText] = useState('사육장을 등록해주세요!');
   const [devices, setDevices] = useState<Device[]>([]);
-  const [connectedDevice, setConnectedDevice] = useState<Device | null>();
+  const charUUID = '5a9edc71-80cb-4159-b2e6-a2913b761026';
+  const sericeUUID = '2f05b2a5-079f-4a07-b9c0-3b1fe7d615c9';
 
   useEffect(() => {
     const subscription = manager.onStateChange(state => {
@@ -76,39 +93,68 @@ const BluetoothConnectScreen = () => {
   };
 
   const startDeviceScan = () => {
-    manager.startDeviceScan(
-      null,
-      {
-        allowDuplicates: false,
-      },
-      async (error, device) => {
-        setIsSearching(true);
-        setDisplayText('검색중...');
-        if (error) {
-          console.error(error);
-          manager.stopDeviceScan();
-        }
-        console.log(
-          device?.localName,
-          device?.name,
-          device?.id,
-          device?.isConnectable,
-        );
-        if (device && device.name) {
-          setDevices(prevDevices => {
-            const deviceIds = prevDevices.map(d => d.id);
-            if (!deviceIds.includes(device.id)) {
-              return [...prevDevices, device];
-            }
-            return prevDevices;
-          });
-        }
+    setDevices([]);
+    try {
+      manager.startDeviceScan(
+        null,
+        {
+          allowDuplicates: false,
+        },
+        async (error, device) => {
+          setIsSearching(true);
+          setDisplayText('검색중...');
+          if (error) {
+            console.error(error);
+            manager.stopDeviceScan();
+          }
+          console.log(
+            device?.localName,
+            device?.name,
+            device?.id,
+            device?.isConnectable,
+          );
+          if (device && device.name) {
+            setDevices(prevDevices => {
+              const deviceIds = prevDevices.map(d => d.id);
+              if (!deviceIds.includes(device.id)) {
+                return [...prevDevices, device];
+              }
+              return prevDevices;
+            });
+          }
 
-        setTimeout(() => {
-          cancelDeviceScan();
-        }, 10000);
-      },
-    );
+          setTimeout(() => {
+            cancelDeviceScan();
+          }, 10000);
+        },
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const write = async () => {
+    try {
+      const rowData = {
+        wifi_id: 'dlink1234',
+        wifi_pw: '14159265',
+        min_temp: 24.5,
+        max_temp: 26,
+        min_humidity: 60.4,
+        max_humidity: 70,
+      };
+      const stringify = `wifi_id ${rowData.wifi_id}; wifi_pw ${rowData.wifi_pw}; min_temp ${rowData.min_temp}; max_temp ${rowData.max_temp}; min_humidity ${rowData.min_humidity}; max_humidity ${rowData.max_humidity};`;
+      const data = base64.encode(JSON.stringify(stringify));
+
+      await manager.writeCharacteristicWithResponseForDevice(
+        device?.id!,
+        sericeUUID,
+        charUUID,
+        data,
+      );
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -128,16 +174,18 @@ const BluetoothConnectScreen = () => {
             <DeviceList>
               <ScrollView>
                 {devices.map((device, index) => (
-                  <DeviceItem
-                    key={index}
-                    name={device.name!}
-                    isConnectable={device.isConnectable!}
-                  />
+                  <DeviceItem key={index} device={device} />
                 ))}
               </ScrollView>
             </DeviceList>
           </DeviceListBlock>
         )}
+        {/* <Button onPress={write}>
+          <Text>WRITE</Text>
+        </Button>
+        <Button onPress={() => navigation.push('CageInfoInputScreen')}>
+          <Text>Nav</Text>
+        </Button> */}
         <SearhchButton
           color={theme.color.secondary}
           onPress={isSearching ? cancelDeviceScan : startDeviceScan}

@@ -19,6 +19,7 @@ const useCreateRecord = () => {
       queryClient.invalidateQueries({
         queryKey: [WEIGHT_QUERY_KEY],
       });
+      console.log('record 초기화');
     },
   });
 };

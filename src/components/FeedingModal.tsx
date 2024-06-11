@@ -8,11 +8,11 @@ import SuperfoodIcon from '../assets/icons/super-food-icon.svg';
 import WormIcon from '../assets/icons/worm-icon.svg';
 import GuitarIcon from '../assets/icons/guitar-icon.svg';
 import FoodSizeButton from './FoodSizeButton';
-import ModalView from './common/ModalView';
 import Button from './common/Button';
 import useCreateRecord from '../hooks/useCreateRecord';
 import useIndividualIdStore from '../stores/useIndividualIdStore';
 import useModalStore from '../stores/useModalStore';
+import FullScreenModal from './common/FullScreenModal';
 
 interface FeedingModalProps {
   isVisible: boolean;
@@ -79,17 +79,25 @@ const FeedingModal = ({isVisible, selected}: FeedingModalProps) => {
   const [size, setSize] = useState('');
 
   const onComplete = () => {
-    mutate({
-      individualId,
-      targetDate: selected,
-      memo: size ? `${food}/${size}` : food,
-      category: 'FEEDING',
-    });
-    setFeedingModalVisible(false);
+    mutate(
+      {
+        individualId,
+        targetDate: selected,
+        memo: size ? `${food}/${size}` : food,
+        category: 'FEEDING',
+      },
+      {
+        onSuccess: () => {
+          setFeedingModalVisible(false);
+        },
+      },
+    );
   };
 
   return (
-    <ModalView isVisible={isVisible} setIsVisible={setFeedingModalVisible}>
+    <FullScreenModal
+      visible={isVisible}
+      onClose={() => setFeedingModalVisible(false)}>
       <Container>
         <ContentBlock>
           <FoodBlock>
@@ -129,7 +137,7 @@ const FeedingModal = ({isVisible, selected}: FeedingModalProps) => {
           </CompleteButton>
         </CloseButtonBlock>
       </Container>
-    </ModalView>
+    </FullScreenModal>
   );
 };
 

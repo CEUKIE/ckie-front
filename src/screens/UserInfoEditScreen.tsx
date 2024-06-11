@@ -67,7 +67,6 @@ const UserInfoEditScreen = () => {
       nickname: newNickname,
       introduction: newIntroduction,
     });
-    navigation.goBack();
   };
 
   useEffect(() => {

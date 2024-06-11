@@ -1,4 +1,4 @@
-import React, {Suspense, useEffect, useState} from 'react';
+import React, {Suspense, useEffect, useMemo, useState} from 'react';
 import styled from '@emotion/native';
 
 import SafeAreaView from '../components/common/SafeAreaView';
@@ -19,7 +19,6 @@ import useIndividualIdStore from '../stores/useIndividualIdStore';
 import useRecords from '../hooks/useRecords';
 import Indicator from '../components/Indicator';
 import useModalStore from '../stores/useModalStore';
-import useIndividualDetail from '../hooks/useIndividualDetail';
 
 interface Category {
   name: string;
@@ -56,54 +55,61 @@ const ScheduleScreen = () => {
     setMemoModalVisible,
   } = useModalStore(state => state);
 
-  const categories = [
-    {
-      name: '피딩',
-      color: '#DDFFE1',
-      icon: <FoodIcon width={32} height={32} fill={theme.color.black} />,
-      setModalVisible: setFeedingModalVisible,
-    },
-    {
-      name: '무게',
-      color: '#DEDDFF',
-      icon: <ScaleIcon width={32} height={32} fill={theme.color.black} />,
-      setModalVisible: setWeightModalVisible,
-    },
-    {
-      name: '탈피',
-      color: '#FFDDE0',
-      icon: <RapterIcon width={32} height={32} fill={theme.color.black} />,
-      setModalVisible: setMoltingModalVisible,
-    },
-    {
-      name: '기타',
-      color: '#FEFFDD',
-      icon: <GuitarIcon width={32} height={32} fill={theme.color.black} />,
-      setModalVisible: setMemoModalVisible,
-    },
-  ];
+  const categories = useMemo(
+    () => [
+      {
+        name: '피딩',
+        color: '#DDFFE1',
+        icon: <FoodIcon width={32} height={32} fill={theme.color.black} />,
+        setModalVisible: setFeedingModalVisible,
+      },
+      {
+        name: '무게',
+        color: '#DEDDFF',
+        icon: <ScaleIcon width={32} height={32} fill={theme.color.black} />,
+        setModalVisible: setWeightModalVisible,
+      },
+      {
+        name: '탈피',
+        color: '#FFDDE0',
+        icon: <RapterIcon width={32} height={32} fill={theme.color.black} />,
+        setModalVisible: setMoltingModalVisible,
+      },
+      {
+        name: '기타',
+        color: '#FEFFDD',
+        icon: <GuitarIcon width={32} height={32} fill={theme.color.black} />,
+        setModalVisible: setMemoModalVisible,
+      },
+    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   useEffect(() => {
-    const planList: MarkedType = {};
-    data.forEach(p => {
-      p.record.forEach(r => {
-        r.color =
-          r.name === 'FEEDING'
-            ? '#DDFFE1'
-            : r.name === 'WEIGHT'
-            ? '#DEDDFF'
-            : r.name === 'ECDYSIS'
-            ? '#FFDDE0'
-            : '#FEFFDD';
+    console.log('data 변경');
+    if (data) {
+      const planList: MarkedType = {};
+      data.forEach(p => {
+        p.record.forEach(r => {
+          r.color =
+            r.name === 'FEEDING'
+              ? '#DDFFE1'
+              : r.name === 'WEIGHT'
+              ? '#DEDDFF'
+              : r.name === 'ECDYSIS'
+              ? '#FFDDE0'
+              : '#FEFFDD';
+        });
       });
-    });
-    // TODO 타입 수정
-    data.forEach(p => {
-      planList[p.target] = {dots: [...p.record]};
-    });
-    setMarkedDates(planList);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    console.log('data: ' + data);
+      // TODO 타입 수정
+      data.forEach(p => {
+        planList[p.target] = {dots: [...p.record]};
+      });
+      setMarkedDates(planList);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      console.log('data: ' + data);
+    }
   }, [data]);
 
   return (

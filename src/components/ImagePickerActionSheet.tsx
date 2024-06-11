@@ -87,6 +87,22 @@ const ImagePickerActionSheet = ({
             : image.path,
       });
 
+      console.log(
+        '룰루' +
+          JSON.stringify(
+            {
+              name: image.filename,
+              type: image.mime,
+              uri:
+                Platform.OS === 'ios'
+                  ? image.path.replace('file://', '')
+                  : image.path,
+            },
+            null,
+            2,
+          ),
+      );
+
       const response = await mutateAsync(body);
       console.log(response);
       const imageUrl =

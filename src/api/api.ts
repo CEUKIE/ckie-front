@@ -1,6 +1,7 @@
 import http from './http';
 import {
   AuthType,
+  CageStateType,
   CageType,
   FileResponse,
   IndividualType,
@@ -123,6 +124,13 @@ export const getWeightRecords = async (individualId: string) => {
   const response = await http.get<
     ResponseForm<RecordType.WeightRecordResponse[]>
   >(`/records/${individualId}/weights`);
+  return response.data.result!;
+};
+
+export const getCageState = async (cageId: string) => {
+  const response = await http.get<ResponseForm<CageStateType.CageResponse[]>>(
+    `/cage-states/${cageId}`,
+  );
   return response.data.result!;
 };
 

@@ -105,6 +105,14 @@ export namespace CageType {
   }
 }
 
+export namespace CageStateType {
+  export interface CageResponse {
+    temperature: number;
+    humidity: number;
+    createdAt: string;
+  }
+}
+
 export namespace SpeciesType {
   export interface SpeciesListResponse {
     id: string;
