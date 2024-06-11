@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import styled from '@emotion/native';
 import {RouteProp, useRoute} from '@react-navigation/native';
 
@@ -13,6 +13,8 @@ import {useNav} from '../hooks/useNav';
 import useCageRegistrationStore from '../stores/useCageRegistrationStore';
 import {RootStackParamList} from '../navigations/CageRegistrationStack';
 import useCageConnectStore from '../stores/useCageConnectStore';
+import { ScrollView } from 'react-native';
+import { SpeciesType } from '../api/types';
 
 interface SpeciesSelectScreenProps
   extends RouteProp<RootStackParamList, 'CageSpeciesSelectScreen'> {}
@@ -49,6 +51,16 @@ const CageSpeciesSelectScreen = () => {
   );
   const {updateCage} = useCageConnectStore(state => state);
   const {data} = useSpeciesList();
+  const [searchInput, setSearchInput] = useState('');
+  const [filteredData, setFilteredData] = useState<
+    SpeciesType.SpeciesListResponse[]
+  >([]);
+
+  useEffect(() => {
+    const filtered = data.filter(item => item.name.includes(searchInput));
+    setFilteredData(filtered);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchInput]);
 
   return (
     <SafeAreaView>
@@ -56,6 +68,8 @@ const CageSpeciesSelectScreen = () => {
         <Container>
           <SearchBox>
             <SearchInput
+              value={searchInput}
+              onChangeText={setSearchInput}
               placeholder="종을 검색해봐요!"
               placeholderTextColor={theme.color.lightGray}
             />
@@ -63,23 +77,25 @@ const CageSpeciesSelectScreen = () => {
               <SearchIcon width={30} height={30} fill={theme.color.secondary} />
             </Button>
           </SearchBox>
-          <SpeciesBox>
-            {data.map((species, index) => (
-              <Species
-                key={index}
-                name={species.name}
-                onPress={() => {
-                  updateSpeciesId(species.id);
-                  setSpeciesLabel(species.name);
-                  updateCage('minTemp', species.minTemperature);
-                  updateCage('maxTemp', species.maxTemperature);
-                  updateCage('minHumidity', species.minHumidity);
-                  updateCage('maxHumidity', species.maxHumidity);
-                  navigation.goBack();
-                }}
-              />
-            ))}
-          </SpeciesBox>
+          <ScrollView>
+            <SpeciesBox>
+              {filteredData.map((species, index) => (
+                <Species
+                  key={index}
+                  name={species.name}
+                  onPress={() => {
+                    updateSpeciesId(species.id);
+                    setSpeciesLabel(species.name);
+                    updateCage('minTemp', species.minTemperature);
+                    updateCage('maxTemp', species.maxTemperature);
+                    updateCage('minHumidity', species.minHumidity);
+                    updateCage('maxHumidity', species.maxHumidity);
+                    navigation.goBack();
+                  }}
+                />
+              ))}
+            </SpeciesBox>
+          </ScrollView>
         </Container>
       </Suspense>
     </SafeAreaView>

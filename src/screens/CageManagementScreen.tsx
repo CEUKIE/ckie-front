@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import React, {Suspense, useState} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import {RefreshControl, ScrollView} from 'react-native';
 
 import theme from '../styles/theme';
@@ -71,7 +71,12 @@ const CageManagementScreen = () => {
             }>
             <CageCardList>
               {data.map(cage => (
-                <CageCard key={cage.id} id={cage.id} name={cage.name} />
+                <CageCard
+                  key={cage.id}
+                  id={cage.id}
+                  name={cage.name}
+                  avatarUrl={cage.avatarUrl}
+                />
               ))}
               <RegistButton onPress={moveToRegistStack}>
                 <AddIcon width={30} height={30} fill={theme.color.white} />

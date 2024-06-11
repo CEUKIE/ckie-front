@@ -10,10 +10,10 @@ type Action = {
 };
 
 const useTimerStore = create<State & Action>(set => ({
-  timer: 5,
+  timer: 10,
   updateTimer: timer => set(() => ({timer})),
   decrementTime: () =>
-    set(state => ({timer: state.timer > 0 ? state.timer - 1 : 5})),
+    set(state => ({timer: state.timer > 0 ? state.timer - 1 : 10})),
 }));
 
 export default useTimerStore;

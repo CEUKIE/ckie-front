@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import styled from '@emotion/native';
 
 import theme from '../styles/theme';
@@ -12,6 +12,8 @@ import Indicator from '../components/Indicator';
 import {useNav} from '../hooks/useNav';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {RootStackParamList} from '../navigations/RootNavigation';
+import { SpeciesType } from '../api/types';
+import { ScrollView } from 'react-native';
 
 interface SpeciesSelectScreenProps
   extends RouteProp<RootStackParamList, 'SpeciesSelectScreen'> {}
@@ -47,6 +49,16 @@ const SpeciesSelectScreen = () => {
     state => state.updateIndividual,
   );
   const {data} = useSpeciesList();
+  const [searchInput, setSearchInput] = useState('');
+  const [filteredData, setFilteredData] = useState<
+    SpeciesType.SpeciesListResponse[]
+  >([]);
+
+  useEffect(() => {
+    const filtered = data.filter(item => item.name.includes(searchInput));
+    setFilteredData(filtered);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchInput]);
 
   return (
     <SafeAreaView>
@@ -54,6 +66,8 @@ const SpeciesSelectScreen = () => {
         <Container>
           <SearchBox>
             <SearchInput
+              value={searchInput}
+              onChangeText={setSearchInput}
               placeholder="종을 검색해봐요!"
               placeholderTextColor={theme.color.lightGray}
             />
@@ -62,17 +76,19 @@ const SpeciesSelectScreen = () => {
             </Button>
           </SearchBox>
           <SpeciesBox>
-            {data.map((species, index) => (
-              <Species
-                key={index}
-                name={species.name}
-                onPress={() => {
-                  updateIndividual('speciesId', species.id);
-                  setSpeciesLabel(species.name);
-                  navigation.goBack();
-                }}
-              />
-            ))}
+            <ScrollView>
+              {filteredData.map((species, index) => (
+                <Species
+                  key={index}
+                  name={species.name}
+                  onPress={() => {
+                    updateIndividual('speciesId', species.id);
+                    setSpeciesLabel(species.name);
+                    navigation.goBack();
+                  }}
+                />
+              ))}
+            </ScrollView>
           </SpeciesBox>
         </Container>
       </Suspense>

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* CkieAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* CkieAppTests.m */; };
+		033D45131EEE4883A1CA33AB /* SCDream1.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE3817CDBE4745B5A174C38C /* SCDream1.otf */; };
 		0C80B921A6F3F58F76C31292 /* libPods-CkieApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-CkieApp.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -15,21 +16,20 @@
 		222617C52C04E64200972DC9 /* SwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222617C42C04E64200972DC9 /* SwiftBridge.swift */; };
 		2DAD311033B94BD2B46F261E /* Jua-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 07DEE34E5A9E4B918836AC1E /* Jua-Regular.ttf */; };
 		4EC04CD0422A48DE97CF3074 /* Pretendard-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8FDE25B1AC7544CEB462DA5F /* Pretendard-Medium.ttf */; };
+		56099A6713464F69B90F7ED1 /* SCDream8.otf in Resources */ = {isa = PBXBuildFile; fileRef = 083D0E801C9E4A2D9CD498D9 /* SCDream8.otf */; };
+		6413BBC6B45B49E08B2F47D6 /* SCDream5.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8CCBF1F5CB564054BEF659BC /* SCDream5.otf */; };
 		7699B88040F8A987B510C191 /* libPods-CkieApp-CkieAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-CkieApp-CkieAppTests.a */; };
+		7CB5D62B46524DCCAAA4CF57 /* SCDream9.otf in Resources */ = {isa = PBXBuildFile; fileRef = 60D52F4C022841D4B504A48E /* SCDream9.otf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8DD7A0FE751848FE9C44629D /* SCDream3.otf in Resources */ = {isa = PBXBuildFile; fileRef = A11A9FB88C264F41BB68A2D8 /* SCDream3.otf */; };
+		B20E3A00D60E4467A295BB0A /* SCDream7.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF4C1FCB5232440296F80B83 /* SCDream7.otf */; };
 		C8436B3BE0784DB6B6530A09 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B335360A9BDA400A8B221BA8 /* Pretendard-Regular.ttf */; };
+		CA96B638639D4C68BC1034C5 /* SCDream2.otf in Resources */ = {isa = PBXBuildFile; fileRef = 38B81F4F78D94B8488095F63 /* SCDream2.otf */; };
+		E5B0B04957024E8EB2E3678E /* SCDream4.otf in Resources */ = {isa = PBXBuildFile; fileRef = 87786030571F4455A4565B06 /* SCDream4.otf */; };
+		ED6ED7C6785F4EC293CAD5D6 /* SCDream6.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4968A370EB05420C8BC5E734 /* SCDream6.otf */; };
 		F54BFAA0C6B548E7BD450F0C /* Pretendard-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4BE5C5C0873F4AD48763A638 /* Pretendard-Bold.ttf */; };
 		F724B852B7D545F095FD5B58 /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 477D4B8895DC452AAEBF9ED0 /* Pretendard-SemiBold.ttf */; };
 		FCA24D094EE8494CA5FADF2E /* Pretendard-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36F78BC950A744008AAC95E0 /* Pretendard-ExtraBold.ttf */; };
-		033D45131EEE4883A1CA33AB /* SCDream1.otf in Resources */ = {isa = PBXBuildFile; fileRef = BE3817CDBE4745B5A174C38C /* SCDream1.otf */; };
-		CA96B638639D4C68BC1034C5 /* SCDream2.otf in Resources */ = {isa = PBXBuildFile; fileRef = 38B81F4F78D94B8488095F63 /* SCDream2.otf */; };
-		8DD7A0FE751848FE9C44629D /* SCDream3.otf in Resources */ = {isa = PBXBuildFile; fileRef = A11A9FB88C264F41BB68A2D8 /* SCDream3.otf */; };
-		E5B0B04957024E8EB2E3678E /* SCDream4.otf in Resources */ = {isa = PBXBuildFile; fileRef = 87786030571F4455A4565B06 /* SCDream4.otf */; };
-		6413BBC6B45B49E08B2F47D6 /* SCDream5.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8CCBF1F5CB564054BEF659BC /* SCDream5.otf */; };
-		ED6ED7C6785F4EC293CAD5D6 /* SCDream6.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4968A370EB05420C8BC5E734 /* SCDream6.otf */; };
-		B20E3A00D60E4467A295BB0A /* SCDream7.otf in Resources */ = {isa = PBXBuildFile; fileRef = CF4C1FCB5232440296F80B83 /* SCDream7.otf */; };
-		56099A6713464F69B90F7ED1 /* SCDream8.otf in Resources */ = {isa = PBXBuildFile; fileRef = 083D0E801C9E4A2D9CD498D9 /* SCDream8.otf */; };
-		7CB5D62B46524DCCAAA4CF57 /* SCDream9.otf in Resources */ = {isa = PBXBuildFile; fileRef = 60D52F4C022841D4B504A48E /* SCDream9.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +47,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* CkieAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CkieAppTests.m; sourceTree = "<group>"; };
 		07DEE34E5A9E4B918836AC1E /* Jua-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Jua-Regular.ttf"; path = "../src/assets/fonts/Jua-Regular.ttf"; sourceTree = "<group>"; };
+		083D0E801C9E4A2D9CD498D9 /* SCDream8.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SCDream8.otf; path = ../src/assets/fonts/SCDream8.otf; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* CkieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CkieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = CkieApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = CkieApp/AppDelegate.mm; sourceTree = "<group>"; };
@@ -76,26 +77,25 @@
 		223A0E5C2BBEBC210074A115 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		223A0E5D2BBEBC210074A115 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		36F78BC950A744008AAC95E0 /* Pretendard-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-ExtraBold.ttf"; path = "../src/assets/fonts/Pretendard-ExtraBold.ttf"; sourceTree = "<group>"; };
+		38B81F4F78D94B8488095F63 /* SCDream2.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SCDream2.otf; path = ../src/assets/fonts/SCDream2.otf; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-CkieApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CkieApp.debug.xcconfig"; path = "Target Support Files/Pods-CkieApp/Pods-CkieApp.debug.xcconfig"; sourceTree = "<group>"; };
 		477D4B8895DC452AAEBF9ED0 /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-SemiBold.ttf"; path = "../src/assets/fonts/Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
+		4968A370EB05420C8BC5E734 /* SCDream6.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SCDream6.otf; path = ../src/assets/fonts/SCDream6.otf; sourceTree = "<group>"; };
 		4BE5C5C0873F4AD48763A638 /* Pretendard-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Bold.ttf"; path = "../src/assets/fonts/Pretendard-Bold.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-CkieApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CkieApp.release.xcconfig"; path = "Target Support Files/Pods-CkieApp/Pods-CkieApp.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-CkieApp-CkieAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CkieApp-CkieAppTests.debug.xcconfig"; path = "Target Support Files/Pods-CkieApp-CkieAppTests/Pods-CkieApp-CkieAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-CkieApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CkieApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		60D52F4C022841D4B504A48E /* SCDream9.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SCDream9.otf; path = ../src/assets/fonts/SCDream9.otf; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = CkieApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		87786030571F4455A4565B06 /* SCDream4.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SCDream4.otf; path = ../src/assets/fonts/SCDream4.otf; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-CkieApp-CkieAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CkieApp-CkieAppTests.release.xcconfig"; path = "Target Support Files/Pods-CkieApp-CkieAppTests/Pods-CkieApp-CkieAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		8CCBF1F5CB564054BEF659BC /* SCDream5.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SCDream5.otf; path = ../src/assets/fonts/SCDream5.otf; sourceTree = "<group>"; };
 		8FDE25B1AC7544CEB462DA5F /* Pretendard-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Medium.ttf"; path = "../src/assets/fonts/Pretendard-Medium.ttf"; sourceTree = "<group>"; };
+		A11A9FB88C264F41BB68A2D8 /* SCDream3.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SCDream3.otf; path = ../src/assets/fonts/SCDream3.otf; sourceTree = "<group>"; };
 		B335360A9BDA400A8B221BA8 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Regular.ttf"; path = "../src/assets/fonts/Pretendard-Regular.ttf"; sourceTree = "<group>"; };
+		BE3817CDBE4745B5A174C38C /* SCDream1.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SCDream1.otf; path = ../src/assets/fonts/SCDream1.otf; sourceTree = "<group>"; };
+		CF4C1FCB5232440296F80B83 /* SCDream7.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SCDream7.otf; path = ../src/assets/fonts/SCDream7.otf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		BE3817CDBE4745B5A174C38C /* SCDream1.otf */ = {isa = PBXFileReference; name = "SCDream1.otf"; path = "../src/assets/fonts/SCDream1.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		38B81F4F78D94B8488095F63 /* SCDream2.otf */ = {isa = PBXFileReference; name = "SCDream2.otf"; path = "../src/assets/fonts/SCDream2.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A11A9FB88C264F41BB68A2D8 /* SCDream3.otf */ = {isa = PBXFileReference; name = "SCDream3.otf"; path = "../src/assets/fonts/SCDream3.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		87786030571F4455A4565B06 /* SCDream4.otf */ = {isa = PBXFileReference; name = "SCDream4.otf"; path = "../src/assets/fonts/SCDream4.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		8CCBF1F5CB564054BEF659BC /* SCDream5.otf */ = {isa = PBXFileReference; name = "SCDream5.otf"; path = "../src/assets/fonts/SCDream5.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		4968A370EB05420C8BC5E734 /* SCDream6.otf */ = {isa = PBXFileReference; name = "SCDream6.otf"; path = "../src/assets/fonts/SCDream6.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		CF4C1FCB5232440296F80B83 /* SCDream7.otf */ = {isa = PBXFileReference; name = "SCDream7.otf"; path = "../src/assets/fonts/SCDream7.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		083D0E801C9E4A2D9CD498D9 /* SCDream8.otf */ = {isa = PBXFileReference; name = "SCDream8.otf"; path = "../src/assets/fonts/SCDream8.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		60D52F4C022841D4B504A48E /* SCDream9.otf */ = {isa = PBXFileReference; name = "SCDream9.otf"; path = "../src/assets/fonts/SCDream9.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

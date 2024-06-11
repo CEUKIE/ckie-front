@@ -16,7 +16,7 @@ const Container = styled.View`
   border-radius: 8px;
   gap: 12px;
   margin-top: 12px;
-  border: 1px solid #e7e7e7;
+  border: 1.5px solid #e7e7e7;
 `;
 
 const ColorBox = styled.View<{color: string}>`

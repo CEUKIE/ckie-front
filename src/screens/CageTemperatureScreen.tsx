@@ -177,10 +177,10 @@ const CageTemperatureScreen = () => {
         },
       );
 
-      const intervalId = setInterval(requestTemp, 6000);
+      const intervalId = setInterval(requestTemp, 11000);
       const timerId = setInterval(() => {
         decrementTime();
-      }, 1000); // update timer every second
+      }, 1000);
 
       return () => {
         clearInterval(intervalId);

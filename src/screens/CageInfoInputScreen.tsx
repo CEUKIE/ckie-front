@@ -41,8 +41,9 @@ const SpeciesBox = styled.View`
   gap: 10px;
 `;
 
-const SearhchButton = styled(Button)`
+const NextButton = styled(Button)`
   padding: 18px 0;
+  background-color: ${props => props.theme.color.secondary};
 `;
 
 const CageInfoInputScreen = () => {
@@ -51,13 +52,9 @@ const CageInfoInputScreen = () => {
       StackNavigationProp<RootStackParamList, 'BluetoothConnectScreen'>
     >();
   const {actionSheetRef, openActionSheet, closeActionSheet} = useActionSheet();
-  const [avatarUrl, setAvatarUrl] = useState(
-    'https://image.ckie.store/images/individual-profile.jpeg',
-  );
   const [speciesLabel, setSpeciesLabel] = useState('');
-  const {name, speciesId, updateName} = useCageRegistrationStore(
-    state => state,
-  );
+  const {name, speciesId, avatarUrl, updateAvatarUrl, updateName} =
+    useCageRegistrationStore(state => state);
   const states = useCageConnectStore(state => state);
 
   return (
@@ -66,12 +63,15 @@ const CageInfoInputScreen = () => {
         <ImagePickerActionSheet
           actionSheetRef={actionSheetRef}
           closeActionSheet={closeActionSheet}
-          setImageUrl={setAvatarUrl}
+          setImageUrl={updateAvatarUrl}
         />
         <ContenetBlock>
           <ClickableAvatar
             onPress={openActionSheet}
-            uri={avatarUrl}
+            uri={
+              avatarUrl ||
+              'https://image.ckie.store/images/individual-profile.jpeg'
+            }
             size={100}
           />
           <InputBlock>
@@ -113,14 +113,14 @@ const CageInfoInputScreen = () => {
             </InputBox>
           </InputBlock>
         </ContenetBlock>
-        <SearhchButton
+        <NextButton
           onPress={() => {
             console.log(JSON.stringify(states, null, 2));
             navigation.push('WifiInfoScreen');
           }}
           disabled={!(name && speciesId)}>
-          <Body1>다음</Body1>
-        </SearhchButton>
+          <Body1 color={theme.color.white}>다음</Body1>
+        </NextButton>
       </Container>
     </SafeAreaView>
   );

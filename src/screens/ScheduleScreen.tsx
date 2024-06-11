@@ -112,14 +112,16 @@ const ScheduleScreen = () => {
     }
   }, [data]);
 
+  if (!data) return <Indicator />
+
   return (
     <SafeAreaView>
+      <FeedingModal isVisible={isFeedingModalVisible} selected={selected} />
+      <WeightModal isVisible={isWeightModalVisible} selected={selected} />
+      <MoltingModal isVisible={isMoltingModalVisible} selected={selected} />
+      <MemoModal isVisible={isMemoModalVisible} selected={selected} />
       <Suspense fallback={<Indicator />}>
-        <FeedingModal isVisible={isFeedingModalVisible} selected={selected} />
-        <WeightModal isVisible={isWeightModalVisible} selected={selected} />
-        <MoltingModal isVisible={isMoltingModalVisible} selected={selected} />
-        <MemoModal isVisible={isMemoModalVisible} selected={selected} />
-        {Object.keys(markedDates).length === data.length ? (
+        {Object.keys(markedDates).length === data.length && (
           <Container>
             <CategoryItemList items={categories} />
             <ScrollView>
@@ -153,8 +155,6 @@ const ScheduleScreen = () => {
               </View>
             </ScrollView>
           </Container>
-        ) : (
-          <Text>loading...</Text>
         )}
       </Suspense>
     </SafeAreaView>

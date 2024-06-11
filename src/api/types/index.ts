@@ -99,9 +99,16 @@ export namespace IndividualType {
 }
 
 export namespace CageType {
+  export interface CreateCageRequest {
+    id: string;
+    name: string;
+    avatarUrl: string;
+  }
+
   export interface CageResponse {
     id: string;
     name: string;
+    avatarUrl: string;
   }
 }
 

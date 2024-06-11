@@ -8,6 +8,7 @@ import useIndividualIdStore from '../stores/useIndividualIdStore';
 export interface CageCardProps {
   id: string;
   name: string;
+  avatarUrl: string;
 }
 
 const Card = styled.TouchableOpacity`
@@ -54,7 +55,7 @@ const NameBlock = styled.View`
 `;
 const Name = styled.Text``;
 
-const CageCard = ({id, name}: CageCardProps) => {
+const CageCard = ({id, name, avatarUrl}: CageCardProps) => {
   const navigation = useNav<'MainTab'>();
   const updateId = useIndividualIdStore(state => state.updateId);
 
@@ -68,7 +69,9 @@ const CageCard = ({id, name}: CageCardProps) => {
         <ProfileBlock>
           <ProfileImage
             source={{
-              uri: 'https://image.ckie.store/images/individual-profile.jpeg',
+              uri:
+                avatarUrl ||
+                'https://image.ckie.store/images/individual-profile.jpeg',
             }}
           />
         </ProfileBlock>

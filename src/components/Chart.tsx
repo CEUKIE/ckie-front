@@ -22,8 +22,8 @@ const Chart = ({records, labels, yAxisSuffix}: ChartProps) => {
   });
 
   useEffect(() => {
-    console.log('records: ' + records);
-    console.log('labels: ' + labels);
+    // console.log('records: ' + records);
+    // console.log('labels: ' + labels);
     const tmpRecords: number[] = [];
     records.forEach(record => tmpRecords.push(record));
     setData({
@@ -44,9 +44,9 @@ const Chart = ({records, labels, yAxisSuffix}: ChartProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [records]);
 
-  useEffect(() => {
-    console.log(`data: ${JSON.stringify(data)}`);
-  }, [data])
+  // useEffect(() => {
+  //   console.log(`data: ${JSON.stringify(data)}`);
+  // }, [data])
 
   return (
     <View>

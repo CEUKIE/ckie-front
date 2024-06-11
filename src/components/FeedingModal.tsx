@@ -13,6 +13,8 @@ import useCreateRecord from '../hooks/useCreateRecord';
 import useIndividualIdStore from '../stores/useIndividualIdStore';
 import useModalStore from '../stores/useModalStore';
 import FullScreenModal from './common/FullScreenModal';
+import ModalView from './common/ModalView';
+import theme from '../styles/theme';
 
 interface FeedingModalProps {
   isVisible: boolean;
@@ -95,9 +97,7 @@ const FeedingModal = ({isVisible, selected}: FeedingModalProps) => {
   };
 
   return (
-    <FullScreenModal
-      visible={isVisible}
-      onClose={() => setFeedingModalVisible(false)}>
+    <ModalView isVisible={isVisible} setIsVisible={setFeedingModalVisible}>
       <Container>
         <ContentBlock>
           <FoodBlock>
@@ -132,12 +132,12 @@ const FeedingModal = ({isVisible, selected}: FeedingModalProps) => {
           <CloseButton onPress={() => setFeedingModalVisible(false)}>
             <Body1>닫기</Body1>
           </CloseButton>
-          <CompleteButton onPress={onComplete}>
+          <CompleteButton onPress={onComplete} color={theme.color.secondary}>
             <Body1 color={'white'}>완료</Body1>
           </CompleteButton>
         </CloseButtonBlock>
       </Container>
-    </FullScreenModal>
+    </ModalView>
   );
 };
 

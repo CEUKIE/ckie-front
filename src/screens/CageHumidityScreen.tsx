@@ -126,7 +126,6 @@ const CageHumidityScreen = () => {
   }, [cageStates]);
 
   useEffect(() => {
-    const cageId = '55475ad3-c152-484e-b50d-5bf38fe8b496';
     // requestTemp();
 
     if (socket) {

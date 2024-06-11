@@ -82,7 +82,7 @@ const MemoModal = ({isVisible, selected}: MemoModalProps) => {
           <CloseButton onPress={() => setMemoModalVisible(false)}>
             <Body1>닫기</Body1>
           </CloseButton>
-          <CompleteButton onPress={onComplete}>
+          <CompleteButton onPress={onComplete} color={theme.color.secondary}>
             <Body1 color={theme.color.white}>완료</Body1>
           </CompleteButton>
         </CloseButtonBlock>

@@ -59,7 +59,7 @@ const WeightChartScreen = () => {
       ...record,
       targetDate: new Date(record.targetDate),
     }));
-    console.log('차트 스크린: ' + data);
+    // console.log('차트 스크린: ' + JSON.stringify(data));
     updateWeightRecords([...records]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
@@ -84,7 +84,7 @@ const WeightChartScreen = () => {
               <RecordTitle>체중</RecordTitle>
               <RecordTitle>변화량</RecordTitle>
             </RecordTitleBlock>
-            {data.length !== 0 &&
+            {data.length === weightRecords.length &&
               weightRecords.map((record, index) => {
                 const date = record.targetDate;
                 const dateFormat = `${date.getFullYear()}.${

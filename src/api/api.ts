@@ -101,6 +101,11 @@ export const getSpeciesList = async () => {
   return response.data.result!;
 };
 
+export const createCage = async (data: CageType.CreateCageRequest) => {
+  const response = await http.post<ResponseForm<void>>('/cages', data);
+  return response;
+};
+
 export const getCages = async () => {
   const response = await http.get<ResponseForm<CageType.CageResponse[]>>(
     '/cages',

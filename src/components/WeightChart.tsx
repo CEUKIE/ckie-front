@@ -26,7 +26,7 @@ const WeightChart = ({weightRecords, weightUnit}: WeightChartProps) => {
   });
 
   useEffect(() => {
-    console.log(`차트 컴포넌트: ${weightRecords}`);
+    // console.log(`차트 컴포넌트: ${weightRecords}`);
     const records: number[] = [];
     weightRecords.forEach(record => records.push(record.weight));
     setData({
