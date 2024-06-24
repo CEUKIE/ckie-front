@@ -68,12 +68,13 @@ export namespace IndividualType {
 
   export interface UpdateIndividualRequest {
     id: string;
-    name: string;
-    avatarUrl: string;
-    gender: Gender;
+    name?: string;
+    avatarUrl?: string;
+    gender?: Gender;
     hatchedAt?: Date | null;
     memo?: string | null;
     cageId?: string | null;
+    weight?: number | null;
   }
 
   export interface IndividualsResponse {
@@ -81,8 +82,8 @@ export namespace IndividualType {
     name: string;
     avatarUrl: string;
     gender: Gender;
-    hatchedAt: Date;
-    memo: string;
+    hatchedAt: string;
+    memo?: string | null;
     species: Pick<SpeciesType.SpeciesListResponse, 'id' | 'name'>;
     // TODO Cage 타입 선언하면 교체
     cage: {
@@ -90,12 +91,32 @@ export namespace IndividualType {
       id: string;
     };
   }
+
+  export interface IndividualsDetailResponse extends IndividualsResponse {
+    weight: number;
+    weightUnit: WeightUnit;
+  }
 }
 
 export namespace CageType {
+  export interface CreateCageRequest {
+    id: string;
+    name: string;
+    avatarUrl: string;
+  }
+
   export interface CageResponse {
     id: string;
     name: string;
+    avatarUrl: string;
+  }
+}
+
+export namespace CageStateType {
+  export interface CageResponse {
+    temperature: number;
+    humidity: number;
+    createdAt: string;
   }
 }
 
@@ -107,6 +128,35 @@ export namespace SpeciesType {
     maxTemperature: number;
     minHumidity: number;
     maxHumidity: number;
+  }
+}
+
+export namespace RecordType {
+  export type RecordCategory = 'FEEDING' | 'WEIGHT' | 'ECDYSIS' | 'ETC';
+
+  export interface CreateRecordsRequest {
+    individualId: string;
+    targetDate: string;
+    weight?: number;
+    memo?: string;
+    category: RecordCategory;
+  }
+
+  export interface RecordsResponse {
+    target: string;
+    record: {
+      id: string;
+      name: RecordCategory;
+      memo?: string | null;
+      // TODO 나중에 빼자~
+      color?: string | null;
+    }[];
+  }
+
+  export interface WeightRecordResponse {
+    id: string;
+    targetDate: string;
+    weight: number;
   }
 }
 

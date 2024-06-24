@@ -34,8 +34,8 @@ const theme = {
     caption: '12px',
     body2: '14px',
     body1: '16px',
-    headline6: '20px',
-    headline5: '24px',
+    headline6: '18px',
+    headline5: '20px',
   },
 
   margin: {

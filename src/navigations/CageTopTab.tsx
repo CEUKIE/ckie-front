@@ -5,6 +5,10 @@ import CageHumidityScreen from '../screens/CageHumidityScreen';
 import CagePhotoScreen from '../screens/CagePhotoScreen';
 import theme from '../styles/theme';
 
+import TempIcon from '../assets/icons/temp-hot-line.svg';
+import HumidityIcon from '../assets/icons/humidity-icon.svg';
+import AlbumIcon from '../assets/icons/image-icon.svg';
+
 export type RootStackParamList = {
   CageTemperatureScreen: undefined;
   CageHumidityScreen: undefined;
@@ -27,21 +31,30 @@ const CageTopTab = () => {
         name={'CageTemperatureScreen'}
         component={CageTemperatureScreen}
         options={{
-          tabBarLabel: '온도',
+          tabBarShowLabel: false,
+          tabBarIcon: ({color}) => (
+            <TempIcon width={30} height={30} fill={color} />
+          ),
         }}
       />
       <Tab.Screen
         name={'CageHumidityScreen'}
         component={CageHumidityScreen}
         options={{
-          tabBarLabel: '습도',
+          tabBarShowLabel: false,
+          tabBarIcon: ({color}) => (
+            <HumidityIcon width={30} height={30} fill={color} />
+          ),
         }}
       />
       <Tab.Screen
         name={'CagePhotoScreen'}
         component={CagePhotoScreen}
         options={{
-          tabBarLabel: '사진',
+          tabBarShowLabel: false,
+          tabBarIcon: ({color}) => (
+            <AlbumIcon width={30} height={30} fill={color} />
+          ),
         }}
       />
     </Tab.Navigator>

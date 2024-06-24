@@ -8,7 +8,7 @@ import useIndividualIdStore from '../stores/useIndividualIdStore';
 export interface CageCardProps {
   id: string;
   name: string;
-  memo: string;
+  avatarUrl: string;
 }
 
 const Card = styled.TouchableOpacity`
@@ -48,23 +48,14 @@ const NameBlock = styled.View`
   align-items: baseline;
   gap: 3px;
   text-align: center;
-`;
-const Name = styled.Text``;
-
-const MemoBlock = styled.View`
+  padding: 12px;
   margin: 0px 10px 5px 10px;
   border-radius: 10px;
   background-color: #ffdfbe;
 `;
+const Name = styled.Text``;
 
-const Memo = styled.Text`
-  border-radius: 5px;
-  text-align: center;
-  padding: 10px;
-  display: flex;
-`;
-
-const CageCard = ({id, name, memo}: CageCardProps) => {
+const CageCard = ({id, name, avatarUrl}: CageCardProps) => {
   const navigation = useNav<'MainTab'>();
   const updateId = useIndividualIdStore(state => state.updateId);
 
@@ -78,7 +69,9 @@ const CageCard = ({id, name, memo}: CageCardProps) => {
         <ProfileBlock>
           <ProfileImage
             source={{
-              uri: 'https://image.ckie.store/images/individual-profile.jpeg',
+              uri:
+                avatarUrl ||
+                'https://image.ckie.store/images/individual-profile.jpeg',
             }}
           />
         </ProfileBlock>
@@ -86,9 +79,6 @@ const CageCard = ({id, name, memo}: CageCardProps) => {
           <NameBlock>
             <Name>{name}</Name>
           </NameBlock>
-          <MemoBlock>
-            <Memo>{memo}</Memo>
-          </MemoBlock>
         </InfoBlock>
       </IndividualBox>
     </Card>

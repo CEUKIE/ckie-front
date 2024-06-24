@@ -1,13 +1,19 @@
 import styled from '@emotion/native';
-import React, {useState} from 'react';
-import ModalView, {ModalViewProps} from './common/ModalView';
+import React, {useEffect, useState} from 'react';
+
+import ModalView from './common/ModalView';
 import {Body1, Body2, Headline5} from './common/TextGroup';
 import Button from './common/Button';
 import theme from '../styles/theme';
+import useCreateRecord from '../hooks/useCreateRecord';
+import useModalStore from '../stores/useModalStore';
+import useUpdateIndividual from '../hooks/useUpdateIndividual';
+import useIndividualDetail from '../hooks/useIndividualDetail';
+import useIndividualIdStore from '../stores/useIndividualIdStore';
 
-interface WeightModalProps extends Omit<ModalViewProps, 'children'> {
-  weightUnit: 'g' | 'kg';
-  currentWeight: number;
+interface WeightModalProps {
+  isVisible: boolean;
+  selected: string;
 }
 
 const Container = styled.View`
@@ -78,38 +84,63 @@ const CompleteButton = styled(Button)`
   flex: 1;
 `;
 
-const WeightModal = ({
-  isVisible,
-  setIsVisible,
-  weightUnit,
-  currentWeight,
-}: WeightModalProps) => {
+const WeightModal = ({isVisible, selected}: WeightModalProps) => {
   const weights = [-0.1, 0.1, -1, 1, -5, 5];
-  const [weight, setWeight] = useState(currentWeight);
+  const individualId = useIndividualIdStore(state => state.id);
+  const {data: individual} = useIndividualDetail(individualId);
+  const {mutate: mutateIndividual} = useUpdateIndividual();
+  const {mutate: mutateWeightRecord} = useCreateRecord();
+  const [newWeight, setNewWeight] = useState(individual.weight);
+  const setWeightModalVisible = useModalStore(
+    state => state.setWeightModalVisible,
+  );
+
+  const onComplete = async () => {
+    mutateWeightRecord({
+      individualId: individual.id,
+      targetDate: selected,
+      weight: newWeight,
+      memo: ``,
+      category: 'WEIGHT',
+    });
+    mutateIndividual({
+      id: individual.id,
+      weight: newWeight,
+    });
+    setWeightModalVisible(false);
+  };
+
+  useEffect(() => {
+    console.log('개체 다시: ' + individual.weight);
+    setNewWeight(individual.weight);
+  }, [individual]);
 
   return (
-    <ModalView isVisible={isVisible} setIsVisible={setIsVisible}>
+    <ModalView isVisible={isVisible} setIsVisible={setWeightModalVisible}>
       <Container>
         <ContentBlock>
           <RecordBlock>
-            <Text>마지막 측정: {`${currentWeight}${weightUnit}`}</Text>
+            <Text>
+              마지막 측정: {`${individual.weight}${individual.weightUnit}`}
+            </Text>
             <Text>
               변화량:
-              <ChangeWeight isIncreasing={weight - currentWeight > 0}>{` ${(
-                weight - currentWeight
+              <ChangeWeight
+                isIncreasing={newWeight - individual.weight > 0}>{` ${(
+                newWeight - individual.weight
               ).toFixed(1)}`}</ChangeWeight>
             </Text>
           </RecordBlock>
           <WeightInputBlock>
             <WeightInput
-              value={String(weight)}
+              value={String(newWeight)}
               editable={false}
-              onChangeText={text => setWeight(Number(text))}
+              onChangeText={text => setNewWeight(Number(text))}
               keyboardType={'numeric'}
               placeholder={'무게'}
               style={{borderBottomWidth: 1}}
             />
-            <Headline5>{weightUnit}</Headline5>
+            <Headline5>{individual.weightUnit}</Headline5>
           </WeightInputBlock>
           <WeightButtonBlock>
             {weights.map((w, i) => (
@@ -117,7 +148,7 @@ const WeightModal = ({
                 key={i}
                 varient={'outline'}
                 onPress={() =>
-                  setWeight(current => Number((current + w).toFixed(1)))
+                  setNewWeight(current => Number((current + w).toFixed(1)))
                 }>
                 <Body1>{w < 0 ? w : `+${w}`}</Body1>
               </WegithButton>
@@ -127,12 +158,12 @@ const WeightModal = ({
         <CloseButtonBlock>
           <CloseButton
             onPress={() => {
-              setIsVisible(false);
-              setWeight(currentWeight);
+              setWeightModalVisible(false);
+              setNewWeight(individual.weight);
             }}>
             <Body1>닫기</Body1>
           </CloseButton>
-          <CompleteButton>
+          <CompleteButton onPress={onComplete} color={theme.color.secondary}>
             <Body1 color={theme.color.white}>완료</Body1>
           </CompleteButton>
         </CloseButtonBlock>

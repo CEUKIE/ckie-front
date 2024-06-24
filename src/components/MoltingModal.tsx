@@ -1,12 +1,18 @@
 import React, {useState} from 'react';
 import styled from '@emotion/native';
 
-import ModalView, {ModalViewProps} from './common/ModalView';
+import ModalView from './common/ModalView';
 import {Body1, Headline6} from './common/TextGroup';
 import Button from './common/Button';
 import theme from '../styles/theme';
+import useCreateRecord from '../hooks/useCreateRecord';
+import useModalStore from '../stores/useModalStore';
+import useIndividualStore from '../stores/useIndividualStore';
 
-interface MoltingModalProps extends Omit<ModalViewProps, 'children'> {}
+interface MoltingModalProps {
+  isVisible: boolean;
+  selected: string;
+}
 
 const Container = styled.View`
   gap: 48px;
@@ -41,11 +47,26 @@ const CompleteButton = styled(Button)`
   flex: 1;
 `;
 
-const MoltingModal = ({isVisible, setIsVisible}: MoltingModalProps) => {
+const MoltingModal = ({isVisible, selected}: MoltingModalProps) => {
+  const {mutate} = useCreateRecord();
+  const individualId = useIndividualStore(state => state.id);
+  const setMoltingModalVisible = useModalStore(
+    state => state.setMoltingModalVisible,
+  );
   const [memo, setMemo] = useState('');
 
+  const onComplete = () => {
+    mutate({
+      individualId,
+      category: 'ECDYSIS',
+      targetDate: selected,
+      memo,
+    });
+    setMoltingModalVisible(false);
+  };
+
   return (
-    <ModalView isVisible={isVisible} setIsVisible={setIsVisible}>
+    <ModalView isVisible={isVisible} setIsVisible={setMoltingModalVisible}>
       <Container>
         <ContentBlock>
           <Headline6>탈피 기록</Headline6>
@@ -60,10 +81,10 @@ const MoltingModal = ({isVisible, setIsVisible}: MoltingModalProps) => {
           />
         </ContentBlock>
         <CloseButtonBlock>
-          <CloseButton onPress={() => setIsVisible(false)}>
+          <CloseButton onPress={() => setMoltingModalVisible(false)}>
             <Body1>닫기</Body1>
           </CloseButton>
-          <CompleteButton>
+          <CompleteButton onPress={onComplete} color={theme.color.secondary}>
             <Body1 color={theme.color.white}>완료</Body1>
           </CompleteButton>
         </CloseButtonBlock>

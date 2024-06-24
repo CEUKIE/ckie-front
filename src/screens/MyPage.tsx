@@ -14,6 +14,7 @@ import MenuButton from '../components/MenuButton';
 import {useNav} from '../hooks/useNav';
 import {remove} from '../utils/persistence';
 import useUserDetail from '../hooks/useUserDetail';
+import Indicator from '../components/Indicator';
 
 const Container = styled.View`
   margin: 0 ${props => props.theme.margin.screen};
@@ -91,7 +92,7 @@ const MyPage = () => {
 
   return (
     <SafeAreaView>
-      <Suspense fallback={<Text>loading...</Text>}>
+      <Suspense fallback={<Indicator />}>
         <ScrollView>
           <Container>
             <ProfileBlock

@@ -3,6 +3,7 @@ import React from 'react';
 import PlanItem, {PlanItemProps} from './PlanItem';
 import {Body1} from './common/TextGroup';
 import {View} from 'react-native';
+import { Shadow } from 'react-native-shadow-2';
 
 const Container = styled.View`
   gap: 12px;
@@ -16,12 +17,13 @@ const PlanItemList = ({items, date}: {items: PlanItemProps[]; date: Date}) => {
       }월 ${date.getDate()}일`}</Body1>
       <View>
         {items.map((item, index) => (
-          <PlanItem
+          <Shadow
             key={index}
-            name={item.name}
-            color={item.color}
-            memo={item.memo}
-          />
+            startColor={'#f8f8f8'}
+            distance={5}
+            style={{width: '100%', borderRadius: 12}}>
+            <PlanItem name={item.name} color={item.color} memo={item.memo} />
+          </Shadow>
         ))}
       </View>
     </Container>

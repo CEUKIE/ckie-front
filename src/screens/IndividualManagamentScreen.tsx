@@ -33,6 +33,7 @@ const SearchBlock = styled.View`
 `;
 
 const IndividualList = styled.View`
+  margin-top: 12px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

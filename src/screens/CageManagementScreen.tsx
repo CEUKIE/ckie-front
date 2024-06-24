@@ -1,14 +1,16 @@
 import styled from '@emotion/native';
-import React from 'react';
-import {ScrollView} from 'react-native';
+import React, {Suspense, useEffect, useState} from 'react';
+import {RefreshControl, ScrollView} from 'react-native';
 
 import theme from '../styles/theme';
-import Button from '../components/common/Button';
-import SearchIcon from '../assets/icons/search.svg';
 import AddIcon from '../assets/icons/add.svg';
 import CageCard from '../components/CageCard';
 import SafeAreaView from '../components/common/SafeAreaView';
-import {cages} from '../db/cages';
+import {useNav} from '../hooks/useNav';
+import useCages, {QUERY_KEY} from '../hooks/useCages';
+import Indicator from '../components/Indicator';
+import SearchInput from '../components/SearchInput';
+import {useQueryClient} from '@tanstack/react-query';
 
 const Container = styled.View`
   margin: 0px ${props => props.theme.margin.screen};
@@ -16,18 +18,8 @@ const Container = styled.View`
 `;
 
 const SearchBlock = styled.View`
-  margin: 20px 48px;
-  border: 3px solid ${props => props.theme.color.secondary};
-  border-radius: 10px;
-  display: flex;
-  flex-direction: row;
-  padding: 8px 10px;
-`;
-
-const SearchInput = styled.TextInput`
-  display: flex;
-  flex: 1;
-  font-size: ${props => props.theme.fontSize.body1};
+  padding: 0 40px;
+  padding-top: 20px;
 `;
 
 const RegistButton = styled.TouchableOpacity`
@@ -40,37 +32,59 @@ const RegistButton = styled.TouchableOpacity`
   margin: 8px;
 `;
 
-const CageCardList = styled.View``;
+const CageCardList = styled.View`
+  margin-top: 12px;
+`;
 
 const CageManagementScreen = () => {
+  const navigation = useNav<'MainTab'>();
+  const {data} = useCages();
+  const [refreshing, setRefreshing] = useState(false);
+  const queryClient = useQueryClient();
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    queryClient.invalidateQueries({queryKey: [QUERY_KEY]});
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1200);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const moveToRegistStack = () => {
+    navigation.push('CageRegistrationStack');
+  };
+
   return (
     <SafeAreaView>
-      <Container>
-        <SearchBlock>
-          <SearchInput
-            placeholder="이름으로 검색해봐요!"
-            placeholderTextColor={theme.color.lightGray}
-          />
-          <Button varient="text">
-            <SearchIcon width={30} height={30} fill={theme.color.secondary} />
-          </Button>
-        </SearchBlock>
-        <ScrollView>
-          <CageCardList>
-            {cages.map(cage => (
-              <CageCard
-                key={cage.id}
-                id={cage.id}
-                name={cage.name}
-                memo={cage.memo}
-              />
-            ))}
-            <RegistButton>
-              <AddIcon width={30} height={30} fill={theme.color.white} />
-            </RegistButton>
-          </CageCardList>
-        </ScrollView>
-      </Container>
+      <Suspense fallback={<Indicator />}>
+        <Container>
+          <SearchBlock>
+            <SearchInput
+              placeholder="이름으로 검색해봐요!"
+              placeholderTextColor={theme.color.lightGray}
+            />
+          </SearchBlock>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
+            <CageCardList>
+              {data.map(cage => (
+                <CageCard
+                  key={cage.id}
+                  id={cage.id}
+                  name={cage.name}
+                  avatarUrl={cage.avatarUrl}
+                />
+              ))}
+              <RegistButton onPress={moveToRegistStack}>
+                <AddIcon width={30} height={30} fill={theme.color.white} />
+              </RegistButton>
+            </CageCardList>
+          </ScrollView>
+        </Container>
+      </Suspense>
     </SafeAreaView>
   );
 };

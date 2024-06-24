@@ -45,7 +45,7 @@ const Info = styled.View`
   width: 100%;
 `;
 
-const Label = styled.Text`
+const Label = styled(Body1)`
   font-size: ${props => props.theme.fontSize.body1};
   margin-bottom: 10px;
 `;
@@ -193,6 +193,7 @@ const IndividualRegistrationScreen = () => {
                     setSelectedValue(itemValue);
                     setSelectedValueIndex(itemIndex);
                   }}>
+                  <Picker.Item key={'default'} label={'선택'} value={''} />
                   {cages.map((cage, index) => (
                     <Picker.Item
                       key={index}
@@ -203,7 +204,13 @@ const IndividualRegistrationScreen = () => {
                 </Picker>
                 <Button
                   onPress={() => {
-                    setSelectedLabel(cages[selectedCageValueIndex].name);
+                    setSelectedLabel(
+                      cages[
+                        selectedCageValueIndex !== 0
+                          ? selectedCageValueIndex - 1
+                          : 0
+                      ].name,
+                    );
                     updateIndividual('cageId', selectedCageValue);
                     setIsCageModalVisible(false);
                   }}>

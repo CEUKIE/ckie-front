@@ -1,9 +1,11 @@
 import http from './http';
 import {
   AuthType,
+  CageStateType,
   CageType,
   FileResponse,
   IndividualType,
+  RecordType,
   ResponseForm,
   SpeciesType,
   UserType,
@@ -67,6 +69,13 @@ export const getIndividuals = async () => {
   return response.data.result!;
 };
 
+export const getIndividualDetail = async (id: string) => {
+  const response = await http.get<
+    ResponseForm<IndividualType.IndividualsDetailResponse>
+  >(`/individuals/${id}`);
+  return response.data.result!;
+};
+
 export const createIndividual = async (
   data: IndividualType.CreateIndividualRequest,
 ) => {
@@ -92,9 +101,40 @@ export const getSpeciesList = async () => {
   return response.data.result!;
 };
 
+export const createCage = async (data: CageType.CreateCageRequest) => {
+  const response = await http.post<ResponseForm<void>>('/cages', data);
+  return response;
+};
+
 export const getCages = async () => {
   const response = await http.get<ResponseForm<CageType.CageResponse[]>>(
     '/cages',
+  );
+  return response.data.result!;
+};
+
+export const createRecord = async (data: RecordType.CreateRecordsRequest) => {
+  const response = await http.post<ResponseForm<void>>('/records', data);
+  return response;
+};
+
+export const getRecords = async (individualId: string) => {
+  const response = await http.get<ResponseForm<RecordType.RecordsResponse[]>>(
+    `/records/${individualId}`,
+  );
+  return response.data.result!;
+};
+
+export const getWeightRecords = async (individualId: string) => {
+  const response = await http.get<
+    ResponseForm<RecordType.WeightRecordResponse[]>
+  >(`/records/${individualId}/weights`);
+  return response.data.result!;
+};
+
+export const getCageState = async (cageId: string) => {
+  const response = await http.get<ResponseForm<CageStateType.CageResponse[]>>(
+    `/cage-states/${cageId}`,
   );
   return response.data.result!;
 };

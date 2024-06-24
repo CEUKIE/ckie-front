@@ -1,7 +1,8 @@
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {getCages} from '../api/api';
 
-const QUERY_KEY = 'cages';
+export const QUERY_KEY = 'cages';
+
 const fetcher = () => getCages();
 
 const useCages = () => {

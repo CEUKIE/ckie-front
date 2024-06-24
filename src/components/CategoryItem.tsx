@@ -8,7 +8,9 @@ export interface CategoryItemProps {
   name: string;
   color: string;
   icon: React.JSX.Element;
-  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalVisible:
+    | React.Dispatch<React.SetStateAction<boolean>>
+    | ((visible: boolean) => void);
 }
 
 const Container = styled.View`
