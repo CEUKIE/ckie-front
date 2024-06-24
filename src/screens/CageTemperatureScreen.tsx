@@ -210,7 +210,7 @@ const CageTemperatureScreen = () => {
                 />
               }>
               {cageStates.length === chartData.length && (
-                <Chart records={chartData} labels={labels} yAxisSuffix={'°C'} />
+                <Chart records={chartData} labels={[]} yAxisSuffix={'°C'} />
               )}
             </Suspense>
           </View>

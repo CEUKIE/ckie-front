@@ -56,7 +56,7 @@ const CagePhotoScreen = () => {
   const {socket} = useSocket();
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(
-    'https://image.ckie.store/images/6bf9136a7453bfc052bc745d9bef82b0.jpg',
+    'https://image.ckie.store/images/individual-profile.jpeg',
   );
 
   const requestPhoto = () => {
@@ -98,7 +98,7 @@ const CagePhotoScreen = () => {
             distance={5}
             style={{width: '100%', borderRadius: 12}}>
             <ContentBlock>
-              <Title>초코 사육장</Title>
+              <Title>사육장</Title>
               <ImageBlock>
                 {isLoading ? (
                   <IndicatorBlock>

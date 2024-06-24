@@ -100,7 +100,7 @@ const WeightModal = ({isVisible, selected}: WeightModalProps) => {
       individualId: individual.id,
       targetDate: selected,
       weight: newWeight,
-      memo: `${individual.weight}`,
+      memo: ``,
       category: 'WEIGHT',
     });
     mutateIndividual({
